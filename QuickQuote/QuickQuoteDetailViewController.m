@@ -20,12 +20,16 @@
 
 @end
 
+// temporary...
+NSString *firstLogin = @"yes"; // just for now
+
 @implementation QuickQuoteDetailViewController
 
 @synthesize cancelBtn = _cancelBtn;
 @synthesize detailItem = _detailItem;
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;
 @synthesize masterPopoverController = _masterPopoverController;
+@synthesize loginViewController;
 
 #pragma mark - Managing the detail item
 
@@ -82,6 +86,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (firstLogin == @"yes")
+    {
+        firstLogin = @"no";
+        [self showLoginScreen];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -102,17 +112,31 @@
 }
 
 
-// this one is fired by the button so animate it for some pizzazz.
 - (IBAction)logOut:(id)sender {
+    // empty models
     
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-//    UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//    [vc setModalPresentationStyle:UIModalPresentationFullScreen];
-    
-//    [self presentViewController:vc animated:YES completion:nil];
-    
-    // fire an event that clears data from keychain...
-    // make sure to nullify the company selection...
+    [self showLoginScreen];
+}
+
+-(void)showLoginScreen
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    QuickQuoteLoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    [vc setModalPresentationStyle:UIModalPresentationFullScreen];
+    vc.delegate = self;
+    [self presentViewController:vc animated:NO completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    QuickQuoteLoginViewController *loginVc = segue.destinationViewController;
+    loginVc.delegate = self;
+}
+
+- (void)quickQuoteLoginViewControllerDidFinish
+{
+    // dismiss
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

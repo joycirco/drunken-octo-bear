@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "QuickQuoteMasterViewController.h"
+#import "QuickQuoteLoginViewController.h"
 
-@interface QuickQuoteDetailViewController : UIViewController <SubstitutableDetailViewController>
+@interface QuickQuoteDetailViewController : UIViewController <PresentedLoginViewControllerDelegate,
+    SubstitutableDetailViewController>
 
 @property (strong, nonatomic) id detailItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBtn;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *centerMarker;
+@property (strong, nonatomic) UIViewController *loginViewController;
 
 @end
