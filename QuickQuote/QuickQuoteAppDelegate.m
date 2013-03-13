@@ -228,19 +228,22 @@
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"QuickQuote.sqlite"];
     
-    NSError *error = nil;
-    storeCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
-    // * Simply deleting the existing store:
-    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
-
-    if (error != nil)
+    if (storeURL != nil)
     {
-        bRet = false;
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        
+        NSError *error = nil;
+        storeCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+        
+        // * Simply deleting the existing store:
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
+
+        if (error != nil)
+        {
+            bRet = false;
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
     }
-    
     return bRet;
 }
 
