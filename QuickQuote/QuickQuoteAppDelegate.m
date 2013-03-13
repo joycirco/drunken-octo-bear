@@ -58,8 +58,24 @@
     [cu generateApplicationData:context];
     
     NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Could not save: %@", [error localizedDescription]);
+    if (![context save:&error])
+    {
+        //NSLog(@"Could not save: %@", [error localizedDescription]);
+        {
+            NSLog(@"Failed to save to data store: %@", [error localizedDescription]);
+            NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+            if(detailedErrors != nil && [detailedErrors count] > 0)
+            {
+                for(NSError* detailedError in detailedErrors)
+                {
+                    NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+                }
+            }
+            else
+            {
+                NSLog(@"  %@", [error userInfo]);
+            }
+        }
     }
     
     // Test listing all QuoteRequests from the store

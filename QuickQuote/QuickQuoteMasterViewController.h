@@ -43,6 +43,9 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *cellPickupDate;
 @property (weak, nonatomic) IBOutlet UITableViewCell *cellDeliveryDate;
 @property (weak, nonatomic) IBOutlet UITableViewCell *cellFreightSummary;
+@property (weak, nonatomic) IBOutlet UITableViewCell *cellPickupAccessorials;
+@property (weak, nonatomic) IBOutlet UITableViewCell *cellDeliveryAccessorials;
+@property (weak, nonatomic) IBOutlet UITableViewCell *cellShipmentAccessorials;
 @property (weak, nonatomic) IBOutlet UITextField *originZip;
 @property (weak, nonatomic) IBOutlet UITextField *destinationZip;
 @property (weak, nonatomic) IBOutlet UITextField *weight;

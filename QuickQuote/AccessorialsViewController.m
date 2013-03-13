@@ -10,6 +10,7 @@
 #import "Accessorial.h"
 #import "QuoteRequest.h"
 #import "AccessorialType.h"
+#import "AccessorialCell.h"
 
 @interface AccessorialsViewController ()
 {
@@ -156,18 +157,27 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    Accessorial *acc = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+   
+    ((AccessorialCell*)cell).label.text = acc.accessorialName;
+    ((AccessorialCell*)cell).accessorial = acc;
+    ((AccessorialCell*)cell).delegate = self;
+   
+    [((AccessorialCell*)cell).controlSwitch setOn: (acc.quoteRequest != nil)];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    //return self.fetchedResultsController.fetchedObjects.count;
-    return 0;
+    return self.fetchedResultsController.fetchedObjects.count;
+    //return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"AccessorialCell";
+    static NSString *CellIdentifier = @"AccessorialCellID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
@@ -248,17 +258,21 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Set predicate to only accessorials for this _quoteRequest
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"quoteRequest=%@", _quoteRequest];
+    //NSPredicate* predicate = [NSPredicate predicateWithFormat:@"quoteRequest=%@", _quoteRequest];
+    //[fetchRequest setPredicate:predicate];
+
+    // Set predicate to only accessorials for this _accessorialTypeID
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialType];
     [fetchRequest setPredicate:predicate];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"accessorialName" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Accessorial"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil /*@"Accessorial"*/];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -305,22 +319,24 @@
     
     switch(type)
     {
-        case NSFetchedResultsChangeInsert:
+       /* case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
+            break;*/
             
+        case NSFetchedResultsChangeDelete:
+        case NSFetchedResultsChangeInsert:
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
-            
+        /*
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
+            break;*/
     }
 }
 
@@ -338,5 +354,20 @@
  
  }
  */
+
+#pragma AccessorialCellDelegate
+- (void)stateChanged:(BOOL)newState : (Accessorial*)accessorial
+{
+    if (accessorial != nil)
+    {
+        // if adding
+        if (newState)
+            [_quoteRequest addAccessorialsObject:accessorial];
+        else
+            [_quoteRequest removeAccessorialsObject:accessorial];
+        
+        
+    }
+}
 
 @end

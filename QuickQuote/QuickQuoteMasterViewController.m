@@ -15,6 +15,8 @@
 #import "QuoteRequest.h"
 #import "Credentials.h"
 #import "FreightItem.h"
+#import "Accessorial.h"
+
 #import "DatePopoverViewController.h"
 
 #import "RSPRateServicePrivileged.h"
@@ -130,6 +132,26 @@
             
             self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
         }
+    
+        int accPickup = 0;
+        int accDeliver = 0;
+        int accShip = 0;
+        for(Accessorial* acc in _quoteRequest.accessorials)
+        {
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:1])
+                accPickup++;
+
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:2])
+                accDeliver++;
+            
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:3])
+                accShip++;
+            
+        }
+    
+        self.cellPickupAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accPickup];
+        self.cellDeliveryAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accDeliver];
+        self.cellShipmentAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accShip];
     }
 }
 

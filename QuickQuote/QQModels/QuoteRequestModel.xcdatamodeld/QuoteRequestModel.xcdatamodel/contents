@@ -3,15 +3,23 @@
     <entity name="Accessorial" representedClassName="Accessorial" syncable="YES">
         <attribute name="accessorialCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accessorialName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="accessorialTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="accessorialType" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AccessorialType" inverseName="accessorial" inverseEntity="AccessorialType" syncable="YES"/>
         <relationship name="freightItem" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="FreightItem" inverseName="accessorials" inverseEntity="FreightItem" syncable="YES"/>
         <relationship name="quoteRequest" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteRequest" inverseName="accessorials" inverseEntity="QuoteRequest" syncable="YES"/>
+        <fetchedProperty name="deliveryAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Accessorial" predicateString="accessorialTypeID==2"/>
+        </fetchedProperty>
+        <fetchedProperty name="pickupAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Accessorial" predicateString="accessorialTypeID==1"/>
+        </fetchedProperty>
+        <fetchedProperty name="shipmentAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Accessorial" predicateString="accessorialTypeID==3"/>
+        </fetchedProperty>
     </entity>
     <entity name="AccessorialType" representedClassName="AccessorialType" syncable="YES">
         <attribute name="accessorialTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="accessorialTypeName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="accessorial" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Accessorial" inverseName="accessorialType" inverseEntity="Accessorial" syncable="YES"/>
     </entity>
     <entity name="Credentials" representedClassName="Credentials" syncable="YES">
         <attribute name="accountId" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,8 +56,8 @@
         <attribute name="pickupDateTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="storeLocationCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Accessorial" inverseName="quoteRequest" inverseEntity="Accessorial" syncable="YES"/>
-        <relationship name="credentials" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Credentials" inverseName="quoteRequest" inverseEntity="Credentials" syncable="YES"/>
+        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Accessorial" inverseName="quoteRequest" inverseEntity="Accessorial" syncable="YES"/>
+        <relationship name="credentials" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Credentials" inverseName="quoteRequest" inverseEntity="Credentials" syncable="YES"/>
         <relationship name="freightItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FreightItem" inverseName="quoteRequest" inverseEntity="FreightItem" syncable="YES"/>
         <fetchedProperty name="deliveryAccessorials" optional="YES" syncable="YES">
             <fetchRequest name="fetchedPropertyFetchRequest" entity="QuoteRequest" predicateString="(accessorialType == 2)"/>
@@ -62,8 +70,8 @@
         </fetchedProperty>
     </entity>
     <elements>
-        <element name="Accessorial" positionX="-11" positionY="123" width="128" height="135"/>
-        <element name="AccessorialType" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Accessorial" positionX="-11" positionY="123" width="128" height="194"/>
+        <element name="AccessorialType" positionX="160" positionY="192" width="128" height="75"/>
         <element name="Credentials" positionX="-225" positionY="78" width="128" height="120"/>
         <element name="FreightItem" positionX="-198" positionY="324" width="128" height="270"/>
         <element name="HandlingUnitType" positionX="160" positionY="192" width="128" height="90"/>

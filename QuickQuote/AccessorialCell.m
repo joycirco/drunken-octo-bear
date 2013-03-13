@@ -11,13 +11,14 @@
 @implementation AccessorialCell
 @synthesize label;
 @synthesize controlSwitch;
+@synthesize accessorial;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
     }
     return self;
 }
@@ -27,6 +28,15 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+
 }
 
+
+- (IBAction)actionSwitchChanged:(id)sender {
+    
+    UISwitch* theSwitch = (UISwitch*) sender;
+    BOOL theSwitchIsOn = theSwitch.on;
+    
+    [self.delegate stateChanged:theSwitchIsOn :accessorial];
+}
 @end
