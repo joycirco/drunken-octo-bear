@@ -9,6 +9,7 @@
 #import "FreightItemsViewController.h"
 #import "FreightItem.h"
 #import "QuoteRequest.h"
+#import "HandlingUnitType.h"
 #import "FreightItemViewController.h"
 
 @interface FreightItemsViewController ()
@@ -37,8 +38,7 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize quoteRequest = _quoteRequest;
-
-
+@synthesize huMap = _huMap;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -97,7 +97,24 @@
     self.editButtonItem.title = @"Delete";
     
     self.navigationItem.rightBarButtonItem = self.btnAddFreight;
+    
+    // load map for handling units
+    _huMap = [[NSMutableDictionary alloc]init];
+    // get accessorial type from data store
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
+                                              inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* hu = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for(HandlingUnitType* h in hu)
+    {
+        [_huMap setObject:h.handlingUnitTypeDescription forKey:h.handlingUnitTypeID];
+    }
 }
+
 
 - (void)viewDidUnload
 {
@@ -153,6 +170,18 @@
 
 -(void)stopActivityIndicator
 {
+}
+
+- (void)setEditing:(BOOL)flag animated:(BOOL)animated
+{
+    [super setEditing:flag animated:animated];
+    if (flag == YES)
+    {
+    }
+    else
+    {
+        self.editButtonItem.title = @"Delete";
+    }
 }
 
 #pragma mark - Rate Detail Segue
@@ -258,31 +287,48 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+    NSMutableString* label;
+    NSMutableString* detail;
+    
+    label = [[NSMutableString alloc]init];
+    detail = [[NSMutableString alloc]init];
+    
+    // get handling unit description from dictionary
+    NSString* huName = nil;
+    if (_huMap != nil && _huMap.count > 0)
+    {
+        huName = [_huMap objectForKey:freight.handlingUnitTypeID];
+    }
+    
+    [label appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
+    if (huName != nil)
+        [label appendFormat:@" %@",huName];
+
+    if (freight.length != nil && [freight.length doubleValue] > 0)
+        [label appendFormat:@" L-%@",[noStyleFormatter stringFromNumber:freight.length]];
+
+    if (freight.width != nil && [freight.width doubleValue] > 0)
+        [label appendFormat:@" W-%@",[noStyleFormatter stringFromNumber:freight.width]];
+
+    if (freight.height != nil && [freight.height doubleValue] > 0)
+        [label appendFormat:@" H-%@",[noStyleFormatter stringFromNumber:freight.height]];
+    
+    [label appendFormat:@", %@",[decimalFormatter stringFromNumber:freight.weight]];
+    [label appendString:freight.weightUOM];
+    [label appendString:@", Class-"];
+    [label appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
+
+    if ([freight.isStackable boolValue])
+        [detail appendString:@"Stackable"];
+    
+    if (freight.nmfc != nil && freight.nmfc.length > 0)
+        [detail appendFormat:@" NMFC-%@",freight.nmfc];
     
     if (freight.freightDescription != nil && freight.freightDescription.length > 0)
-    {
-        cell.textLabel.text = freight.freightDescription;
-    }
-    else
-    {
-        NSMutableString* str = [[NSMutableString alloc]init];
-        [str appendString:@"Freight Item "];
-        NSInteger i = 1;
-        [str appendString: [NSString stringWithFormat:@"%d", (indexPath.row + i)]];
-        
-        cell.textLabel.text = str;
-    }
-    
-    NSMutableString* detail = [[NSMutableString alloc]init];
-    
-    [detail appendString:[decimalFormatter stringFromNumber:freight.weight]];
-    [detail appendString:freight.weightUOM];
-    [detail appendString:@", Class: "];
-    [detail appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
-    [detail appendString:@", "];
-    [detail appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
-    [detail appendString:@" Pallets"];
-    
+        [detail appendFormat:@", Description- %@", freight.freightDescription];
+
+    cell.textLabel.text = label;
     cell.detailTextLabel.text = detail;
 }
 
@@ -293,6 +339,12 @@
     int nRows = self.fetchedResultsController.fetchedObjects.count;
     
     self.editButtonItem.enabled = (nRows > 0);
+    
+    if (self.isEditing && (nRows ==0))
+    {
+        [self setEditing:NO animated:YES];
+        self.editButtonItem.title = @"Delete";
+    }
     
     return nRows;
 }
@@ -310,7 +362,6 @@
     
     return cell;
 }
-
 
 #pragma mark Freight Item Management
 
@@ -340,7 +391,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         // Delete the row from the data source
-        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        //FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:indexPath];
         
         if (freight != nil)
         {

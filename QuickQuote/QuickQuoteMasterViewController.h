@@ -26,7 +26,8 @@
 
 @interface QuickQuoteMasterViewController : UITableViewController
         <NSFetchedResultsControllerDelegate, UISplitViewControllerDelegate,
-        DatePopoverViewControllerDelegate, UIPopoverControllerDelegate>
+        DatePopoverViewControllerDelegate, UIPopoverControllerDelegate,
+        UITextFieldDelegate>
 {
 
     /******  Swapable Detail View Code ******/
@@ -48,9 +49,8 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *cellShipmentAccessorials;
 @property (weak, nonatomic) IBOutlet UITextField *originZip;
 @property (weak, nonatomic) IBOutlet UITextField *destinationZip;
-@property (weak, nonatomic) IBOutlet UITextField *weight;
-@property (weak, nonatomic) IBOutlet UITextField *freightClass;
-@property (weak, nonatomic) IBOutlet UITextField *numHandlingUnits;
+@property (weak, nonatomic) IBOutlet UITextField *storeLocationCode;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSettings;
 @property (weak, nonatomic) IBOutlet UIButton *btnRate;
 
 @property (nonatomic, retain) NSDate* dateToSet;
@@ -70,6 +70,8 @@
 
 - (IBAction)rateAction:(id)sender;
 
+- (IBAction)saveAction:(id)sender;
+- (IBAction)infoAction:(id)sender;
 - (void)setDateFromPopover:(NSDate *)aDate;
 
 @end

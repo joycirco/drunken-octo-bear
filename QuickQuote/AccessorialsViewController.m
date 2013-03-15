@@ -159,7 +159,6 @@
     //[self.tableView reloadData];
 }
 
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     BOOL bIsOn = NO;

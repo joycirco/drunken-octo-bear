@@ -19,6 +19,7 @@
     NSNumberFormatter *decimalFormatter;
     NSNumberFormatter *noStyleFormatter;
     NSString* currentPickerSegue;
+    NSString* validationErrorTitle;
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -111,6 +112,8 @@
 
 - (void)configureView
 {
+    validationErrorTitle = @"Validation Error";
+    
     [self initPickerItems];
     
     // Update the user interface for the freight item.
@@ -132,6 +135,7 @@
     self.length.delegate = self;
     self.width.delegate = self;
     self.height.delegate = self;
+    self.freightDescription.delegate = self;
 
     if (! self.editing)
     {
@@ -169,7 +173,7 @@
         self.width.text = [decimalFormatter stringFromNumber:_freightItem.width];
         self.height.text = [decimalFormatter stringFromNumber:_freightItem.height];
         self.nmfc.text = _freightItem.nmfc;
-        [self.stackable setOn:_freightItem.isStackable];
+        [self.stackable setOn:[_freightItem.isStackable boolValue]];
     }
 }
 
@@ -203,26 +207,37 @@
             [self setEditing:YES animated:FALSE];
             return;
         }
-            
-        // Save the changes if needed and change the views to noneditable.
-        bEditing = false;
-        self.weight.enabled = false;
-        self.units.enabled = false;
-        self.length.enabled = false;
-        self.width.enabled = false;
-        self.height.enabled = false;
-        self.btnFreightClass.enabled = false;
-        self.btnHandlingUnitType.enabled = false;
-        self.stackable.enabled = false;
-        self.nmfc.enabled = false;
-        //self.freightDescription.editable = NO;
+        else
+        {
+            // Save the changes if needed and change the views to noneditable.
+            bEditing = false;
+            self.weight.enabled = false;
+            self.units.enabled = false;
+            self.length.enabled = false;
+            self.width.enabled = false;
+            self.height.enabled = false;
+            self.btnFreightClass.enabled = false;
+            self.btnHandlingUnitType.enabled = false;
+            self.stackable.enabled = false;
+            self.nmfc.enabled = false;
+            //self.freightDescription.editable = NO;
 
-        // to do - validate input
-        // if isValid
-        [self saveFreightItem];
-        self.title = @"Freight Item Detail";
+            // to do - validate input
+            // if isValid
+            [self saveFreightItem];
+            self.title = @"Freight Item Detail";
+        }
     }
 }
+
+#pragma mark - UITextFieldDelegate
+// Close the keyboard if someone presses enter from any textfield
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
+
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -231,7 +246,6 @@
         
     }
 }
-
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -293,9 +307,15 @@
 }
 
 
+#pragma mark - UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    return self.isEditing;
+}
+
 -(BOOL) isValid
 {
-    BOOL bValid = NO;
+    BOOL bValid = YES;
 
     // validate input
     double weight = [self.weight.text doubleValue];
@@ -303,27 +323,16 @@
 
     if ((weight <= 0) || (weight > 50000))
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Validation Error" message:@"Weight is out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+        bValid = NO;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:validationErrorTitle message:@"Weight is out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
         [alert show];
     }
     else if (handlingUnits <= 0)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Validation Error" message:@"Handling Units are out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+        bValid = NO;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:validationErrorTitle message:@"Handling Units are out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
         [alert show];
     }
-    
-    _freightItem.freightClass = [NSDecimalNumber decimalNumberWithString:self.btnFreightClass.titleLabel.text];
-    _freightItem.freightDescription = self.freightDescription.text;
-    _freightItem.handlingUnitTypeID = [self getHandlingUnitTypeID:self.btnHandlingUnitType.titleLabel.text];
-    _freightItem.isStackable = FALSE;
-    _freightItem.length = [NSDecimalNumber decimalNumberWithString:self.length.text];
-    _freightItem.width = [NSDecimalNumber decimalNumberWithString:self.width.text];
-    _freightItem.height = [NSDecimalNumber decimalNumberWithString:self.height.text];
-    _freightItem.nmfc = self.nmfc.text;
-    _freightItem.isStackable = [NSNumber numberWithBool:self.stackable.isOn];
-    
-    
-    
     return bValid;
 }
 
@@ -335,7 +344,7 @@
     _freightItem.freightDescription = self.freightDescription.text;
     _freightItem.handlingUnits = [noStyleFormatter numberFromString: self.units.text];
     _freightItem.handlingUnitTypeID = [self getHandlingUnitTypeID:self.btnHandlingUnitType.titleLabel.text];
-    _freightItem.isStackable = FALSE;
+    //_freightItem.isStackable = FALSE;
     _freightItem.length = [NSDecimalNumber decimalNumberWithString:self.length.text];
     _freightItem.width = [NSDecimalNumber decimalNumberWithString:self.width.text];
     _freightItem.height = [NSDecimalNumber decimalNumberWithString:self.height.text];
@@ -493,13 +502,20 @@
     return ret;
 }
 
-- (IBAction)selectHandlingUnit:(id)sender {
+- (IBAction)selectHandlingUnit:(id)sender
+{
 }
 
-- (IBAction)selectFreightClass:(id)sender {
+- (IBAction)selectFreightClass:(id)sender
+{
 }
-- (IBAction)stackableChanged:(id)sender {
+
+- (IBAction)stackableChanged:(id)sender
+{
+    
+   // UISwitch* theSwitch = (UISwitch*) sender;
+   // _freightItem.isStackable =  [NSNumber numberWithBool:theSwitch.on];
+    
 }
-- (IBAction)deleteFreightAction:(id)sender {
-}
+
 @end

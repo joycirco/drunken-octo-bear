@@ -12,7 +12,10 @@
 
 @class QuoteRequest, FreightItem;
 
-@interface FreightItemViewController : UIViewController <UITextFieldDelegate, PickerPopoverViewControllerDelegate, SubstitutableDetailViewController>
+@interface FreightItemViewController : UIViewController <UITextFieldDelegate,
+                                                        UITextViewDelegate,
+                                                        PickerPopoverViewControllerDelegate,
+                                                        SubstitutableDetailViewController>
 @property (weak, nonatomic) IBOutlet UITextField *weight;
 @property (weak, nonatomic) IBOutlet UITextField *units;
 @property (weak, nonatomic) IBOutlet UITextField *length;
@@ -33,7 +36,6 @@
 @property (strong, nonatomic) UIPopoverController *pickerPopoverController;
 
 @property (nonatomic,assign) bool isAdding;
-- (IBAction)deleteFreightAction:(id)sender;
 
 @property (retain, nonatomic) NSMutableArray* freightClasses;
 @property (retain, nonatomic) NSMutableArray* handlingUnitTypes;

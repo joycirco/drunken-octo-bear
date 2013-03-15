@@ -110,6 +110,9 @@
 
 - (void)configureView
 {
+    self.originZip.delegate = self;
+    self.destinationZip.delegate = self;
+    self.storeLocationCode.delegate = self;
 
     self.btnRate.enabled=NO;
     
@@ -285,7 +288,8 @@
     self.fetchedResultsController = aFetchedResultsController;
     
 	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
+	if (![self.fetchedResultsController performFetch:&error])
+    {
 	    /*
 	     Replace this implementation with code to handle the error appropriately.
          
@@ -302,12 +306,9 @@
 {
 }
 
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+// implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
  - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
  {
-     // In the simplest, most efficient, case, reload the table view.
-     //[self.tableView reloadData];
-     
      _quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
     
      [self configureView];
@@ -335,6 +336,52 @@
     self.rootPopoverButtonItem = nil;
 }
 
+#pragma mark - UITextFieldDelegate
+// Close the keyboard if someone presses enter from any textfield
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+   /* if(textField == self.storeLocationCode)
+    {
+        BOOL editingDate;
+        editingDate = YES;
+        UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 216)];
+        UIDatePicker *pv = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,0,320,216)];
+        [myView addSubview:pv];
+        
+        [self.view.superview addSubview:myView];
+        pv.userInteractionEnabled = YES;
+        textField.placeholder = @"currently selecting below";
+        [self scrollTheView:YES];
+        return NO;
+    } */
+    return YES;
+}
+
+- (void)scrollTheView:(BOOL) moveUp
+{
+    int scrollAmount = 212;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect rect = self.view.frame;
+    if(moveUp)
+    {
+        rect.origin.y -= scrollAmount;
+    }
+    else
+    {
+        rect.origin.y += scrollAmount;
+    }
+    self.view.frame = rect;
+    [UIView commitAnimations];
+}
+
+
 #pragma mark - Date Popover Delegate
 
 - (void)datePopoverViewControllerDidFinish:(DatePopoverViewController *)controller
@@ -349,7 +396,13 @@
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
     if (linkedDateCell != nil)
+    {
         linkedDateCell.detailTextLabel.text = [dateFormat stringFromDate:aDate];
+        
+        // set pickup date for quote as well
+        if (linkedDateCell == self.cellPickupDate)
+            _quoteRequest.pickupDateTime = aDate;
+    }
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
@@ -383,20 +436,21 @@
 }
 */
 
-#pragma mark - FetchedFreightItemsDelegate
--(void)didUpdateFreightItems:(NSMutableArray*) freightItems
+#pragma mark - QuoickQuoteMasterView Actions
+
+- (IBAction)saveAction:(id)sender
 {
-    
+
+}
+
+- (IBAction)infoAction:(id)sender
+{
+
 }
 
 - (IBAction)rateAction:(id)sender {
     
     [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
-    
-    // clear the list
-    //QuickQuoteResultsViewController* view = self.detailViewController;
-    //if (view != nil)
-    //    [view clearRateResponseList];
     
 	// Create the service
 	RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];
@@ -409,25 +463,21 @@
     reqRRP.reqLoginName = _quoteRequest.credentials.loginName;
     reqRRP.reqLoginPassword = _quoteRequest.credentials.password;
     reqRRP.reqAccountId = _quoteRequest.credentials.accountId;
-    reqRRP.reqRoutingCustomerCode = _quoteRequest.storeLocationCode;
+    if (self.storeLocationCode.text != nil)
+        reqRRP.reqRoutingCustomerCode =  _quoteRequest.storeLocationCode = self.storeLocationCode.text;
     reqRRP.reqLoginToken = _quoteRequest.credentials.token;
     
-    reqRRP.reqOriginZip = self.originZip.text;
-    reqRRP.reqDestZip = self.destinationZip.text; // mutableCopy;
+    reqRRP.reqOriginZip = _quoteRequest.originPostalCode = self.originZip.text;
+    reqRRP.reqDestZip = _quoteRequest.destinationPostalCode = self.destinationZip.text;
     
-    //NSDateFormatter *df1 = [[NSDateFormatter alloc] init];
-    //[df1 setDateFormat:@"MM/dd/yyyy"];
-    //reqRRP.reqPickupDate = [df1 dateFromString: self.cellPickupDate.detailTextLabel.text];
     reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
-    
-    //NSDateFormatter *df2 = [[NSDateFormatter alloc] init];
-    //[df2 setDateFormat:@"MM/dd/yyyy"];
-    //reqRRP.reqDropDate = [df2 dateFromString: self.cellDeliveryDate.detailTextLabel.text];
     
     int daysToAdd = 3;
     NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
     reqRRP.reqDropDate = newDate1;
     
+    // keep track if any freight is stackable
+    BOOL isStackable = NO;
     // iterate through the freight items
     if (_quoteRequest.freightItems != nil)
     {
@@ -440,22 +490,29 @@
             f.units = [fqr.handlingUnits intValue];
             f.length = fqr.length;
             f.width = fqr.width;
-            f.height = fqr.height;            
+            f.height = fqr.height;
+            
+            if (fqr.isStackable)
+                isStackable = YES;
+            
             [reqRRP.reqFreight addObject: f];
         }
     }
-
-    /*
-    // add freight item
-    RSPFreight* f = [[RSPFreight alloc] init];
-    f.freightClass = [NSDecimalNumber decimalNumberWithString: self.freightClass.text];
-    f.weight = [NSDecimalNumber decimalNumberWithString: self.weight.text];
-    f.units =  [self.numHandlingUnits.text intValue];
-    f.volume = [NSDecimalNumber decimalNumberWithString: @"90"];
-    f.length = [NSDecimalNumber decimalNumberWithString: @"48"];
-    f.width = [NSDecimalNumber decimalNumberWithString: @"40"];
-    f.height = [NSDecimalNumber decimalNumberWithString: @"36"];
-    [reqRRP.reqFreight addObject: f ];*/
+    
+    // set stackable
+    reqRRP.reqFreightStackable = isStackable;
+    
+    // iterate through accessorials
+    if (_quoteRequest.accessorials != nil)
+    {
+        for(Accessorial* acc in _quoteRequest.accessorials)
+        {
+            RSPAccessorial* a = [[RSPAccessorial alloc]init];
+            a.accCode = acc.accessorialCode;
+            [reqRRP.reqAccessorials addObject:a];
+        }
+    }
+    
     
     /*
     // add pallet position
@@ -474,55 +531,12 @@
     reqRRP.reqViewSpecificBillingContracts = true;
     reqRRP.reqViewWebCostContracts = true;
     reqRRP.reqViewWebBillingContracts = true;
-    reqRRP.reqViewRatingCost = 1;
+    reqRRP.reqViewRatingCost = 0;
     
-    /*
-    QuoteRequest* req = [[QuoteRequest alloc] init];
-    
-    // credentials
-    req.credentials = [[Credentials alloc] init];
-    req.credentials.loginName = @"testbot";
-    req.credentials.password = @"supersecret468";
-    req.credentials.accountId =  @"32700120";
-    req.credentials.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    
-    req.originPostalCode = @"50801";
-    req.destinationPostalCode = @"66048";
-    
-    NSDateFormatter *df1 = [[NSDateFormatter alloc] init];
-    [df1 setDateFormat:@"yyyy-MM-dd HH:mm"];
-    req.pickupDateTime = [df1 dateFromString: @"2012-03-28 13:01"];
-    
-    FreightItem* f1 = [[FreightItem alloc] init];
-    f1.weight = [NSDecimalNumber decimalNumberWithString: @"2000.0"];
-    f1.weightUOM = @"LB";
-    f1.freightClass = [NSDecimalNumber decimalNumberWithString: @"50"];
-    f1.NMFC = @"8229";
-    f1.handlingUnits = 3;
-    f1.handlingUnitType = 1;
-    f1.length = [NSDecimalNumber decimalNumberWithString: @"48"];
-    f1.width = [NSDecimalNumber decimalNumberWithString: @"40"];
-    f1.height = [NSDecimalNumber decimalNumberWithString:@"36"];
-    f1.dimUOM = @"IN";
-    [req addFreightItem:f1];
-        */
-    // now submit the request
-    //[reqRRP submitRequest];
-    
-    _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _progress_ind.center = self.view.center; //CGPointMake (self.view.bounds.size.width * 0.5F, self.view.bounds.size.height * 0.5F);
-    //_progress_ind.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-    [_progress_ind startAnimating];
-    [self.view addSubview:_progress_ind];
-
 	[service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
-    
-    //if (req != nil)
-    //    [req directRequest];
 }
 
 // Handle the response from RateShipment.
-
 - (void) RateShipmentHandler: (id) value {
 
     [_progress_ind stopAnimating];

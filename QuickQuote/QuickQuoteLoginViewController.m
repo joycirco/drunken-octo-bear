@@ -105,7 +105,6 @@
 }
 
 // Close the keyboard if someone presses enter from any textfield
-// !Not working at the moment...fix this
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

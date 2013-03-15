@@ -99,7 +99,6 @@
     [self.delegate freightEditViewControllerDidFinish:self];
 }
 
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ((textField == self.tfWeight) || (textField == self.tfUnits))

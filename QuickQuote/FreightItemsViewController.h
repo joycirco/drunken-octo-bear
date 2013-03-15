@@ -22,7 +22,7 @@
 
 @property (nonatomic, retain) FreightItem* selectedFreight;
 
-//@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSMutableDictionary* huMap;
 
 @property (strong, nonatomic) UIPopoverController *detailPopoverController;
 
