@@ -40,6 +40,7 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 // Interface Builder actions are used for custom click events
 - (IBAction)signInAction:(id)sender;
 - (IBAction)textFieldEdited;
+- (void)determineButtonPositions;
 
 @end
 

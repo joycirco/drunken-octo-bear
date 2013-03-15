@@ -139,7 +139,6 @@ NSString *firstLogin = @"yes"; // just for now
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 /*
 // overrides the split/detail view and pulls up the login screen for us.
 // Split Navigation views have to be the root, but that's okay...

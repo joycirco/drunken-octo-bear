@@ -51,6 +51,20 @@
     passwordTextField.delegate = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
+-(void)resetControls
+{
+    [companyButton setHidden:true];
+    [companyButton setTitle:@"Select Company" forState:UIControlStateNormal];
+    [enterpriseButton setHidden:true];
+    [enterpriseButton setTitle:@"Select Enterprise" forState:UIControlStateNormal];
+    [self determineButtonPositions];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -84,6 +98,16 @@
 -(void)handleEnterpriseViewPickerSegue:(UIStoryboardSegue *)segue
 {
     // stuff
+}
+
+-(void)selectedACompany
+{
+    [self.companyButton setTitle:[Data sharedInstance].user.selectedCompany forState:UIControlStateNormal];
+}
+
+-(void)selectedAEnterprise
+{
+    [self.enterpriseButton setTitle:[Data sharedInstance].user.selectedEnterprise forState:UIControlStateNormal];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
@@ -123,36 +147,21 @@
 // they entered a textfield
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    NSLog(@"editing...%@", @"textFieldDidBeginEditing...");
+    
 }
 
 // they left a textfield by closing the keyboard...
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    //if (userTextField.text == @"steven")
-    //{
-    //NSLog(@"%@", @"Welcome steven");
-    //}
+
 }
 
 -(void)textFieldEdited
 {
-    NSLog(@"editing...%@", @"edited a textfield...");
-    NSLog(@"checking user...%@", @"");
-    NSLog(@"%@", [Data sharedInstance].user.email);
-    
-    // parameter from signinclick = false
-    [self preAuthenticateUser];
     // check the user
+    [self preAuthenticateUser];
 }
 
--(void)resetControls
-{
-    [companyButton setHidden:true];
-    [companyButton setTitle:@"Select Company" forState:UIControlStateNormal];
-    [enterpriseButton setHidden:true];
-    [enterpriseButton setTitle:@"Select Enterprise" forState:UIControlStateNormal];
-}
 
 -(void)loadUser:(User*)userToLoad
 {
@@ -217,7 +226,55 @@
 {
     [self determineObjectVisibility:currentUser :currentUser.companies :companyButton];
     [self determineObjectVisibility:currentUser :currentUser.enterprises :enterpriseButton];
+    [self determineButtonPositions];
 }
+
+// position the buttons on the screen accordingly...
+-(void)determineButtonPositions
+{
+    // drawing information
+    CGFloat const buttonX = 43.0;
+    CGFloat const buttonWidth = 365.0;
+    CGFloat const topButtonY = 170.0;
+    CGFloat const bottomButtonY = 214.0;
+    CGFloat const signinYGap = 63;
+    
+    // refactor...
+    if (companyButton.hidden == false && enterpriseButton.hidden == false)
+    {
+        enterpriseButton.frame = CGRectMake(buttonX, topButtonY,
+            enterpriseButton.frame.size.width, enterpriseButton.frame.size.height);
+        companyButton.frame = CGRectMake(buttonX, bottomButtonY,
+            companyButton.frame.size.width, companyButton.frame.size.height);
+        signinButton.frame = CGRectMake(buttonX, bottomButtonY + signinYGap,
+                                        buttonWidth, signinButton.frame.size.height);
+    }
+    else if (companyButton.hidden == false && enterpriseButton.hidden)
+    {
+        companyButton.frame = CGRectMake(buttonX, topButtonY,
+            companyButton.frame.size.width, companyButton.frame.size.height);
+        enterpriseButton.frame = CGRectMake(buttonX, bottomButtonY,
+            enterpriseButton.frame.size.width, enterpriseButton.frame.size.height);
+        signinButton.frame = CGRectMake(buttonX, topButtonY + signinYGap,
+                                        buttonWidth, signinButton.frame.size.height);
+    }
+    else if(companyButton.hidden && enterpriseButton.hidden == false)
+    {
+        enterpriseButton.frame = CGRectMake(buttonX, topButtonY,
+            enterpriseButton.frame.size.width, enterpriseButton.frame.size.height);
+        companyButton.frame = CGRectMake(buttonX, bottomButtonY,
+            companyButton.frame.size.width, companyButton.frame.size.height);
+        signinButton.frame = CGRectMake(buttonX, topButtonY + signinYGap,
+                                        buttonWidth, signinButton.frame.size.height);
+    }
+    else if(companyButton.hidden && enterpriseButton.hidden)
+    {
+        signinButton.frame = CGRectMake(buttonX, topButtonY,
+                                        buttonWidth, signinButton.frame.size.height);
+    }
+    
+} // determineButtonPositions
+
 
 // we want to control the positions of elements rathering than animating the alpha property...
 -(void)determineObjectVisibility:(User*)currentUser : (NSMutableArray*)objectToCheck : (UIButton*)button
@@ -236,16 +293,6 @@
     {
         button.hidden = true;
     }
-}
-
--(void)selectedACompany
-{
-    [self.companyButton setTitle:[Data sharedInstance].user.selectedCompany forState:UIControlStateNormal];
-}
-
--(void)selectedAEnterprise
-{
-    [self.enterpriseButton setTitle:[Data sharedInstance].user.selectedEnterprise forState:UIControlStateNormal];
 }
 
 @end
