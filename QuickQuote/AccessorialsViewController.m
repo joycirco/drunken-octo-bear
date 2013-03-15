@@ -8,6 +8,7 @@
 
 #import "AccessorialsViewController.h"
 #import "Accessorial.h"
+#import "PersistedAccessorial.h"
 #import "QuoteRequest.h"
 #import "AccessorialType.h"
 #import "AccessorialCell.h"
@@ -58,8 +59,9 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    [self configureView];
-    
+    self.fetchedResultsController = nil;
+
+    [self configureView];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,7 +138,6 @@
 {
     // get accessorial type from data store
     NSError* error;
-    // Test listing all QuoteRequests from the store
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"AccessorialType"
                                               inManagedObjectContext:_managedObjectContext];
@@ -152,20 +153,32 @@
     if (_accessorialType != nil){
         self.title =  [NSString stringWithFormat:@"%@ Accessorials", _accessorialType.accessorialTypeName];
     }
-        
+    
+    int count = self.fetchedResultsController.fetchedObjects.count;
+    
+    //[self.tableView reloadData];
 }
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Accessorial *acc = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    BOOL bIsOn = NO;
     
-   
-    ((AccessorialCell*)cell).label.text = acc.accessorialName;
-    ((AccessorialCell*)cell).accessorial = acc;
+    PersistedAccessorial *pAcc = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    for(Accessorial* a in _quoteRequest.accessorials)
+    {
+        if ([a.accessorialCode isEqualToString:pAcc.accessorialCode])
+        {
+            bIsOn = YES;
+            break;
+        }
+    }
+    
+    ((AccessorialCell*)cell).label.text = pAcc.accessorialName;
+    ((AccessorialCell*)cell).accessorial = pAcc;
     ((AccessorialCell*)cell).delegate = self;
-   
-    [((AccessorialCell*)cell).controlSwitch setOn: (acc.quoteRequest != nil)];
-    
+    [((AccessorialCell*)cell).controlSwitch setOn: bIsOn];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -251,7 +264,7 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Accessorial" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersistedAccessorial" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
@@ -262,7 +275,7 @@
     //[fetchRequest setPredicate:predicate];
 
     // Set predicate to only accessorials for this _accessorialTypeID
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialType];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialTypeID];
     [fetchRequest setPredicate:predicate];
     
     // Edit the sort key as appropriate.
@@ -272,7 +285,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil /*@"Accessorial"*/];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -293,7 +306,7 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView beginUpdates];
+    //[self.tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
@@ -315,34 +328,34 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+    /*
     UITableView *tableView = self.tableView;
     
     switch(type)
     {
-       /* case NSFetchedResultsChangeInsert:
+        case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;*/
+            break;
             
-        case NSFetchedResultsChangeDelete:
-        case NSFetchedResultsChangeInsert:
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
-        /*
+
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;*/
+            break;
     }
+     */
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView endUpdates];
+    //[self.tableView endUpdates];
 }
 
 
@@ -356,17 +369,47 @@
  */
 
 #pragma AccessorialCellDelegate
-- (void)stateChanged:(BOOL)newState : (Accessorial*)accessorial
+- (void)stateChanged:(BOOL)newState : (PersistedAccessorial*)accessorial
 {
+    Accessorial* removeMe = nil;
+    
     if (accessorial != nil)
     {
         // if adding
         if (newState)
-            [_quoteRequest addAccessorialsObject:accessorial];
+        {
+            Accessorial *acc = [NSEntityDescription
+                                insertNewObjectForEntityForName:@"Accessorial"
+                                inManagedObjectContext: _managedObjectContext];
+            
+            acc.accessorialName = accessorial.accessorialName;
+            acc.accessorialCode = accessorial.accessorialCode;
+            acc.accessorialTypeID = accessorial.accessorialTypeID;
+            acc.timeStamp = [NSDate date];
+            [_quoteRequest addAccessorialsObject:acc];
+        }
         else
-            [_quoteRequest removeAccessorialsObject:accessorial];
+        {
+            for (Accessorial* acc in _quoteRequest.accessorials)
+            {
+                if ([acc.accessorialCode isEqualToString:accessorial.accessorialCode])
+                {
+                    removeMe = acc;
+                    break;
+                }
+            }
+        }
+
+        if (removeMe != nil)
+        {
+            [_quoteRequest removeAccessorialsObject:removeMe];
+        }
         
-        
+        NSError *error;
+        if (![_managedObjectContext save:&error])
+        {
+            NSLog(@"Could not save: %@", [error localizedDescription]);
+        }
     }
 }
 

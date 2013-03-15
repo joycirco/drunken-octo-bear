@@ -42,7 +42,7 @@
         <attribute name="weight" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="weightUOM" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Accessorial" inverseName="freightItem" inverseEntity="Accessorial" syncable="YES"/>
+        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Accessorial" inverseName="freightItem" inverseEntity="Accessorial" syncable="YES"/>
         <relationship name="quoteRequest" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteRequest" inverseName="freightItems" inverseEntity="QuoteRequest" syncable="YES"/>
     </entity>
     <entity name="HandlingUnitType" representedClassName="HandlingUnitType" syncable="YES">
@@ -50,13 +50,18 @@
         <attribute name="handlingUnitTypeDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="handlingUnitTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="PersistedAccessorial" representedClassName="PersistedAccessorial" syncable="YES">
+        <attribute name="accessorialCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="accessorialName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="accessorialTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="QuoteRequest" representedClassName="QuoteRequest" syncable="YES">
         <attribute name="destinationPostalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="originPostalCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pickupDateTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="storeLocationCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Accessorial" inverseName="quoteRequest" inverseEntity="Accessorial" syncable="YES"/>
+        <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Accessorial" inverseName="quoteRequest" inverseEntity="Accessorial" syncable="YES"/>
         <relationship name="credentials" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Credentials" inverseName="quoteRequest" inverseEntity="Credentials" syncable="YES"/>
         <relationship name="freightItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FreightItem" inverseName="quoteRequest" inverseEntity="FreightItem" syncable="YES"/>
         <fetchedProperty name="deliveryAccessorials" optional="YES" syncable="YES">
@@ -76,5 +81,6 @@
         <element name="FreightItem" positionX="-198" positionY="324" width="128" height="270"/>
         <element name="HandlingUnitType" positionX="160" positionY="192" width="128" height="90"/>
         <element name="QuoteRequest" positionX="-459" positionY="99" width="128" height="224"/>
+        <element name="PersistedAccessorial" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

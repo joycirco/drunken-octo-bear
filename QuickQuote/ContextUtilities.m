@@ -9,7 +9,7 @@
 #import "ContextUtilities.h"
 #import "AccessorialType.h"
 #import "HandlingUnitType.h"
-#import "Accessorial.h"
+#import "PersistedAccessorial.h"
 
 @interface ContextUtilities()
 {
@@ -48,7 +48,12 @@
     acc3.accessorialTypeID = [NSNumber numberWithInt:3];
     acc3.accessorialTypeName = @"Shipment";
     
+    AccessorialType *acc4 = [NSEntityDescription
+                             insertNewObjectForEntityForName:@"AccessorialType"
+                             inManagedObjectContext:context];
     
+    acc4.accessorialTypeID = [NSNumber numberWithInt:4];
+    acc4.accessorialTypeName = @"Freight";
     
     
     //    1	Pallets (48 x 40)	1	PLT	Pallets (48 x 40)
@@ -115,9 +120,7 @@
                 
                         @"PROTECTFRE", @"ResDel", @"ResPick", @"SORTSEG", @"SS", nil];
 
-    NSArray* accTypes = [[NSArray alloc]initWithObjects: [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:2],
-                                          [NSNumber numberWithInt:1], [NSNumber numberWithInt:3],[NSNumber numberWithInt:2],[NSNumber numberWithInt:3],[NSNumber numberWithInt:3],
-                                          [NSNumber numberWithInt:3],[NSNumber numberWithInt:2],[NSNumber numberWithInt:1],[NSNumber numberWithInt:3],[NSNumber numberWithInt:3],nil];
+    NSArray* accTypes = [[NSArray alloc]initWithObjects: [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:2],[NSNumber numberWithInt:1], [NSNumber numberWithInt:3],[NSNumber numberWithInt:2],[NSNumber numberWithInt:3],[NSNumber numberWithInt:3],[NSNumber numberWithInt:4],[NSNumber numberWithInt:2],[NSNumber numberWithInt:1],[NSNumber numberWithInt:4],[NSNumber numberWithInt:3],nil];
 
     for(int i=0; i < accDesc.count; i++)
     {
@@ -127,15 +130,13 @@
 
 -(void) CreatePersistedAccessorial:(NSString*)accName :(NSString*)accCode :(NSNumber*)accTypeID :(NSManagedObjectContext*)context
 {
-    Accessorial *acc = [NSEntityDescription
-                        insertNewObjectForEntityForName:@"Accessorial"
+    PersistedAccessorial *acc = [NSEntityDescription
+                        insertNewObjectForEntityForName:@"PersistedAccessorial"
                         inManagedObjectContext:context];
     
     acc.accessorialName = accName;
     acc.accessorialCode = accCode;
-    acc.accessorialTypeID = accTypeID;
-    acc.timeStamp = [NSDate date];
-  
+    acc.accessorialTypeID = accTypeID;  
 }
 
 -(void) CreatePersistedHUType:(NSString*)hutDesc :(NSString*)hutCode :(NSNumber*)huType :(NSManagedObjectContext*)context

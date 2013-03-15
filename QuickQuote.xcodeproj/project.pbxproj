@@ -43,6 +43,7 @@
 		FF1D4D0616D5C69C00FA710C /* RateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */; };
 		FF1EE9B916F0139B00A973C0 /* AccessorialType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9B816F0139A00A973C0 /* AccessorialType.m */; };
 		FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9BB16F013D100A973C0 /* Accessorial.m */; };
+		FF25A63A16F22EB000C0ADF9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FF25A63916F22EB000C0ADF9 /* Settings.bundle */; };
 		FF31875316C31BA6001B9D3B /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C216C31BA6001B9D3B /* NSData+Base64.m */; };
 		FF31875416C31BA6001B9D3B /* NSMutableArray+Soap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C416C31BA6001B9D3B /* NSMutableArray+Soap.m */; };
 		FF31875516C31BA6001B9D3B /* Soap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C616C31BA6001B9D3B /* Soap.m */; };
@@ -116,10 +117,6 @@
 		FF31879916C31BA6001B9D3B /* Soap+Prefix.m in Sources */ = {isa = PBXBuildFile; fileRef = FF31875216C31BA6001B9D3B /* Soap+Prefix.m */; };
 		FF4DF28316C09A0300AE954F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */; };
 		FF4DF28516C09A1A00AE954F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28416C09A1A00AE954F /* Security.framework */; };
-		FF4DF36516C09C7800AE954F /* AccessorialQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF34F16C09C7800AE954F /* AccessorialQQ.m */; };
-		FF4DF36616C09C7800AE954F /* CredentialsQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35116C09C7800AE954F /* CredentialsQQ.m */; };
-		FF4DF36716C09C7800AE954F /* FreightItemQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35316C09C7800AE954F /* FreightItemQQ.m */; };
-		FF4DF36816C09C7800AE954F /* QuoteRequestQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35516C09C7800AE954F /* QuoteRequestQQ.m */; };
 		FF4DF36916C09C7800AE954F /* AccessorialPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35816C09C7800AE954F /* AccessorialPricingDetail.m */; };
 		FF4DF36A16C09C7800AE954F /* CWTPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35A16C09C7800AE954F /* CWTPricingDetail.m */; };
 		FF4DF36B16C09C7800AE954F /* FreightPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35C16C09C7800AE954F /* FreightPricingDetail.m */; };
@@ -138,6 +135,7 @@
 		FFC6E38A16ED4BE900D7B026 /* HandlingUnitType.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */; };
 		FFC6E38D16ED4C0A00D7B026 /* FreightItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */; };
 		FFD2458816E2DB050095EBEB /* FreightItemEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD2458716E2DB050095EBEB /* FreightItemEditViewController.m */; };
+		FFD9A47716F14D5A0086E728 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD9A47616F14D5A0086E728 /* PersistedAccessorial.m */; };
 		FFDBC56C16EA494E00255B6B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDBC56B16EA494E00255B6B /* CoreData.framework */; };
 		FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */; };
 		FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865B316EAC9D900222386 /* QuoteRequest.m */; };
@@ -214,6 +212,7 @@
 		FF1EE9B816F0139A00A973C0 /* AccessorialType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccessorialType.m; path = QuickQuote/AccessorialType.m; sourceTree = "<group>"; };
 		FF1EE9BA16F013D100A973C0 /* Accessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Accessorial.h; path = QuickQuote/Accessorial.h; sourceTree = "<group>"; };
 		FF1EE9BB16F013D100A973C0 /* Accessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Accessorial.m; path = QuickQuote/Accessorial.m; sourceTree = "<group>"; };
+		FF25A63916F22EB000C0ADF9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FF3186C116C31BA6001B9D3B /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		FF3186C216C31BA6001B9D3B /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		FF3186C316C31BA6001B9D3B /* NSMutableArray+Soap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Soap.h"; sourceTree = "<group>"; };
@@ -360,14 +359,6 @@
 		FF31875216C31BA6001B9D3B /* Soap+Prefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Soap+Prefix.m"; sourceTree = "<group>"; };
 		FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FF4DF28416C09A1A00AE954F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		FF4DF34E16C09C7800AE954F /* AccessorialQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialQQ.h; sourceTree = "<group>"; };
-		FF4DF34F16C09C7800AE954F /* AccessorialQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessorialQQ.m; sourceTree = "<group>"; };
-		FF4DF35016C09C7800AE954F /* CredentialsQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CredentialsQQ.h; sourceTree = "<group>"; };
-		FF4DF35116C09C7800AE954F /* CredentialsQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CredentialsQQ.m; sourceTree = "<group>"; };
-		FF4DF35216C09C7800AE954F /* FreightItemQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemQQ.h; sourceTree = "<group>"; };
-		FF4DF35316C09C7800AE954F /* FreightItemQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemQQ.m; sourceTree = "<group>"; };
-		FF4DF35416C09C7800AE954F /* QuoteRequestQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoteRequestQQ.h; sourceTree = "<group>"; };
-		FF4DF35516C09C7800AE954F /* QuoteRequestQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoteRequestQQ.m; sourceTree = "<group>"; };
 		FF4DF35716C09C7800AE954F /* AccessorialPricingDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialPricingDetail.h; sourceTree = "<group>"; };
 		FF4DF35816C09C7800AE954F /* AccessorialPricingDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessorialPricingDetail.m; sourceTree = "<group>"; };
 		FF4DF35916C09C7800AE954F /* CWTPricingDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWTPricingDetail.h; sourceTree = "<group>"; };
@@ -404,6 +395,8 @@
 		FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FreightItem.m; path = QuickQuote/FreightItem.m; sourceTree = "<group>"; };
 		FFD2458616E2DB050095EBEB /* FreightItemEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemEditViewController.h; sourceTree = "<group>"; };
 		FFD2458716E2DB050095EBEB /* FreightItemEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemEditViewController.m; sourceTree = "<group>"; };
+		FFD9A47516F14D5A0086E728 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistedAccessorial.h; sourceTree = "<group>"; };
+		FFD9A47616F14D5A0086E728 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistedAccessorial.m; sourceTree = "<group>"; };
 		FFDBC56B16EA494E00255B6B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FFDBC57116EA529500255B6B /* QuoteRequestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuoteRequestModel.xcdatamodel; sourceTree = "<group>"; };
 		FFE865B216EAC9D900222386 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
@@ -444,6 +437,7 @@
 		A421475216B2306A003FDF9C = {
 			isa = PBXGroup;
 			children = (
+				FF25A63916F22EB000C0ADF9 /* Settings.bundle */,
 				FFE9B3C016EA58520049B24C /* Core Data */,
 				FF41F5DA16CB19C30027A6FF /* Resources */,
 				FF3186BF16C31BA6001B9D3B /* RateService */,
@@ -513,8 +507,8 @@
 				A400437C16BF41A200D25DF6 /* QuickQuoteLoginViewController.m */,
 				FF69717A16CB3689008788B0 /* QuickQuoteResultsViewController.h */,
 				FF69717B16CB3689008788B0 /* QuickQuoteResultsViewController.m */,
-				FF1D4D0416D5C69C00FA710C /* RateDetailViewController.h */,
 				FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */,
+				FF1D4D0416D5C69C00FA710C /* RateDetailViewController.h */,
 				FFF3EB4D16E290FA007F9E92 /* FreightItemsViewController.h */,
 				FFF3EB4E16E290FA007F9E92 /* FreightItemsViewController.m */,
 				FFD2458616E2DB050095EBEB /* FreightItemEditViewController.h */,
@@ -758,26 +752,10 @@
 		FF4DF34C16C09C7800AE954F /* QQModels */ = {
 			isa = PBXGroup;
 			children = (
-				FF4DF34D16C09C7800AE954F /* QQRequestModels */,
 				FF4DF35616C09C7800AE954F /* QQResponseModels */,
 			);
 			name = QQModels;
 			path = QuickQuote/QQModels;
-			sourceTree = "<group>";
-		};
-		FF4DF34D16C09C7800AE954F /* QQRequestModels */ = {
-			isa = PBXGroup;
-			children = (
-				FF4DF34E16C09C7800AE954F /* AccessorialQQ.h */,
-				FF4DF34F16C09C7800AE954F /* AccessorialQQ.m */,
-				FF4DF35016C09C7800AE954F /* CredentialsQQ.h */,
-				FF4DF35116C09C7800AE954F /* CredentialsQQ.m */,
-				FF4DF35216C09C7800AE954F /* FreightItemQQ.h */,
-				FF4DF35316C09C7800AE954F /* FreightItemQQ.m */,
-				FF4DF35416C09C7800AE954F /* QuoteRequestQQ.h */,
-				FF4DF35516C09C7800AE954F /* QuoteRequestQQ.m */,
-			);
-			path = QQRequestModels;
 			sourceTree = "<group>";
 		};
 		FF4DF35616C09C7800AE954F /* QQResponseModels */ = {
@@ -815,6 +793,8 @@
 				FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */,
 				FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */,
 				FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */,
+				FFD9A47516F14D5A0086E728 /* PersistedAccessorial.h */,
+				FFD9A47616F14D5A0086E728 /* PersistedAccessorial.m */,
 				FF1EE9BA16F013D100A973C0 /* Accessorial.h */,
 				FF1EE9BB16F013D100A973C0 /* Accessorial.m */,
 				FF1EE9B716F0139A00A973C0 /* AccessorialType.h */,
@@ -914,6 +894,7 @@
 				A47A5FB616B256E900A533A9 /* SplashGradient2.png in Resources */,
 				A4FE5A6D16B8EF88009A3AEC /* Icon_Ipad_retina.png in Resources */,
 				A4FE5A6F16B8EFE7009A3AEC /* Icon_Ipad.png in Resources */,
+				FF25A63A16F22EB000C0ADF9 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -954,10 +935,6 @@
 				A421478116B2306A003FDF9C /* QuickQuoteDetailViewController.m in Sources */,
 				A42147A516B243F5003FDF9C /* LoginSeague.m in Sources */,
 				A400437D16BF41A200D25DF6 /* QuickQuoteLoginViewController.m in Sources */,
-				FF4DF36516C09C7800AE954F /* AccessorialQQ.m in Sources */,
-				FF4DF36616C09C7800AE954F /* CredentialsQQ.m in Sources */,
-				FF4DF36716C09C7800AE954F /* FreightItemQQ.m in Sources */,
-				FF4DF36816C09C7800AE954F /* QuoteRequestQQ.m in Sources */,
 				FF4DF36916C09C7800AE954F /* AccessorialPricingDetail.m in Sources */,
 				FF4DF36A16C09C7800AE954F /* CWTPricingDetail.m in Sources */,
 				FF4DF36B16C09C7800AE954F /* FreightPricingDetail.m in Sources */,
@@ -1064,6 +1041,7 @@
 				A477082616EEC4C200F67473 /* User.m in Sources */,
 				FF1EE9B916F0139B00A973C0 /* AccessorialType.m in Sources */,
 				FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */,
+				FFD9A47716F14D5A0086E728 /* PersistedAccessorial.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

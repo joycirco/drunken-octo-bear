@@ -18,6 +18,9 @@
     NSNumberFormatter *decimalFormatter;
     NSNumberFormatter *noStyleFormatter;
     int _selectedIndex;
+    NSIndexPath* editIndex;
+    
+    BOOL isInsert;
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -87,6 +90,13 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //NSArray *tempArray2= [[NSArray alloc] initWithObjects:self.btnAddFreight,self.editButtonItem,nil];
+    //self.navigationItem.rightBarButtonItems=tempArray2;
+
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.editButtonItem.title = @"Delete";
+    
+    self.navigationItem.rightBarButtonItem = self.btnAddFreight;
 }
 
 - (void)viewDidUnload
@@ -229,11 +239,7 @@
 
 - (void)configureView
 {
-    // Update the user interface for the detail item.
-    
-    //if (self.detailItem) {
-    //    self.detailDescriptionLabel.text = [self.detailItem description];
-    //}
+    self.editButtonItem.title = @"Delete";
 }
 
 - (FreightItem*)getSelectedFreight
@@ -283,7 +289,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.fetchedResultsController.fetchedObjects.count;
+    
+    int nRows = self.fetchedResultsController.fetchedObjects.count;
+    
+    self.editButtonItem.enabled = (nRows > 0);
+    
+    return nRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -310,20 +321,58 @@
     return YES;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(isInsert)
+    {
+        isInsert = NO;
+        return UITableViewCellEditingStyleInsert;
+    }
+    else
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    /*else if (editingStyle == UITableViewCellEditingStyleInsert)
-    {
+        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        
+        if (freight != nil)
+        {
+            [_quoteRequest removeFreightItemsObject:freight];
+        }
+        
+        // uncomment to have a confirmation alert
+        /*
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Delete Item?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+        editIndex = indexPath;
+        alert.delegate = self;
+        [alert show];*/
+    }
+    //else if (editingStyle == UITableViewCellEditingStyleInsert)
+    //{
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    } */
+    //}
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+    if (buttonIndex != [alertView cancelButtonIndex])
+    {
+        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        
+        if (freight != nil)
+        {
+            [_quoteRequest removeFreightItemsObject:freight];
+        }
+    }
+}
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
