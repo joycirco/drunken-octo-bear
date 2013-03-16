@@ -164,7 +164,8 @@ NSString *firstLogin = @"yes"; // just for now
         _progress_ind.center = self.view.center;
         //_subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
         //[_subView addSubview:_progress_ind];
-        [self.view.superview addSubview:_subView];
+        //[self.view.superview addSubview:_subView];
+        [self.view.superview addSubview:_progress_ind];
         _progress_ind.center = _subView.center;
     }
 
