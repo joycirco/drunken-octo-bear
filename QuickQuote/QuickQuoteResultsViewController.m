@@ -10,6 +10,7 @@
 #import "RSPRateResponsePrivileged.h"
 #import "RateResponse.h"
 #import "RateDetailViewController.h"
+#import "RateResultCell.h"
 
 @interface QuickQuoteResultsViewController ()
 {
@@ -192,13 +193,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"RateCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    RateResultCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
     if (cell != nil && _rates != nil && _rates.count > 0)
     {
-        RateResponse *object = _rates[indexPath.row];
-        cell.textLabel.text = object.carrierName;
-        cell.detailTextLabel.text = [currencyFormatter stringFromNumber: object.carrierTotalCharge];
+        RateResponse *rate = _rates[indexPath.row];
+        
+        cell.carrierName.text = rate.carrierName;
+        cell.transitDays.text = [NSString stringWithFormat:@"%d Days", rate.transitDays];
+        cell.totalCarrierCharges.text = [currencyFormatter stringFromNumber: rate.carrierTotalCharge];
+        cell.transitMode.text = rate.mode;
+        cell.serviceMode.text = rate.serviceMode;
+        cell.distance.text = [NSString stringWithFormat:@"%d Miles",rate.distance];
     }
     
     return cell;

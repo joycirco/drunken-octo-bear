@@ -37,6 +37,8 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 @property (strong, nonatomic) IBOutlet UIButton *enterpriseButton;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
 
+@property (strong, nonatomic) NSManagedObjectContext* managedObjectContext;
+
 // Interface Builder actions are used for custom click events
 - (IBAction)signInAction:(id)sender;
 - (IBAction)textFieldEdited;

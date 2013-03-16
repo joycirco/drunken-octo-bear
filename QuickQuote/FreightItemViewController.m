@@ -136,6 +136,7 @@
     self.width.delegate = self;
     self.height.delegate = self;
     self.freightDescription.delegate = self;
+    self.nmfc.delegate = self;
 
     if (! self.editing)
     {

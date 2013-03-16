@@ -16,6 +16,7 @@
 #import "Credentials.h"
 #import "FreightItem.h"
 #import "Accessorial.h"
+#import "HandlingUnitType.h"
 
 #import "DatePopoverViewController.h"
 
@@ -31,6 +32,7 @@
     UITableViewCell* linkedDateCell;
     
     UIActivityIndicatorView* _progress_ind;
+    NSMutableDictionary* huMap;
 }
 
 - (void)configureView;
@@ -72,6 +74,22 @@
     // get quote request from data store (1st one for now)
     _quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
 
+    // load map for handling units
+    huMap = [[NSMutableDictionary alloc]init];
+    // get accessorial type from data store
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
+                                              inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* hu = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for(HandlingUnitType* h in hu)
+    {
+        [huMap setObject:h forKey:h.handlingUnitTypeID];
+    }
+    
     [self configureView];
 }
 
@@ -131,9 +149,19 @@
         {
             NSNumberFormatter *numFormat = [[NSNumberFormatter alloc] init];
             [numFormat setNumberStyle:NSNumberFormatterNoStyle];
-            self.cellFreightSummary.detailTextLabel.text = [NSString stringWithFormat:@"%d", _quoteRequest.freightItems.count];
+            self.cellFreightSummary.textLabel.text = [NSString stringWithFormat:@"# Items: %d", _quoteRequest.freightItems.count];
             
             self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
+            
+            float totWeight = 0;
+            NSString* uomWeight = @"";
+            for (FreightItem* f in _quoteRequest.freightItems)
+            {
+                totWeight += [f.weight floatValue];
+                uomWeight = f.weightUOM;
+            }
+            NSDecimalNumber* w = [[NSDecimalNumber alloc] initWithFloat:totWeight];
+            self.cellFreightSummary.detailTextLabel.text = [NSString stringWithFormat:@"Weight: %@%@", [numFormat stringFromNumber:w], uomWeight];
         }
     
         int accPickup = 0;
@@ -478,6 +506,7 @@
     
     // keep track if any freight is stackable
     BOOL isStackable = NO;
+    int palletCount = 0;
     // iterate through the freight items
     if (_quoteRequest.freightItems != nil)
     {
@@ -492,15 +521,34 @@
             f.width = fqr.width;
             f.height = fqr.height;
             
-            if (fqr.isStackable)
+            if ([fqr.isStackable boolValue])
                 isStackable = YES;
             
             [reqRRP.reqFreight addObject: f];
+            
+            
+            //freight is pallet ?
+            HandlingUnitType* hu = [huMap objectForKey:fqr.handlingUnitTypeID];
+            if ((hu != nil) && ([hu.handlingUnitTypeCode isEqualToString:@"PLT"] || [hu.handlingUnitTypeCode isEqualToString:@"SKD"]))
+            {
+                // add pallet position
+                RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
+                pp.length = [fqr.weight doubleValue];
+                pp.width = [fqr.width doubleValue];
+                pp.height = [fqr.height doubleValue];
+                pp.weight = [fqr.weight doubleValue];
+                pp.positionCount = [fqr.handlingUnits integerValue];
+                palletCount += [fqr.handlingUnits integerValue];
+                [reqRRP.reqPalletPositions addObject: pp];
+            }
         }
     }
     
     // set stackable
     reqRRP.reqFreightStackable = isStackable;
+    
+    // set pallet count
+    reqRRP.reqPalletCount = palletCount;
     
     // iterate through accessorials
     if (_quoteRequest.accessorials != nil)
@@ -512,18 +560,6 @@
             [reqRRP.reqAccessorials addObject:a];
         }
     }
-    
-    
-    /*
-    // add pallet position
-    reqRRP.reqPalletCount = f.units;
-    RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
-    pp.length = 10;
-    pp.height = 10;
-    pp.width = 10;
-    pp.weight = [f.weight doubleValue];
-    pp.positionCount = f.units;
-    [reqRRP.reqPalletPositions addObject: pp];*/
     
     reqRRP.reqViewSpecificCostContracts = true;
     reqRRP.reqViewGeneralCostContracts = true;

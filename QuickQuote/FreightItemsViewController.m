@@ -111,7 +111,7 @@
     
     for(HandlingUnitType* h in hu)
     {
-        [_huMap setObject:h.handlingUnitTypeDescription forKey:h.handlingUnitTypeID];
+        [_huMap setObject:h forKey:h.handlingUnitTypeID];
     }
 }
 
@@ -294,39 +294,39 @@
     label = [[NSMutableString alloc]init];
     detail = [[NSMutableString alloc]init];
     
-    // get handling unit description from dictionary
-    NSString* huName = nil;
+    // get handling unit from dictionary
+    HandlingUnitType* hu = nil;
     if (_huMap != nil && _huMap.count > 0)
     {
-        huName = [_huMap objectForKey:freight.handlingUnitTypeID];
+        hu = [_huMap objectForKey:freight.handlingUnitTypeID];
     }
     
     [label appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
-    if (huName != nil)
-        [label appendFormat:@" %@",huName];
+    if (hu != nil)
+        [label appendFormat:@" %@",hu.handlingUnitTypeDescription];
 
     if (freight.length != nil && [freight.length doubleValue] > 0)
-        [label appendFormat:@" L-%@",[noStyleFormatter stringFromNumber:freight.length]];
+        [label appendFormat:@" L:%@",[noStyleFormatter stringFromNumber:freight.length]];
 
     if (freight.width != nil && [freight.width doubleValue] > 0)
-        [label appendFormat:@" W-%@",[noStyleFormatter stringFromNumber:freight.width]];
+        [label appendFormat:@" W:%@",[noStyleFormatter stringFromNumber:freight.width]];
 
     if (freight.height != nil && [freight.height doubleValue] > 0)
-        [label appendFormat:@" H-%@",[noStyleFormatter stringFromNumber:freight.height]];
+        [label appendFormat:@" H:%@",[noStyleFormatter stringFromNumber:freight.height]];
     
     [label appendFormat:@", %@",[decimalFormatter stringFromNumber:freight.weight]];
     [label appendString:freight.weightUOM];
-    [label appendString:@", Class-"];
+    [label appendString:@", Class:"];
     [label appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
 
     if ([freight.isStackable boolValue])
         [detail appendString:@"Stackable"];
     
     if (freight.nmfc != nil && freight.nmfc.length > 0)
-        [detail appendFormat:@" NMFC-%@",freight.nmfc];
+        [detail appendFormat:@" NMFC:%@",freight.nmfc];
     
     if (freight.freightDescription != nil && freight.freightDescription.length > 0)
-        [detail appendFormat:@", Description- %@", freight.freightDescription];
+        [detail appendFormat:@", Description:%@", freight.freightDescription];
 
     cell.textLabel.text = label;
     cell.detailTextLabel.text = detail;

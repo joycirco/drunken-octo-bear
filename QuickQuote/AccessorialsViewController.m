@@ -150,11 +150,12 @@
     _accessorialType = [[_managedObjectContext executeFetchRequest:fetchRequest error:&error] objectAtIndex:0];
     
     // set view title based on accessorial type
-    if (_accessorialType != nil){
+    if (_accessorialType != nil)
+    {
         self.title =  [NSString stringWithFormat:@"%@ Accessorials", _accessorialType.accessorialTypeName];
     }
     
-    int count = self.fetchedResultsController.fetchedObjects.count;
+    //int count = self.fetchedResultsController.fetchedObjects.count;
     
     //[self.tableView reloadData];
 }

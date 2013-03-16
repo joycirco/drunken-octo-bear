@@ -13,10 +13,8 @@
 @interface QuickQuoteDetailViewController : UIViewController <PresentedLoginViewControllerDelegate,
     SubstitutableDetailViewController>
 
-@property (strong, nonatomic) id detailItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBtn;
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *centerMarker;
 @property (strong, nonatomic) UIViewController *loginViewController;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
