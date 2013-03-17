@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UITextView *freightDescription;
 @property (weak, nonatomic) IBOutlet UISwitch *stackable;
 @property (weak, nonatomic) IBOutlet UITextField *nmfc;
+
+@property (weak, nonatomic) IBOutlet UILabel *redLabel;
+
 - (IBAction)stackableChanged:(id)sender;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

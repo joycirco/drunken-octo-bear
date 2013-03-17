@@ -139,7 +139,6 @@
 		FFC6E38716ED40DA00D7B026 /* PickerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38616ED40DA00D7B026 /* PickerItem.m */; };
 		FFC6E38A16ED4BE900D7B026 /* HandlingUnitType.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */; };
 		FFC6E38D16ED4C0A00D7B026 /* FreightItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */; };
-		FFD2458816E2DB050095EBEB /* FreightItemEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFD2458716E2DB050095EBEB /* FreightItemEditViewController.m */; };
 		FFDBC56C16EA494E00255B6B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDBC56B16EA494E00255B6B /* CoreData.framework */; };
 		FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */; };
 		FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865B316EAC9D900222386 /* QuoteRequest.m */; };
@@ -405,8 +404,6 @@
 		FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HandlingUnitType.m; path = QuickQuote/HandlingUnitType.m; sourceTree = "<group>"; };
 		FFC6E38B16ED4C0A00D7B026 /* FreightItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreightItem.h; path = QuickQuote/FreightItem.h; sourceTree = "<group>"; };
 		FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FreightItem.m; path = QuickQuote/FreightItem.m; sourceTree = "<group>"; };
-		FFD2458616E2DB050095EBEB /* FreightItemEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemEditViewController.h; sourceTree = "<group>"; };
-		FFD2458716E2DB050095EBEB /* FreightItemEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemEditViewController.m; sourceTree = "<group>"; };
 		FFDBC56B16EA494E00255B6B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FFDBC57116EA529500255B6B /* QuoteRequestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuoteRequestModel.xcdatamodel; sourceTree = "<group>"; };
 		FFE865B216EAC9D900222386 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
@@ -525,8 +522,6 @@
 				FF1D4D0416D5C69C00FA710C /* RateDetailViewController.h */,
 				FFF3EB4D16E290FA007F9E92 /* FreightItemsViewController.h */,
 				FFF3EB4E16E290FA007F9E92 /* FreightItemsViewController.m */,
-				FFD2458616E2DB050095EBEB /* FreightItemEditViewController.h */,
-				FFD2458716E2DB050095EBEB /* FreightItemEditViewController.m */,
 				FF77866F16EBA4C200CAAF81 /* FreightItemViewController.h */,
 				FF77867016EBA4C200CAAF81 /* FreightItemViewController.m */,
 				FF0D2A5516ED2FC6006B547F /* PickerPopoverViewController.h */,
@@ -1039,7 +1034,6 @@
 				FF916D9E16D981CB00131DB8 /* ArrayOfFreightPricingDetail.m in Sources */,
 				FF916DA116D981F100131DB8 /* ArrayOfRateResponse.m in Sources */,
 				FFF3EB4F16E290FA007F9E92 /* FreightItemsViewController.m in Sources */,
-				FFD2458816E2DB050095EBEB /* FreightItemEditViewController.m in Sources */,
 				FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */,
 				FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */,
 				FFE865BD16EAC9DA00222386 /* Credentials.m in Sources */,

@@ -67,6 +67,7 @@ NSString *firstLogin = @"yes"; // just for now
     UIImage *image = [UIImage imageNamed: @"eShipping_Logo.png"];
     
     self.imageView.contentMode = UIViewContentModeCenter;
+    self.imageView.alpha = .6;
     [self.imageView setImage:image];
     
     
@@ -158,15 +159,17 @@ NSString *firstLogin = @"yes"; // just for now
 
 - (void)startActivityIndicator
 {
-    if (_progress_ind == nil && _subView == nil)
+    //if (_progress_ind == nil && _subView == nil)
+    if (_progress_ind == nil)
     {
         _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _progress_ind.center = self.view.center;
+        _progress_ind.alpha = 1.0;
         //_subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
         //[_subView addSubview:_progress_ind];
         //[self.view.superview addSubview:_subView];
         [self.view.superview addSubview:_progress_ind];
-        _progress_ind.center = _subView.center;
+        //_progress_ind.center = _subView.center;
     }
 
     [_progress_ind startAnimating];

@@ -36,6 +36,7 @@
 }
 
 - (void)configureView;
+- (BOOL)canQuote;
 
 @end
 
@@ -151,7 +152,7 @@
             [numFormat setNumberStyle:NSNumberFormatterNoStyle];
             self.cellFreightSummary.textLabel.text = [NSString stringWithFormat:@"# Items: %d", _quoteRequest.freightItems.count];
             
-            self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
+            //self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
             
             float totWeight = 0;
             NSString* uomWeight = @"";
@@ -184,6 +185,8 @@
         self.cellDeliveryAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accDeliver];
         self.cellShipmentAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accShip];
     }
+    
+    self.btnRate.enabled = [self canQuote];
 }
 
 
@@ -372,6 +375,43 @@
     return NO;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    //NSLog([NSString stringWithFormat:@"textField ended editing... value is:%@",textField.text]);
+    if (textField == self.originZip)
+        _quoteRequest.originPostalCode = self.originZip.text;
+    
+    if (textField == self.destinationZip)
+        _quoteRequest.destinationPostalCode = self.destinationZip.text;
+    
+    if (textField == self.storeLocationCode)
+        _quoteRequest.storeLocationCode = self.storeLocationCode.text;
+    
+    [self configureView];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // zip codes
+    if (textField == self.originZip || textField == self.destinationZip)
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString *expression =@"^([a-zA-Z0-9-]{0,10})?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+    
+    return YES;
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
    /* if(textField == self.storeLocationCode)
@@ -390,6 +430,7 @@
     } */
     return YES;
 }
+
 
 - (void)scrollTheView:(BOOL) moveUp
 {
@@ -464,6 +505,50 @@
 }
 */
 
+-(BOOL)canQuote
+{
+    BOOL bRet = NO;
+    
+    bRet = [self isValid];
+    
+    return bRet;
+}
+
+-(BOOL)isValid
+{
+    if (_quoteRequest == nil)
+        return NO;
+    
+    if (_quoteRequest != nil && _quoteRequest.freightItems.count == 0)
+        return NO;
+    
+    //if (! [self stringIsValid:self.originZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
+    //    return NO;
+
+    //if (! [self stringIsValid:self.destinationZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
+    //    return NO;
+    
+    return YES;
+}
+
+-(BOOL)stringIsValid:(NSString*)stringToValidate :(NSString*)regExpression
+{
+    NSRange range = [stringToValidate rangeOfString:stringToValidate];
+
+    NSString *newString = [stringToValidate stringByReplacingCharactersInRange:range withString:stringToValidate];
+   
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regExpression
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:nil];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                        options:0
+                                                          range:NSMakeRange(0, [newString length])];
+    if (numberOfMatches == 0)
+        return NO;
+
+    return YES;
+}
+
 #pragma mark - QuoickQuoteMasterView Actions
 
 - (IBAction)saveAction:(id)sender
@@ -476,100 +561,111 @@
 
 }
 
-- (IBAction)rateAction:(id)sender {
-    
-    [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
-    
-	// Create the service
-	RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];
-	service.logging = YES;
-    
-    service.username = _quoteRequest.credentials.loginName;
-	service.password = _quoteRequest.credentials.password;
-    
-    RSPRateRequestPrivileged* reqRRP = [[RSPRateRequestPrivileged alloc] init];
-    reqRRP.reqLoginName = _quoteRequest.credentials.loginName;
-    reqRRP.reqLoginPassword = _quoteRequest.credentials.password;
-    reqRRP.reqAccountId = _quoteRequest.credentials.accountId;
-    if (self.storeLocationCode.text != nil)
-        reqRRP.reqRoutingCustomerCode =  _quoteRequest.storeLocationCode = self.storeLocationCode.text;
-    reqRRP.reqLoginToken = _quoteRequest.credentials.token;
-    
-    reqRRP.reqOriginZip = _quoteRequest.originPostalCode = self.originZip.text;
-    reqRRP.reqDestZip = _quoteRequest.destinationPostalCode = self.destinationZip.text;
-    
-    reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
-    
-    int daysToAdd = 3;
-    NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
-    reqRRP.reqDropDate = newDate1;
-    
-    // keep track if any freight is stackable
-    BOOL isStackable = NO;
-    int palletCount = 0;
-    // iterate through the freight items
-    if (_quoteRequest.freightItems != nil)
+- (IBAction)rateAction:(id)sender
+{
+
+    if ([self canQuote])
     {
-        for(FreightItem* fqr in _quoteRequest.freightItems)
+    
+        [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
+        
+        // Create the service
+        RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];
+        service.logging = YES;
+        
+        service.username = _quoteRequest.credentials.loginName;
+        service.password = _quoteRequest.credentials.password;
+        
+        RSPRateRequestPrivileged* reqRRP = [[RSPRateRequestPrivileged alloc] init];
+        reqRRP.reqLoginName = _quoteRequest.credentials.loginName;
+        reqRRP.reqLoginPassword = _quoteRequest.credentials.password;
+        reqRRP.reqAccountId = _quoteRequest.credentials.accountId;
+        if (self.storeLocationCode.text != nil)
+            reqRRP.reqRoutingCustomerCode =  _quoteRequest.storeLocationCode; // = self.storeLocationCode.text;
+        reqRRP.reqLoginToken = _quoteRequest.credentials.token;
+        
+        reqRRP.reqOriginZip = _quoteRequest.originPostalCode; // = self.originZip.text;
+        reqRRP.reqDestZip = _quoteRequest.destinationPostalCode; // = self.destinationZip.text;
+        
+        reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
+        
+        int daysToAdd = 3;
+        NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
+        reqRRP.reqDropDate = newDate1;
+        
+        // keep track if any freight is stackable
+        BOOL isStackable = NO;
+        int palletCount = 0;
+        // iterate through the freight items
+        if (_quoteRequest.freightItems != nil)
         {
-            //[fqr performSelector];
-            RSPFreight* f = [[RSPFreight alloc] init];
-            f.freightClass = fqr.freightClass;
-            f.weight = fqr.weight;
-            f.units = [fqr.handlingUnits intValue];
-            f.length = fqr.length;
-            f.width = fqr.width;
-            f.height = fqr.height;
-            
-            if ([fqr.isStackable boolValue])
-                isStackable = YES;
-            
-            [reqRRP.reqFreight addObject: f];
-            
-            
-            //freight is pallet ?
-            HandlingUnitType* hu = [huMap objectForKey:fqr.handlingUnitTypeID];
-            if ((hu != nil) && ([hu.handlingUnitTypeCode isEqualToString:@"PLT"] || [hu.handlingUnitTypeCode isEqualToString:@"SKD"]))
+            for(FreightItem* fqr in _quoteRequest.freightItems)
             {
-                // add pallet position
-                RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
-                pp.length = [fqr.weight doubleValue];
-                pp.width = [fqr.width doubleValue];
-                pp.height = [fqr.height doubleValue];
-                pp.weight = [fqr.weight doubleValue];
-                pp.positionCount = [fqr.handlingUnits integerValue];
-                palletCount += [fqr.handlingUnits integerValue];
-                [reqRRP.reqPalletPositions addObject: pp];
+                //[fqr performSelector];
+                RSPFreight* f = [[RSPFreight alloc] init];
+                f.freightClass = fqr.freightClass;
+                f.weight = fqr.weight;
+                f.units = [fqr.handlingUnits intValue];
+                if ([fqr.length doubleValue] > 0)
+                    f.length = fqr.length;
+                if ([fqr.width doubleValue] > 0)
+                    f.width = fqr.width;
+                if ([fqr.height doubleValue] > 0)
+                    f.height = fqr.height;
+                
+                if ([fqr.isStackable boolValue])
+                    isStackable = YES;
+                
+                [reqRRP.reqFreight addObject: f];
+                
+                
+                //freight is pallet ?
+                HandlingUnitType* hu = [huMap objectForKey:fqr.handlingUnitTypeID];
+                if ((hu != nil) && ([hu.handlingUnitTypeCode isEqualToString:@"PLT"] || [hu.handlingUnitTypeCode isEqualToString:@"SKD"]))
+                {
+                    // add pallet position
+                    RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
+                    if ([fqr.length doubleValue] > 0)
+                        pp.length = [fqr.length doubleValue];
+                    if ([fqr.width doubleValue] > 0)
+                        pp.width = [fqr.width doubleValue];
+                    if ([fqr.height doubleValue] > 0)
+                        pp.height = [fqr.height doubleValue];
+                    pp.weight = [fqr.weight doubleValue];
+                    pp.positionCount = [fqr.handlingUnits integerValue];
+                    palletCount += [fqr.handlingUnits integerValue];
+                    [reqRRP.reqPalletPositions addObject: pp];
+                }
             }
         }
-    }
-    
-    // set stackable
-    reqRRP.reqFreightStackable = isStackable;
-    
-    // set pallet count
-    reqRRP.reqPalletCount = palletCount;
-    
-    // iterate through accessorials
-    if (_quoteRequest.accessorials != nil)
-    {
-        for(Accessorial* acc in _quoteRequest.accessorials)
+        
+        // set stackable
+        reqRRP.reqFreightStackable = isStackable;
+        
+        // set pallet count
+        reqRRP.reqPalletCount = palletCount;
+        
+        // iterate through accessorials
+        if (_quoteRequest.accessorials != nil)
         {
-            RSPAccessorial* a = [[RSPAccessorial alloc]init];
-            a.accCode = acc.accessorialCode;
-            [reqRRP.reqAccessorials addObject:a];
+            for(Accessorial* acc in _quoteRequest.accessorials)
+            {
+                RSPAccessorial* a = [[RSPAccessorial alloc]init];
+                a.accCode = acc.accessorialCode;
+                [reqRRP.reqAccessorials addObject:a];
+            }
         }
+        
+        reqRRP.reqViewSpecificCostContracts = true;
+        reqRRP.reqViewGeneralCostContracts = true;
+        reqRRP.reqViewGeneralBillingContracts = true;
+        reqRRP.reqViewSpecificBillingContracts = true;
+        reqRRP.reqViewWebCostContracts = true;
+        reqRRP.reqViewWebBillingContracts = true;
+        reqRRP.reqViewRatingCost = 0;
+        
+        [service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
     }
-    
-    reqRRP.reqViewSpecificCostContracts = true;
-    reqRRP.reqViewGeneralCostContracts = true;
-    reqRRP.reqViewGeneralBillingContracts = true;
-    reqRRP.reqViewSpecificBillingContracts = true;
-    reqRRP.reqViewWebCostContracts = true;
-    reqRRP.reqViewWebBillingContracts = true;
-    reqRRP.reqViewRatingCost = 0;
-    
-	[service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
 }
 
 // Handle the response from RateShipment.
@@ -589,6 +685,7 @@
 	// Handle faults
 	if([value isKindOfClass:[SoapFault class]]) {
 		NSLog(@"%@", value);
+        [self HandleSoapFault:value];
 		return;
 	}
         
@@ -611,6 +708,15 @@
 
     NSString *errorString = [error localizedDescription];
     NSString *errorTitle = [NSString stringWithFormat:@"Error (%d)", error.code];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+-(void) HandleSoapFault:(SoapFault*) error{
+    
+    NSString *errorString = error.description;
+    NSString *errorTitle = [NSString stringWithFormat:@"SOAP Error (%@)", error.faultCode];
     UIAlertView *errorView =
     [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
     [errorView show];

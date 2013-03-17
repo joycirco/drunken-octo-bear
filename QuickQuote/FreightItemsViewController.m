@@ -206,15 +206,6 @@
         [destinationView setEditing:true animated:true];
     }
 
-    if ([[segue identifier] isEqualToString:@"freightItemEdit"])
-    {
-        FreightItemEditViewController* destinationView = [segue destinationViewController];
-        destinationView.managedObjectContext = self.managedObjectContext;
-        destinationView.quoteRequest = _quoteRequest;
-        destinationView.freightItem = [self getSelectedFreight];
-        destinationView.isAdding = false;
-    }
-
     if ([[segue identifier] isEqualToString:@"freightItemView"])
     {
         FreightItemViewController* destinationView = [segue destinationViewController];
@@ -224,38 +215,9 @@
     }
 }
 
-- (void)freightEditViewControllerDidFinish:(FreightItemEditViewController *)controller
-{
-    [self.detailPopoverController dismissPopoverAnimated:YES];
-    self.detailPopoverController = nil;
-}
-
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     self.detailPopoverController = nil;
-}
-
--(IBAction)cancelledFreightItemEdit:(UIStoryboardSegue *)segue
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(IBAction)saveFreightItemEdit:(UIStoryboardSegue *)segue
-{
-    if ([[segue identifier] isEqualToString:@"saveFreightEdit"])
-    {
-        FreightItemEditViewController* editController = [segue sourceViewController];
-        // to do validate
-        if (editController.freightItem)
-        {
-            if (editController.isAdding)
-            {
-                [_quoteRequest addFreightItemsObject:editController.freightItem];
-            }
-        }
-        
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
 }
 
 #pragma mark - Table view data source

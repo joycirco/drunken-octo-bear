@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuickQuoteMasterViewController.h"
-#import "FreightItemEditViewController.h"
 
 @class FreightItem;
 @class QuoteRequest;
 
 @interface FreightItemsViewController : UITableViewController
                                     <UITableViewDelegate, SubstitutableDetailViewController,
-                                    FreightItemEditViewControllerDelegate, NSFetchedResultsControllerDelegate>
+                                     NSFetchedResultsControllerDelegate>
 {
 
 }

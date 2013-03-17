@@ -23,7 +23,7 @@
 
 - (void)awakeFromNib
 {
-    self.contentSizeForViewInPopover = CGSizeMake(350.0, 680.0);
+    self.contentSizeForViewInPopover = CGSizeMake(350.0, 620.0);
     [super awakeFromNib];
 }
 
