@@ -27,9 +27,6 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 @property (strong, nonatomic) UIPopoverController *companyPickerViewController;
 @property (strong, nonatomic) UIPopoverController *enterprisePickerViewController;
 
-@property (strong, nonatomic) UIPopoverController *companyPickerViewController;
-@property (strong, nonatomic) UIPopoverController *enterprisePickerViewController;
-
 @property (weak, nonatomic) IBOutlet UILabel *redLabel;
 @property (weak, nonatomic) IBOutlet UILabel *greenLabel;
 

@@ -94,7 +94,7 @@
                     [txt appendFormat:@"Toll Free: %@",t.termTollFree];
                 self.phoneFaxDest.text = txt;
                 
-                self.contactEmailDest.text = t.termEmail;
+                self.contactEmailDest.text = [NSString stringWithFormat:@"Email: %@",t.termEmail];
                 self.contactDest.text = [NSString stringWithFormat:@"Contact: %@",t.termContact];
                 NSString* str = @"";
                 if (t.termContactTitle != nil && t.termContactTitle.length >0)

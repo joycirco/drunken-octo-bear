@@ -141,27 +141,6 @@ NSString *firstLogin = @"yes"; // just for now
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)showLoginScreen
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    QuickQuoteLoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [vc setModalPresentationStyle:UIModalPresentationFullScreen];
-    vc.delegate = self;
-    [self presentViewController:vc animated:NO completion:nil];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    QuickQuoteLoginViewController *loginVc = segue.destinationViewController;
-    loginVc.delegate = self;
-}
-
-- (void)quickQuoteLoginViewControllerDidFinish
-{
-    // dismiss
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 #pragma mark - SubstitutableDetailViewController
 #pragma mark Managing the popover
 
