@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Enterprise.h"
 
 @class CompanyPickerViewController;
 
 @protocol CompanyPickerViewControllerDelegate
 @required
 -(void)companyPickerViewControllerDidFinish:(CompanyPickerViewController *)controller;
--(void)selectedACompany;
+-(void)selectedACompany:(NSString*)selectedCompanyName;
 @end
 
 @interface CompanyPickerViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
@@ -21,7 +22,8 @@
 @property (weak, nonatomic) id <CompanyPickerViewControllerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet  UIPickerView *picker;
-@property (strong, nonatomic)           NSMutableArray *fakeCompaniesDataArray;
+@property (strong, nonatomic)           NSArray *companies;
+@property (strong, nonatomic)           Enterprise *enterprise;
 
 
 // interface builder actions

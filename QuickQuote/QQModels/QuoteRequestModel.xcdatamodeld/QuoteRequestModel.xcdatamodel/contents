@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Accessorial" representedClassName="Accessorial" syncable="YES">
         <attribute name="accessorialCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accessorialName" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,12 +13,25 @@
         <attribute name="accessorialTypeName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="accessorial" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Accessorial" inverseName="accessorialType" inverseEntity="Accessorial" syncable="YES"/>
     </entity>
+    <entity name="Company" representedClassName="Company" syncable="YES">
+        <attribute name="companyId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="companyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="enterprise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Enterprise" inverseName="companies" inverseEntity="Enterprise" syncable="YES"/>
+    </entity>
     <entity name="Credentials" representedClassName="Credentials" syncable="YES">
         <attribute name="accountId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="loginName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="quoteRequest" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="QuoteRequest" inverseName="credentials" inverseEntity="QuoteRequest" syncable="YES"/>
+    </entity>
+    <entity name="Enterprise" representedClassName="Enterprise" syncable="YES">
+        <attribute name="enterpriseId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="enterpriseName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="companies" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="enterprise" inverseEntity="Company" syncable="YES"/>
+        <relationship name="user" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="enterprises" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="FreightItem" representedClassName="FreightItem" syncable="YES">
         <attribute name="dimUOM" optional="YES" attributeType="String" syncable="YES"/>
@@ -61,12 +74,25 @@
             <fetchRequest name="fetchedPropertyFetchRequest" entity="QuoteRequest" predicateString="(accessorialType == 3)"/>
         </fetchedProperty>
     </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="accountId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="loginName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectedCompanyId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="selectedEnterpriseId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="enterprises" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Enterprise" inverseName="user" inverseEntity="Enterprise" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Accessorial" positionX="-11" positionY="123" width="128" height="135"/>
         <element name="AccessorialType" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Company" positionX="-504" positionY="473" width="128" height="103"/>
         <element name="Credentials" positionX="-225" positionY="78" width="128" height="120"/>
-        <element name="FreightItem" positionX="-198" positionY="324" width="128" height="270"/>
-        <element name="HandlingUnitType" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Enterprise" positionX="-702" positionY="530" width="128" height="118"/>
+        <element name="FreightItem" positionX="-216" positionY="333" width="128" height="270"/>
+        <element name="HandlingUnitType" positionX="160" positionY="99" width="128" height="90"/>
         <element name="QuoteRequest" positionX="-459" positionY="99" width="128" height="224"/>
+        <element name="User" positionX="-245" positionY="648" width="128" height="163"/>
     </elements>
 </model>

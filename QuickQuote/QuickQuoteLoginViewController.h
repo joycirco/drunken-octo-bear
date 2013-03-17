@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CompanyPickerViewController.h"
 #import "EnterprisePickerViewController.h"
+#import <CoreData/CoreData.h>
+#import "DataModel.h"
 
 @class QuickQuoteLoginViewController;
 
@@ -18,7 +20,8 @@
 @end
 
 @interface QuickQuoteLoginViewController : UIViewController <UIPopoverControllerDelegate,
-CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UITextFieldDelegate>
+    CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate,
+    UITextFieldDelegate, NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) id <PresentedLoginViewControllerDelegate> delegate;
 
@@ -26,6 +29,9 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 
 @property (strong, nonatomic) UIPopoverController *companyPickerViewController;
 @property (strong, nonatomic) UIPopoverController *enterprisePickerViewController;
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @property (weak, nonatomic) IBOutlet UILabel *redLabel;
 @property (weak, nonatomic) IBOutlet UILabel *greenLabel;
@@ -37,10 +43,11 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 @property (strong, nonatomic) IBOutlet UIButton *enterpriseButton;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
 
+//@property (strong, nonatomic) DataModel *dataModel;
+
 // Interface Builder actions are used for custom click events
 - (IBAction)signInAction:(id)sender;
 - (IBAction)textFieldEdited;
-- (void)determineButtonPositions;
 
 @end
 

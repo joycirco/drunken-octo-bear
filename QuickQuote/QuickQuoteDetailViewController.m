@@ -30,6 +30,7 @@ NSString *firstLogin = @"yes"; // just for now
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize loginViewController;
+@synthesize managedObjectContext;
 
 #pragma mark - Managing the detail item
 

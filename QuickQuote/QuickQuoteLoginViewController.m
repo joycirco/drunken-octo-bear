@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
+#import "QuickQuoteAppDelegate.h"
 #import "QuickQuoteLoginViewController.h"
 #import "User.h"
-#import "Data.h" // delete?
+#import "Enterprise.h"
+#import "Company.h"
 
 @interface QuickQuoteLoginViewController ()
 
@@ -21,6 +23,9 @@
 @synthesize companyPickerViewController;
 @synthesize enterprisePickerViewController;
 
+@synthesize managedObjectContext;
+@synthesize fetchedResultsController;
+
 @synthesize redLabel;
 @synthesize greenLabel;
 
@@ -32,6 +37,7 @@
 @synthesize signinButton;
 
 @synthesize delegate;
+//@synthesize dataModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,18 +57,13 @@
     passwordTextField.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    
-}
-
 -(void)resetControls
 {
     [companyButton setHidden:true];
     [companyButton setTitle:@"Select Company" forState:UIControlStateNormal];
     [enterpriseButton setHidden:true];
     [enterpriseButton setTitle:@"Select Enterprise" forState:UIControlStateNormal];
-    [self determineButtonPositions];
+    [self configureButtonPositions];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,7 +72,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-// refactor this soon...like write some methods
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     [[segue destinationViewController] setDelegate:self];
@@ -100,14 +100,17 @@
     // stuff
 }
 
--(void)selectedACompany
+-(void)selectedACompany:(NSString*)selectedCompanyName
 {
-    [self.companyButton setTitle:[Data sharedInstance].user.selectedCompany forState:UIControlStateNormal];
+    // this top line appears to be resetting the view to original button positions
+    [self.companyButton setTitle:selectedCompanyName forState:UIControlStateNormal];
+    //[self updateLoginScreen]; // not as expected
 }
 
--(void)selectedAEnterprise
+-(void)selectedAEnterprise:(NSString*)selectedEnterpriseName
 {
-    [self.enterpriseButton setTitle:[Data sharedInstance].user.selectedEnterprise forState:UIControlStateNormal];
+    [self.enterpriseButton setTitle:selectedEnterpriseName forState:UIControlStateNormal];
+    [self updateLoginScreen]; // nbot as expected
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
@@ -118,18 +121,14 @@
 
 - (void)companyPickerViewControllerDidFinish:(CompanyPickerViewController *)controller
 {
-    // do stuff as we close it
     [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
 }
 
 -(void)enterprisePickerViewControllerDidFinish:(EnterprisePickerViewController *)controller
 {
-    // do stuff as we close it...
     [[currentPopoverSegue popoverController] dismissPopoverAnimated:YES];
 }
 
-// Close the keyboard if someone presses enter from any textfield
-// !Not working at the moment...fix this
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -144,13 +143,11 @@
     }
 }
 
-// they entered a textfield
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     
 }
 
-// they left a textfield by closing the keyboard...
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
 
@@ -158,36 +155,47 @@
 
 -(void)textFieldEdited
 {
-    // check the user
     [self preAuthenticateUser];
 }
 
 
 -(void)loadUser:(User*)userToLoad
 {
-    [Data sharedInstance].user = userToLoad;
-    [self updateLoginScreen:[Data sharedInstance].user];
+    [DataModel sharedInstance].currentUser = userToLoad;
     [greenLabel setHidden:true];
     [redLabel setHidden:true];
+    [self updateLoginScreen];
     NSLog(@"Welcome Legit User");
 }
 
-// see if we need to show the company/enterprise buttons
 -(BOOL)preAuthenticateUser
 {
     NSString *userTextFieldString = [userTextField.text stringByTrimmingCharactersInSet:
                                      [NSCharacterSet whitespaceCharacterSet]];
     NSString *userPassTextFieldString = [passwordTextField.text stringByTrimmingCharactersInSet:
-                                         [NSCharacterSet whitespaceCharacterSet]];
+                                        [NSCharacterSet whitespaceCharacterSet]];
     
+    // get reference to app delegate
+    QuickQuoteAppDelegate *appDelegate = (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [DataModel sharedInstance].managedObjectContext = appDelegate.managedObjectContext;
+    managedObjectContext = appDelegate.managedObjectContext;
+    
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User"
+                                              inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSError *error;
+    
+    NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+       
     // look for a user based of the entered information
-    for (User* user in [Data sharedInstance].availableUsers)
+     for (User *user in fetchedObjects)
     {
-        if (([userTextFieldString isEqualToString:user.loginName] ||
-             [userTextFieldString isEqualToString:user.email]) &&
-            [userPassTextFieldString isEqualToString:user.password])
+        if (([userTextFieldString caseInsensitiveCompare:user.loginName] == NSOrderedSame ||
+             [userTextFieldString caseInsensitiveCompare:user.email] == NSOrderedSame) &&
+             [userPassTextFieldString isEqualToString:user.password])
         {
-            // we found our user
             [self loadUser:user];
             return true;
         }
@@ -196,8 +204,6 @@
     return false;
 }
 
-// might want to seperate this into more methods soon
-// this pretty much verifies that the user is legit
 -(BOOL)authenticateUser
 {
     if ([self preAuthenticateUser])
@@ -222,15 +228,71 @@
     return false;
 }
 
--(void)updateLoginScreen:(User *)currentUser
+-(void)updateLoginScreen
 {
-    [self determineObjectVisibility:currentUser :currentUser.companies :companyButton];
-    [self determineObjectVisibility:currentUser :currentUser.enterprises :enterpriseButton];
-    [self determineButtonPositions];
+    User *currentUser = [DataModel sharedInstance].currentUser;
+    
+    [self configurePreSelections:currentUser];
+    [self configureButtonVisibility: [self getCurrentEnterprise].companies.allObjects :companyButton :FALSE];
+    [self configureButtonVisibility:currentUser.enterprises.allObjects :enterpriseButton :TRUE];
+    [self configureButtonPositions];
+}
+-(void)configureButtonVisibility: (NSArray*)arrayToCheck : (UIButton*)button : (BOOL*)isEnterprise
+{
+    // User *currentUser = [DataModel sharedInstance].currentUser;
+    
+    if ([arrayToCheck count] > 1)
+    {
+        if (isEnterprise)
+        {
+            if ([enterpriseButton.titleLabel.text isEqualToString:@"Select Enterprise"])
+            {
+                companyButton.hidden = TRUE;
+                [self showButtonAnimated:button];
+            }
+        }
+        else
+        {
+             [self showButtonAnimated:button];
+        }
+    }
+    else
+    {
+        button.hidden = TRUE;
+    }
 }
 
-// position the buttons on the screen accordingly...
--(void)determineButtonPositions
+-(void)configurePreSelections:(User*)currentUser
+{
+    NSArray *enterprises = currentUser.enterprises.allObjects;
+    
+    if (enterprises.count == 1)
+    {
+        Enterprise *enterprise = enterprises[0];
+        currentUser.selectedEnterpriseId = enterprise.enterpriseId;
+    }
+    
+    Enterprise *enterprise = [self getCurrentEnterprise];
+    
+    if (enterprise.companies.count == 1)
+    {
+        Company *company = enterprise.companies.allObjects[0];
+        currentUser.selectedCompanyId = company.companyId;
+    }
+}
+
+-(void)showButtonAnimated: (UIButton*)button
+{
+    button.alpha = 0.0;
+    button.hidden = false;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
+    [button setAlpha:1.0];
+    [UIView commitAnimations];
+}
+
+-(void)configureButtonPositions
 {
     // drawing information
     CGFloat const buttonX = 43.0;
@@ -238,8 +300,7 @@
     CGFloat const topButtonY = 170.0;
     CGFloat const bottomButtonY = 214.0;
     CGFloat const signinYGap = 63;
-    
-    // refactor...
+  
     if (companyButton.hidden == false && enterpriseButton.hidden == false)
     {
         enterpriseButton.frame = CGRectMake(buttonX, topButtonY,
@@ -253,18 +314,14 @@
     {
         companyButton.frame = CGRectMake(buttonX, topButtonY,
             companyButton.frame.size.width, companyButton.frame.size.height);
-        enterpriseButton.frame = CGRectMake(buttonX, bottomButtonY,
-            enterpriseButton.frame.size.width, enterpriseButton.frame.size.height);
-        signinButton.frame = CGRectMake(buttonX, topButtonY + signinYGap,
+        signinButton.frame = CGRectMake(buttonX, bottomButtonY + signinYGap,
                                         buttonWidth, signinButton.frame.size.height);
     }
     else if(companyButton.hidden && enterpriseButton.hidden == false)
     {
         enterpriseButton.frame = CGRectMake(buttonX, topButtonY,
             enterpriseButton.frame.size.width, enterpriseButton.frame.size.height);
-        companyButton.frame = CGRectMake(buttonX, bottomButtonY,
-            companyButton.frame.size.width, companyButton.frame.size.height);
-        signinButton.frame = CGRectMake(buttonX, topButtonY + signinYGap,
+        signinButton.frame = CGRectMake(buttonX, bottomButtonY + signinYGap,
                                         buttonWidth, signinButton.frame.size.height);
     }
     else if(companyButton.hidden && enterpriseButton.hidden)
@@ -273,26 +330,50 @@
                                         buttonWidth, signinButton.frame.size.height);
     }
     
-} // determineButtonPositions
+}
 
+#pragma mark - Fetched results controller
 
-// we want to control the positions of elements rathering than animating the alpha property...
--(void)determineObjectVisibility:(User*)currentUser : (NSMutableArray*)objectToCheck : (UIButton*)button
+- (NSFetchedResultsController *)fetchedResultsController
 {
-    if (objectToCheck.count > 1)
+    
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    //[self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    //[self.tableView endUpdates];
+}
+
+- (Enterprise*)getCurrentEnterprise
+{
+    User *currentUser = [DataModel sharedInstance].currentUser;
+    
+    for (Enterprise *enterprise in currentUser.enterprises)
     {
-        button.alpha = 0.0;
-        button.hidden = false;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.5];
-        [UIView setAnimationCurve: UIViewAnimationCurveEaseInOut];
-        [button setAlpha:1.0];
-        [UIView commitAnimations];
+        if (enterprise.enterpriseId == currentUser.selectedEnterpriseId)
+        {
+            return enterprise;
+        }
     }
-    else
-    {
-        button.hidden = true;
-    }
+    return nil; // didn't find it
 }
 
 @end

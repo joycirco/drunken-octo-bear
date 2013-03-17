@@ -2,15 +2,19 @@
 //  Company.m
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/10/13.
+//  Created by Steven Tuckness on 3/17/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
 #import "Company.h"
+#import "Enterprise.h"
+
 
 @implementation Company
 
-@synthesize company_pk;
-@synthesize company_display;
+@dynamic companyId;
+@dynamic companyName;
+@dynamic timeStamp;
+@dynamic enterprise;
 
 @end

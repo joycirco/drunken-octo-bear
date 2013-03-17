@@ -7,7 +7,8 @@
 //
 
 #import "EnterprisePickerViewController.h"
-#import "Data.h"
+#import "DataModel.h"
+#import "Enterprise.h"
 
 @interface EnterprisePickerViewController ()
 
@@ -33,7 +34,7 @@
 	// Do any additional setup after loading the view.
     
     // all companies are eShipping except 26 fitness
-    self.enterpriseArray = [Data sharedInstance].user.enterprises;
+    self.enterpriseArray = [DataModel sharedInstance].currentUser.enterprises.allObjects;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -61,17 +62,15 @@
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [self.enterpriseArray objectAtIndex:row];
+    Enterprise *enterprise = [self.enterpriseArray objectAtIndex:row];
+    return enterprise.enterpriseName;
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSString *selectedEnterprise = [NSString stringWithFormat:@"%@", [enterpriseArray objectAtIndex:row]];
-    [Data sharedInstance].user.selectedEnterprise = selectedEnterprise;
-    //NSLog(@"%@", [Data sharedInstance].selectedCompany);
-    
-    [self.delegate selectedAEnterprise];
-    // send a message to the parent view controller to go ahead and update the button with the text...
+    Enterprise *selectedEnterprise = [enterpriseArray objectAtIndex:row];
+    [DataModel sharedInstance].currentUser.selectedEnterpriseId = selectedEnterprise.enterpriseId;
+    [self.delegate selectedAEnterprise:selectedEnterprise.enterpriseName];
 }
 
 -(IBAction)doneAction:(id)sender

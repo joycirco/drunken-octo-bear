@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *centerMarker;
 @property (strong, nonatomic) UIViewController *loginViewController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
