@@ -12,8 +12,10 @@
 
 @class QuoteRequest, FreightItem;
 
-@interface FreightItemViewController : UIViewController <UITextFieldDelegate, PickerPopoverViewControllerDelegate, SubstitutableDetailViewController>
-
+@interface FreightItemViewController : UIViewController <UITextFieldDelegate,
+                                                        UITextViewDelegate,
+                                                        PickerPopoverViewControllerDelegate,
+                                                        SubstitutableDetailViewController>
 @property (weak, nonatomic) IBOutlet UITextField *weight;
 @property (weak, nonatomic) IBOutlet UITextField *units;
 @property (weak, nonatomic) IBOutlet UITextField *length;
@@ -22,6 +24,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnHandlingUnitType;
 @property (weak, nonatomic) IBOutlet UIButton *btnFreightClass;
 @property (weak, nonatomic) IBOutlet UITextView *freightDescription;
+@property (weak, nonatomic) IBOutlet UISwitch *stackable;
+@property (weak, nonatomic) IBOutlet UITextField *nmfc;
+
+@property (weak, nonatomic) IBOutlet UILabel *redLabel;
+
+- (IBAction)stackableChanged:(id)sender;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) QuoteRequest* quoteRequest;

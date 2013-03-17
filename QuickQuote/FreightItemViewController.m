@@ -19,6 +19,7 @@
     NSNumberFormatter *decimalFormatter;
     NSNumberFormatter *noStyleFormatter;
     NSString* currentPickerSegue;
+    NSString* validationErrorTitle;
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -28,6 +29,7 @@
 - (void)initPickerItems;
 - (NSString*)getHandlingUnitName:(NSNumber*)htID;
 - (NSNumber*)getHandlingUnitTypeID:(NSString*)htName;
+- (BOOL) isValid;
 
 @end
 
@@ -42,6 +44,7 @@
 @synthesize freightClasses = _freightClasses;
 @synthesize handlingUnitTypes = _handlingUnitTypes;
 
+@synthesize redLabel = _redLabel;
 
 - (void)awakeFromNib
 {
@@ -66,6 +69,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [_redLabel setHidden:true];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -110,6 +115,8 @@
 
 - (void)configureView
 {
+    validationErrorTitle = @"Validation Error";
+    
     [self initPickerItems];
     
     // Update the user interface for the freight item.
@@ -120,6 +127,8 @@
                         inManagedObjectContext:_managedObjectContext];
         
         [_freightItem setDefaults];
+        _freightItem.weight = nil;
+        _freightItem.handlingUnits = nil;
         
         self.title = @"Add Freight Item...";
     }
@@ -129,6 +138,8 @@
     self.length.delegate = self;
     self.width.delegate = self;
     self.height.delegate = self;
+    self.freightDescription.delegate = self;
+    self.nmfc.delegate = self;
 
     if (! self.editing)
     {
@@ -139,6 +150,8 @@
         self.height.enabled = false;
         self.btnFreightClass.enabled = false;
         self.btnHandlingUnitType.enabled = false;
+        self.stackable.enabled = false;
+        self.nmfc.enabled = false;
     }
 
     self.btnFreightClass.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -163,6 +176,10 @@
         self.length.text = [decimalFormatter stringFromNumber:_freightItem.length];
         self.width.text = [decimalFormatter stringFromNumber:_freightItem.width];
         self.height.text = [decimalFormatter stringFromNumber:_freightItem.height];
+        self.nmfc.text = _freightItem.nmfc;
+        [self.stackable setOn:[_freightItem.isStackable boolValue]];
+        
+        [self handlingUnitTypeChanged:[_freightItem.handlingUnitTypeID intValue]];
     }
 }
 
@@ -170,7 +187,11 @@
 {
     bool bEditing;
     
+    // turn off any error messages
+    [_redLabel setHidden:true];
+    
     [super setEditing:flag animated:animated];
+    
     if (flag == YES)
     {
         // Change views to edit mode.
@@ -182,29 +203,53 @@
         self.height.enabled = true;
         self.btnFreightClass.enabled = true;
         self.btnHandlingUnitType.enabled = true;
+        self.nmfc.enabled=true;
+        self.stackable.enabled=true;
+        
         //self.freightDescription.editable = YES;
         if (!_isAdding)
             self.title = @"Edit freight Item Detail";
     }
     else
     {
-        // Save the changes if needed and change the views to noneditable.
-        bEditing = false;
-        self.weight.enabled = false;
-        self.units.enabled = false;
-        self.length.enabled = false;
-        self.width.enabled = false;
-        self.height.enabled = false;
-        self.btnFreightClass.enabled = false;
-        self.btnHandlingUnitType.enabled = false;
-        //self.freightDescription.editable = NO;
+        [self.view endEditing:YES];
 
-        // to do - validate input
-        // if isValid
-        [self saveFreightItem];
-        self.title = @"Freight Item Detail";
+        if (! [self isValid])
+        {
+            [self setEditing:YES animated:FALSE];
+            return;
+        }
+        else
+        {
+            // Save the changes if needed and change the views to noneditable.
+            bEditing = false;
+            self.weight.enabled = false;
+            self.units.enabled = false;
+            self.length.enabled = false;
+            self.width.enabled = false;
+            self.height.enabled = false;
+            self.btnFreightClass.enabled = false;
+            self.btnHandlingUnitType.enabled = false;
+            self.stackable.enabled = false;
+            self.nmfc.enabled = false;
+            //self.freightDescription.editable = NO;
+
+            // to do - validate input
+            // if isValid
+            [self saveFreightItem];
+            self.title = @"Freight Item Detail";
+        }
     }
 }
+
+#pragma mark - UITextFieldDelegate
+// Close the keyboard if someone presses enter from any textfield
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
+
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -212,6 +257,125 @@
     {
         
     }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // double
+    if (textField == self.weight)
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString *expression = @"^([0-9]+)?(\\.([0-9]{1,2})?)?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+    
+    // integers
+    if (textField == self.units)
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString *expression =@"^([0-9]{1,5}+)?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+    
+    if (textField==self.nmfc)
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString* expression = @"^([0-9-]{0,7})?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+
+    if ((textField == self.length)
+        || (textField == self.width)
+        || (textField == self.height))
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString *expression =@"^([0-9]{1,4}+)?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark - UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    return self.isEditing;
+}
+
+-(BOOL) isValid
+{
+    BOOL bValid = YES;
+
+    // validate input
+    double weight = [self.weight.text doubleValue];
+    int handlingUnits = [self.units.text intValue];
+
+    if ((weight <= 0) || (weight > 50000))
+    {
+        bValid = NO;
+        //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:validationErrorTitle message:@"Weight is out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+        //[alert show];
+        if (weight <= 0)
+            _redLabel.text = @"Weight is required.";
+        else
+            _redLabel.text = @"Weight is out of range.";
+        
+        [_redLabel setHidden:false];
+        
+    }
+    else if (handlingUnits <= 0)
+    {
+        bValid = NO;
+        //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:validationErrorTitle message:@"Handling Units are out of range." delegate:self  cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+        //[alert show];
+        _redLabel.text = @"Number of handling units is required.";
+        [_redLabel setHidden:false];
+        
+    }
+    return bValid;
 }
 
 -(void)saveFreightItem
@@ -222,11 +386,13 @@
     _freightItem.freightDescription = self.freightDescription.text;
     _freightItem.handlingUnits = [noStyleFormatter numberFromString: self.units.text];
     _freightItem.handlingUnitTypeID = [self getHandlingUnitTypeID:self.btnHandlingUnitType.titleLabel.text];
-    _freightItem.isStackable = FALSE;
+    //_freightItem.isStackable = FALSE;
     _freightItem.length = [NSDecimalNumber decimalNumberWithString:self.length.text];
     _freightItem.width = [NSDecimalNumber decimalNumberWithString:self.width.text];
     _freightItem.height = [NSDecimalNumber decimalNumberWithString:self.height.text];
-        
+    _freightItem.nmfc = self.nmfc.text;
+    _freightItem.isStackable = [NSNumber numberWithBool:self.stackable.isOn];
+    
     if (_isAdding)
     {
        [_quoteRequest addFreightItemsObject:_freightItem];
@@ -238,6 +404,8 @@
     currentPickerSegue = nil;
     
     NSString* segueId = [segue identifier];
+    
+    [self.view endEditing:YES];
     
     if ([segueId isEqualToString:@"handlingUnitPopover"])
     {
@@ -276,6 +444,7 @@
     {
         HandlingUnitType* h = object;
         [self.btnHandlingUnitType setTitle:h.handlingUnitTypeDescription forState:UIControlStateNormal];
+        [self handlingUnitTypeChanged:[h.handlingUnitTypeID intValue]];
     }
 
     if (currentPickerSegue != nil && [currentPickerSegue isEqualToString:@"freightClassPopover"])
@@ -319,6 +488,11 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
                                               inManagedObjectContext:_managedObjectContext];
     [fetchRequest setEntity:entity];
+
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"handlingUnitTypeDescription" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
     
     NSArray *fetchedObjects = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
     for (HandlingUnitType *h in fetchedObjects)
@@ -378,9 +552,65 @@
     return ret;
 }
 
-- (IBAction)selectHandlingUnit:(id)sender {
+- (IBAction)selectHandlingUnit:(id)sender
+{
 }
 
-- (IBAction)selectFreightClass:(id)sender {
+- (IBAction)selectFreightClass:(id)sender
+{
 }
+
+- (IBAction)stackableChanged:(id)sender
+{
+    
+   // UISwitch* theSwitch = (UISwitch*) sender;
+   // _freightItem.isStackable =  [NSNumber numberWithBool:theSwitch.on];
+    
+}
+
+-(void)handlingUnitTypeChanged:(int)handlingUnitTypeID
+{
+    BOOL matchesFreight = NO;
+    
+    matchesFreight = (handlingUnitTypeID == [_freightItem.handlingUnitTypeID intValue]);
+    
+    if ((handlingUnitTypeID == 1) || (handlingUnitTypeID==2))
+    {
+        if (handlingUnitTypeID==1)
+        {
+            self.length.text = @"48";
+            self.width.text = @"40";
+            self.height.text = @"";
+        }
+
+        if (handlingUnitTypeID==2)
+        {
+            self.length.text = @"48";
+            self.width.text = @"48";
+            self.height.text = @"";
+        }
+        
+        self.length.enabled = false;
+        self.width.enabled = false;
+        self.height.enabled = false;
+    }
+    else
+    {
+        if (self.isEditing)
+        {
+            self.length.enabled = true;
+            self.width.enabled = true;
+            self.height.enabled = true;
+            
+            if (!matchesFreight)
+            {
+                self.length.text = @"";
+                self.width.text = @"";
+                self.height.text = @"";
+            }
+        }
+    }
+}
+
+
 @end

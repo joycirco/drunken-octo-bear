@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "QuickQuoteMasterViewController.h"
+#import "AccessorialCell.h"
 
 @class Accessorial, QuoteRequest, AccessorialType;
 
 @interface AccessorialsViewController : UITableViewController <UITableViewDelegate,
-                                        SubstitutableDetailViewController,NSFetchedResultsControllerDelegate>
+                                        SubstitutableDetailViewController,NSFetchedResultsControllerDelegate,
+                                        AccessorialCellDelegate>
 {
     
 }

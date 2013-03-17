@@ -15,6 +15,9 @@
 #import "QuoteRequest.h"
 #import "Credentials.h"
 #import "FreightItem.h"
+#import "Accessorial.h"
+#import "HandlingUnitType.h"
+
 #import "DatePopoverViewController.h"
 
 #import "RSPRateServicePrivileged.h"
@@ -29,9 +32,11 @@
     UITableViewCell* linkedDateCell;
     
     UIActivityIndicatorView* _progress_ind;
+    NSMutableDictionary* huMap;
 }
 
 - (void)configureView;
+- (BOOL)canQuote;
 
 @end
 
@@ -70,6 +75,22 @@
     // get quote request from data store (1st one for now)
     _quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
 
+    // load map for handling units
+    huMap = [[NSMutableDictionary alloc]init];
+    // get accessorial type from data store
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
+                                              inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* hu = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for(HandlingUnitType* h in hu)
+    {
+        [huMap setObject:h forKey:h.handlingUnitTypeID];
+    }
+    
     [self configureView];
 }
 
@@ -108,6 +129,9 @@
 
 - (void)configureView
 {
+    self.originZip.delegate = self;
+    self.destinationZip.delegate = self;
+    self.storeLocationCode.delegate = self;
 
     self.btnRate.enabled=NO;
     
@@ -126,11 +150,43 @@
         {
             NSNumberFormatter *numFormat = [[NSNumberFormatter alloc] init];
             [numFormat setNumberStyle:NSNumberFormatterNoStyle];
-            self.cellFreightSummary.detailTextLabel.text = [NSString stringWithFormat:@"%d", _quoteRequest.freightItems.count];
+            self.cellFreightSummary.textLabel.text = [NSString stringWithFormat:@"# Items: %d", _quoteRequest.freightItems.count];
             
-            self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
+            //self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
+            
+            float totWeight = 0;
+            NSString* uomWeight = @"";
+            for (FreightItem* f in _quoteRequest.freightItems)
+            {
+                totWeight += [f.weight floatValue];
+                uomWeight = f.weightUOM;
+            }
+            NSDecimalNumber* w = [[NSDecimalNumber alloc] initWithFloat:totWeight];
+            self.cellFreightSummary.detailTextLabel.text = [NSString stringWithFormat:@"Weight: %@%@", [numFormat stringFromNumber:w], uomWeight];
         }
+    
+        int accPickup = 0;
+        int accDeliver = 0;
+        int accShip = 0;
+        for(Accessorial* acc in _quoteRequest.accessorials)
+        {
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:1])
+                accPickup++;
+
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:2])
+                accDeliver++;
+            
+            if (acc.accessorialTypeID == [NSNumber numberWithInt:3])
+                accShip++;
+            
+        }
+    
+        self.cellPickupAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accPickup];
+        self.cellDeliveryAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accDeliver];
+        self.cellShipmentAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accShip];
     }
+    
+    self.btnRate.enabled = [self canQuote];
 }
 
 
@@ -263,7 +319,8 @@
     self.fetchedResultsController = aFetchedResultsController;
     
 	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
+	if (![self.fetchedResultsController performFetch:&error])
+    {
 	    /*
 	     Replace this implementation with code to handle the error appropriately.
          
@@ -280,12 +337,9 @@
 {
 }
 
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+// implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
  - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
  {
-     // In the simplest, most efficient, case, reload the table view.
-     //[self.tableView reloadData];
-     
      _quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
     
      [self configureView];
@@ -313,6 +367,90 @@
     self.rootPopoverButtonItem = nil;
 }
 
+#pragma mark - UITextFieldDelegate
+// Close the keyboard if someone presses enter from any textfield
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    //NSLog([NSString stringWithFormat:@"textField ended editing... value is:%@",textField.text]);
+    if (textField == self.originZip)
+        _quoteRequest.originPostalCode = self.originZip.text;
+    
+    if (textField == self.destinationZip)
+        _quoteRequest.destinationPostalCode = self.destinationZip.text;
+    
+    if (textField == self.storeLocationCode)
+        _quoteRequest.storeLocationCode = self.storeLocationCode.text;
+    
+    [self configureView];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    // zip codes
+    if (textField == self.originZip || textField == self.destinationZip)
+    {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        
+        NSString *expression =@"^([a-zA-Z0-9-]{0,10})?$";
+        
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:nil];
+        NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                            options:0
+                                                              range:NSMakeRange(0, [newString length])];
+        if (numberOfMatches == 0)
+            return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+   /* if(textField == self.storeLocationCode)
+    {
+        BOOL editingDate;
+        editingDate = YES;
+        UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(0, 320, 320, 216)];
+        UIDatePicker *pv = [[UIDatePicker alloc] initWithFrame:CGRectMake(0,0,320,216)];
+        [myView addSubview:pv];
+        
+        [self.view.superview addSubview:myView];
+        pv.userInteractionEnabled = YES;
+        textField.placeholder = @"currently selecting below";
+        [self scrollTheView:YES];
+        return NO;
+    } */
+    return YES;
+}
+
+
+- (void)scrollTheView:(BOOL) moveUp
+{
+    int scrollAmount = 212;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    CGRect rect = self.view.frame;
+    if(moveUp)
+    {
+        rect.origin.y -= scrollAmount;
+    }
+    else
+    {
+        rect.origin.y += scrollAmount;
+    }
+    self.view.frame = rect;
+    [UIView commitAnimations];
+}
+
+
 #pragma mark - Date Popover Delegate
 
 - (void)datePopoverViewControllerDidFinish:(DatePopoverViewController *)controller
@@ -327,7 +465,13 @@
     [dateFormat setDateFormat:@"MM/dd/yyyy"];
     
     if (linkedDateCell != nil)
+    {
         linkedDateCell.detailTextLabel.text = [dateFormat stringFromDate:aDate];
+        
+        // set pickup date for quote as well
+        if (linkedDateCell == self.cellPickupDate)
+            _quoteRequest.pickupDateTime = aDate;
+    }
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
@@ -361,146 +505,170 @@
 }
 */
 
-#pragma mark - FetchedFreightItemsDelegate
--(void)didUpdateFreightItems:(NSMutableArray*) freightItems
+-(BOOL)canQuote
 {
+    BOOL bRet = NO;
     
+    bRet = [self isValid];
+    
+    return bRet;
 }
 
-- (IBAction)rateAction:(id)sender {
+-(BOOL)isValid
+{
+    if (_quoteRequest == nil)
+        return NO;
     
-    [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
+    if (_quoteRequest != nil && _quoteRequest.freightItems.count == 0)
+        return NO;
     
-    // clear the list
-    //QuickQuoteResultsViewController* view = self.detailViewController;
-    //if (view != nil)
-    //    [view clearRateResponseList];
+    //if (! [self stringIsValid:self.originZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
+    //    return NO;
+
+    //if (! [self stringIsValid:self.destinationZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
+    //    return NO;
     
-	// Create the service
-	RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];
-	service.logging = YES;
-    
-    service.username = _quoteRequest.credentials.loginName;
-	service.password = _quoteRequest.credentials.password;
-    
-    RSPRateRequestPrivileged* reqRRP = [[RSPRateRequestPrivileged alloc] init];
-    reqRRP.reqLoginName = _quoteRequest.credentials.loginName;
-    reqRRP.reqLoginPassword = _quoteRequest.credentials.password;
-    reqRRP.reqAccountId = _quoteRequest.credentials.accountId;
-    reqRRP.reqRoutingCustomerCode = _quoteRequest.storeLocationCode;
-    reqRRP.reqLoginToken = _quoteRequest.credentials.token;
-    
-    reqRRP.reqOriginZip = self.originZip.text;
-    reqRRP.reqDestZip = self.destinationZip.text; // mutableCopy;
-    
-    //NSDateFormatter *df1 = [[NSDateFormatter alloc] init];
-    //[df1 setDateFormat:@"MM/dd/yyyy"];
-    //reqRRP.reqPickupDate = [df1 dateFromString: self.cellPickupDate.detailTextLabel.text];
-    reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
-    
-    //NSDateFormatter *df2 = [[NSDateFormatter alloc] init];
-    //[df2 setDateFormat:@"MM/dd/yyyy"];
-    //reqRRP.reqDropDate = [df2 dateFromString: self.cellDeliveryDate.detailTextLabel.text];
-    
-    int daysToAdd = 3;
-    NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
-    reqRRP.reqDropDate = newDate1;
-    
-    // iterate through the freight items
-    if (_quoteRequest.freightItems != nil)
+    return YES;
+}
+
+-(BOOL)stringIsValid:(NSString*)stringToValidate :(NSString*)regExpression
+{
+    NSRange range = [stringToValidate rangeOfString:stringToValidate];
+
+    NSString *newString = [stringToValidate stringByReplacingCharactersInRange:range withString:stringToValidate];
+   
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regExpression
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:nil];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:newString
+                                                        options:0
+                                                          range:NSMakeRange(0, [newString length])];
+    if (numberOfMatches == 0)
+        return NO;
+
+    return YES;
+}
+
+#pragma mark - QuoickQuoteMasterView Actions
+
+- (IBAction)saveAction:(id)sender
+{
+
+}
+
+- (IBAction)infoAction:(id)sender
+{
+
+}
+
+- (IBAction)rateAction:(id)sender
+{
+
+    if ([self canQuote])
     {
-        for(FreightItem* fqr in _quoteRequest.freightItems)
+    
+        [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
+        
+        // Create the service
+        RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];
+        service.logging = YES;
+        
+        service.username = _quoteRequest.credentials.loginName;
+        service.password = _quoteRequest.credentials.password;
+        
+        RSPRateRequestPrivileged* reqRRP = [[RSPRateRequestPrivileged alloc] init];
+        reqRRP.reqLoginName = _quoteRequest.credentials.loginName;
+        reqRRP.reqLoginPassword = _quoteRequest.credentials.password;
+        reqRRP.reqAccountId = _quoteRequest.credentials.accountId;
+        if (self.storeLocationCode.text != nil)
+            reqRRP.reqRoutingCustomerCode =  _quoteRequest.storeLocationCode; // = self.storeLocationCode.text;
+        reqRRP.reqLoginToken = _quoteRequest.credentials.token;
+        
+        reqRRP.reqOriginZip = _quoteRequest.originPostalCode; // = self.originZip.text;
+        reqRRP.reqDestZip = _quoteRequest.destinationPostalCode; // = self.destinationZip.text;
+        
+        reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
+        
+        int daysToAdd = 3;
+        NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
+        reqRRP.reqDropDate = newDate1;
+        
+        // keep track if any freight is stackable
+        BOOL isStackable = NO;
+        int palletCount = 0;
+        // iterate through the freight items
+        if (_quoteRequest.freightItems != nil)
         {
-            //[fqr performSelector];
-            RSPFreight* f = [[RSPFreight alloc] init];
-            f.freightClass = fqr.freightClass;
-            f.weight = fqr.weight;
-            f.units = [fqr.handlingUnits intValue];
-            f.length = fqr.length;
-            f.width = fqr.width;
-            f.height = fqr.height;            
-            [reqRRP.reqFreight addObject: f];
+            for(FreightItem* fqr in _quoteRequest.freightItems)
+            {
+                //[fqr performSelector];
+                RSPFreight* f = [[RSPFreight alloc] init];
+                f.freightClass = fqr.freightClass;
+                f.weight = fqr.weight;
+                f.units = [fqr.handlingUnits intValue];
+                if ([fqr.length doubleValue] > 0)
+                    f.length = fqr.length;
+                if ([fqr.width doubleValue] > 0)
+                    f.width = fqr.width;
+                if ([fqr.height doubleValue] > 0)
+                    f.height = fqr.height;
+                
+                if ([fqr.isStackable boolValue])
+                    isStackable = YES;
+                
+                [reqRRP.reqFreight addObject: f];
+                
+                
+                //freight is pallet ?
+                HandlingUnitType* hu = [huMap objectForKey:fqr.handlingUnitTypeID];
+                if ((hu != nil) && ([hu.handlingUnitTypeCode isEqualToString:@"PLT"] || [hu.handlingUnitTypeCode isEqualToString:@"SKD"]))
+                {
+                    // add pallet position
+                    RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
+                    if ([fqr.length doubleValue] > 0)
+                        pp.length = [fqr.length doubleValue];
+                    if ([fqr.width doubleValue] > 0)
+                        pp.width = [fqr.width doubleValue];
+                    if ([fqr.height doubleValue] > 0)
+                        pp.height = [fqr.height doubleValue];
+                    pp.weight = [fqr.weight doubleValue];
+                    pp.positionCount = [fqr.handlingUnits integerValue];
+                    palletCount += [fqr.handlingUnits integerValue];
+                    [reqRRP.reqPalletPositions addObject: pp];
+                }
+            }
         }
+        
+        // set stackable
+        reqRRP.reqFreightStackable = isStackable;
+        
+        // set pallet count
+        reqRRP.reqPalletCount = palletCount;
+        
+        // iterate through accessorials
+        if (_quoteRequest.accessorials != nil)
+        {
+            for(Accessorial* acc in _quoteRequest.accessorials)
+            {
+                RSPAccessorial* a = [[RSPAccessorial alloc]init];
+                a.accCode = acc.accessorialCode;
+                [reqRRP.reqAccessorials addObject:a];
+            }
+        }
+        
+        reqRRP.reqViewSpecificCostContracts = true;
+        reqRRP.reqViewGeneralCostContracts = true;
+        reqRRP.reqViewGeneralBillingContracts = true;
+        reqRRP.reqViewSpecificBillingContracts = true;
+        reqRRP.reqViewWebCostContracts = true;
+        reqRRP.reqViewWebBillingContracts = true;
+        reqRRP.reqViewRatingCost = 0;
+        
+        [service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
     }
-
-    /*
-    // add freight item
-    RSPFreight* f = [[RSPFreight alloc] init];
-    f.freightClass = [NSDecimalNumber decimalNumberWithString: self.freightClass.text];
-    f.weight = [NSDecimalNumber decimalNumberWithString: self.weight.text];
-    f.units =  [self.numHandlingUnits.text intValue];
-    f.volume = [NSDecimalNumber decimalNumberWithString: @"90"];
-    f.length = [NSDecimalNumber decimalNumberWithString: @"48"];
-    f.width = [NSDecimalNumber decimalNumberWithString: @"40"];
-    f.height = [NSDecimalNumber decimalNumberWithString: @"36"];
-    [reqRRP.reqFreight addObject: f ];*/
-    
-    /*
-    // add pallet position
-    reqRRP.reqPalletCount = f.units;
-    RSPPalletPositions* pp = [[RSPPalletPositions alloc] init];
-    pp.length = 10;
-    pp.height = 10;
-    pp.width = 10;
-    pp.weight = [f.weight doubleValue];
-    pp.positionCount = f.units;
-    [reqRRP.reqPalletPositions addObject: pp];*/
-    
-    reqRRP.reqViewSpecificCostContracts = true;
-    reqRRP.reqViewGeneralCostContracts = true;
-    reqRRP.reqViewGeneralBillingContracts = true;
-    reqRRP.reqViewSpecificBillingContracts = true;
-    reqRRP.reqViewWebCostContracts = true;
-    reqRRP.reqViewWebBillingContracts = true;
-    reqRRP.reqViewRatingCost = 1;
-    
-    /*
-    QuoteRequest* req = [[QuoteRequest alloc] init];
-    
-    // credentials
-    req.credentials = [[Credentials alloc] init];
-    req.credentials.loginName = @"testbot";
-    req.credentials.password = @"supersecret468";
-    req.credentials.accountId =  @"32700120";
-    req.credentials.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    
-    req.originPostalCode = @"50801";
-    req.destinationPostalCode = @"66048";
-    
-    NSDateFormatter *df1 = [[NSDateFormatter alloc] init];
-    [df1 setDateFormat:@"yyyy-MM-dd HH:mm"];
-    req.pickupDateTime = [df1 dateFromString: @"2012-03-28 13:01"];
-    
-    FreightItem* f1 = [[FreightItem alloc] init];
-    f1.weight = [NSDecimalNumber decimalNumberWithString: @"2000.0"];
-    f1.weightUOM = @"LB";
-    f1.freightClass = [NSDecimalNumber decimalNumberWithString: @"50"];
-    f1.NMFC = @"8229";
-    f1.handlingUnits = 3;
-    f1.handlingUnitType = 1;
-    f1.length = [NSDecimalNumber decimalNumberWithString: @"48"];
-    f1.width = [NSDecimalNumber decimalNumberWithString: @"40"];
-    f1.height = [NSDecimalNumber decimalNumberWithString:@"36"];
-    f1.dimUOM = @"IN";
-    [req addFreightItem:f1];
-        */
-    // now submit the request
-    //[reqRRP submitRequest];
-    
-    _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _progress_ind.center = self.view.center; //CGPointMake (self.view.bounds.size.width * 0.5F, self.view.bounds.size.height * 0.5F);
-    //_progress_ind.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-    [_progress_ind startAnimating];
-    [self.view addSubview:_progress_ind];
-
-	[service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
-    
-    //if (req != nil)
-    //    [req directRequest];
 }
 
 // Handle the response from RateShipment.
-
 - (void) RateShipmentHandler: (id) value {
 
     [_progress_ind stopAnimating];
@@ -517,6 +685,7 @@
 	// Handle faults
 	if([value isKindOfClass:[SoapFault class]]) {
 		NSLog(@"%@", value);
+        [self HandleSoapFault:value];
 		return;
 	}
         
@@ -539,6 +708,15 @@
 
     NSString *errorString = [error localizedDescription];
     NSString *errorTitle = [NSString stringWithFormat:@"Error (%d)", error.code];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+-(void) HandleSoapFault:(SoapFault*) error{
+    
+    NSString *errorString = error.description;
+    NSString *errorTitle = [NSString stringWithFormat:@"SOAP Error (%@)", error.faultCode];
     UIAlertView *errorView =
     [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
     [errorView show];

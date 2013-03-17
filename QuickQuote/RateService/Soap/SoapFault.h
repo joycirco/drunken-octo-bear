@@ -25,5 +25,6 @@
 + (SoapFault*) faultWithData: (NSMutableData*) data;
 + (SoapFault*) faultWithXMLDocument: (CXMLDocument*) document;
 + (SoapFault*) faultWithXMLElement: (CXMLNode*) element;
+- (NSString*) description;
 
 @end

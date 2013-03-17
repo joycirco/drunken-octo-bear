@@ -9,6 +9,7 @@
 #import "FreightItemsViewController.h"
 #import "FreightItem.h"
 #import "QuoteRequest.h"
+#import "HandlingUnitType.h"
 #import "FreightItemViewController.h"
 
 @interface FreightItemsViewController ()
@@ -18,6 +19,9 @@
     NSNumberFormatter *decimalFormatter;
     NSNumberFormatter *noStyleFormatter;
     int _selectedIndex;
+    NSIndexPath* editIndex;
+    
+    BOOL isInsert;
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -34,8 +38,7 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize quoteRequest = _quoteRequest;
-
-
+@synthesize huMap = _huMap;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,7 +90,31 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //NSArray *tempArray2= [[NSArray alloc] initWithObjects:self.btnAddFreight,self.editButtonItem,nil];
+    //self.navigationItem.rightBarButtonItems=tempArray2;
+
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.editButtonItem.title = @"Delete";
+    
+    self.navigationItem.rightBarButtonItem = self.btnAddFreight;
+    
+    // load map for handling units
+    _huMap = [[NSMutableDictionary alloc]init];
+    // get accessorial type from data store
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
+                                              inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* hu = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for(HandlingUnitType* h in hu)
+    {
+        [_huMap setObject:h forKey:h.handlingUnitTypeID];
+    }
 }
+
 
 - (void)viewDidUnload
 {
@@ -145,6 +172,18 @@
 {
 }
 
+- (void)setEditing:(BOOL)flag animated:(BOOL)animated
+{
+    [super setEditing:flag animated:animated];
+    if (flag == YES)
+    {
+    }
+    else
+    {
+        self.editButtonItem.title = @"Delete";
+    }
+}
+
 #pragma mark - Rate Detail Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -167,15 +206,6 @@
         [destinationView setEditing:true animated:true];
     }
 
-    if ([[segue identifier] isEqualToString:@"freightItemEdit"])
-    {
-        FreightItemEditViewController* destinationView = [segue destinationViewController];
-        destinationView.managedObjectContext = self.managedObjectContext;
-        destinationView.quoteRequest = _quoteRequest;
-        destinationView.freightItem = [self getSelectedFreight];
-        destinationView.isAdding = false;
-    }
-
     if ([[segue identifier] isEqualToString:@"freightItemView"])
     {
         FreightItemViewController* destinationView = [segue destinationViewController];
@@ -185,38 +215,9 @@
     }
 }
 
-- (void)freightEditViewControllerDidFinish:(FreightItemEditViewController *)controller
-{
-    [self.detailPopoverController dismissPopoverAnimated:YES];
-    self.detailPopoverController = nil;
-}
-
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     self.detailPopoverController = nil;
-}
-
--(IBAction)cancelledFreightItemEdit:(UIStoryboardSegue *)segue
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(IBAction)saveFreightItemEdit:(UIStoryboardSegue *)segue
-{
-    if ([[segue identifier] isEqualToString:@"saveFreightEdit"])
-    {
-        FreightItemEditViewController* editController = [segue sourceViewController];
-        // to do validate
-        if (editController.freightItem)
-        {
-            if (editController.isAdding)
-            {
-                [_quoteRequest addFreightItemsObject:editController.freightItem];
-            }
-        }
-        
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }
 }
 
 #pragma mark - Table view data source
@@ -229,11 +230,7 @@
 
 - (void)configureView
 {
-    // Update the user interface for the detail item.
-    
-    //if (self.detailItem) {
-    //    self.detailDescriptionLabel.text = [self.detailItem description];
-    //}
+    self.editButtonItem.title = @"Delete";
 }
 
 - (FreightItem*)getSelectedFreight
@@ -252,38 +249,66 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:indexPath];
+  
+    NSMutableString* label;
+    NSMutableString* detail;
+    
+    label = [[NSMutableString alloc]init];
+    detail = [[NSMutableString alloc]init];
+    
+    // get handling unit from dictionary
+    HandlingUnitType* hu = nil;
+    if (_huMap != nil && _huMap.count > 0)
+    {
+        hu = [_huMap objectForKey:freight.handlingUnitTypeID];
+    }
+    
+    [label appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
+    if (hu != nil)
+        [label appendFormat:@" %@",hu.handlingUnitTypeDescription];
+
+    if (freight.length != nil && [freight.length doubleValue] > 0)
+        [label appendFormat:@" L:%@",[noStyleFormatter stringFromNumber:freight.length]];
+
+    if (freight.width != nil && [freight.width doubleValue] > 0)
+        [label appendFormat:@" W:%@",[noStyleFormatter stringFromNumber:freight.width]];
+
+    if (freight.height != nil && [freight.height doubleValue] > 0)
+        [label appendFormat:@" H:%@",[noStyleFormatter stringFromNumber:freight.height]];
+    
+    [label appendFormat:@", %@",[decimalFormatter stringFromNumber:freight.weight]];
+    [label appendString:freight.weightUOM];
+    [label appendString:@", Class:"];
+    [label appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
+
+    if ([freight.isStackable boolValue])
+        [detail appendString:@"Stackable"];
+    
+    if (freight.nmfc != nil && freight.nmfc.length > 0)
+        [detail appendFormat:@" NMFC:%@",freight.nmfc];
     
     if (freight.freightDescription != nil && freight.freightDescription.length > 0)
-    {
-        cell.textLabel.text = freight.freightDescription;
-    }
-    else
-    {
-        NSMutableString* str = [[NSMutableString alloc]init];
-        [str appendString:@"Freight Item "];
-        NSInteger i = 1;
-        [str appendString: [NSString stringWithFormat:@"%d", (indexPath.row + i)]];
-        
-        cell.textLabel.text = str;
-    }
-    
-    NSMutableString* detail = [[NSMutableString alloc]init];
-    
-    [detail appendString:[decimalFormatter stringFromNumber:freight.weight]];
-    [detail appendString:freight.weightUOM];
-    [detail appendString:@", Class: "];
-    [detail appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
-    [detail appendString:@", "];
-    [detail appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
-    [detail appendString:@" Pallets"];
-    
+        [detail appendFormat:@", Description:%@", freight.freightDescription];
+
+    cell.textLabel.text = label;
     cell.detailTextLabel.text = detail;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.fetchedResultsController.fetchedObjects.count;
+    
+    int nRows = self.fetchedResultsController.fetchedObjects.count;
+    
+    self.editButtonItem.enabled = (nRows > 0);
+    
+    if (self.isEditing && (nRows ==0))
+    {
+        [self setEditing:NO animated:YES];
+        self.editButtonItem.title = @"Delete";
+    }
+    
+    return nRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -300,7 +325,6 @@
     return cell;
 }
 
-
 #pragma mark Freight Item Management
 
 // Override to support conditional editing of the table view.
@@ -310,20 +334,59 @@
     return YES;
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(isInsert)
+    {
+        isInsert = NO;
+        return UITableViewCellEditingStyleInsert;
+    }
+    else
+    {
+        return UITableViewCellEditingStyleDelete;
+    }
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    /*else if (editingStyle == UITableViewCellEditingStyleInsert)
-    {
+        //FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        if (freight != nil)
+        {
+            [_quoteRequest removeFreightItemsObject:freight];
+        }
+        
+        // uncomment to have a confirmation alert
+        /*
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"Delete Item?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+        editIndex = indexPath;
+        alert.delegate = self;
+        [alert show];*/
+    }
+    //else if (editingStyle == UITableViewCellEditingStyleInsert)
+    //{
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    } */
+    //}
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //NSIndexPath *path = [self.tableView indexPathForSelectedRow];
+    if (buttonIndex != [alertView cancelButtonIndex])
+    {
+        FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:editIndex];
+        
+        if (freight != nil)
+        {
+            [_quoteRequest removeFreightItemsObject:freight];
+        }
+    }
+}
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath

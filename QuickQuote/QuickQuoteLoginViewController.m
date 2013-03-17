@@ -7,6 +7,7 @@
 //
 
 #import "QuickQuoteLoginViewController.h"
+#import "QuickQuoteAppDelegate.h"
 #import "User.h"
 #import "Data.h" // delete?
 
@@ -33,11 +34,13 @@
 
 @synthesize delegate;
 
+@synthesize managedObjectContext = _managedObjectContext;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self)
+    {
     }
     return self;
 }
@@ -46,7 +49,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+
+    // Get a reference to the Managed Object Context
+    // note: This is NOT the best way to do this, just quick and dirty
+    QuickQuoteAppDelegate *appDelegate =  (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
+    _managedObjectContext = [appDelegate managedObjectContext];
+
     userTextField.delegate = self;
     passwordTextField.delegate = self;
 }

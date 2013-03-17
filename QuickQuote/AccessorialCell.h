@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class PersistedAccessorial;
+
+@protocol AccessorialCellDelegate
+- (void)stateChanged:(BOOL)newState : (PersistedAccessorial*)accessorial;
+@end
+
 @interface AccessorialCell : UITableViewCell
+@property (weak, nonatomic) id <AccessorialCellDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UISwitch *controlSwitch;
+- (IBAction)actionSwitchChanged:(id)sender;
+
+@property (strong, nonatomic) PersistedAccessorial* accessorial;
 
 @end

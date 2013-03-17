@@ -20,11 +20,30 @@
     RateResponse* _rate;
 }
 
-
-@property (weak, nonatomic) IBOutlet UILabel *carrierName;
 @property (retain, nonatomic) RateResponse* rate;
 - (IBAction)closeAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 @property (weak, nonatomic) id <RateDetailViewControllerDelegate> delegate;
+
+@property (weak, nonatomic) IBOutlet UILabel *carrierNameOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *addressOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *cityStateZipOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *phoneFaxOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *contactEmailOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *contactOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *contactTitleOrigin;
+
+@property (weak, nonatomic) IBOutlet UILabel *contactTitleDest;
+@property (weak, nonatomic) IBOutlet UILabel *carrierNameDest;
+@property (weak, nonatomic) IBOutlet UILabel *addressDest;
+@property (weak, nonatomic) IBOutlet UILabel *cityStateZipDest;
+@property (weak, nonatomic) IBOutlet UILabel *phoneFaxDest;
+@property (weak, nonatomic) IBOutlet UILabel *contactEmailDest;
+@property (weak, nonatomic) IBOutlet UILabel *contactDest;
+
+@property (weak, nonatomic) IBOutlet UILabel *parametersUsed1;
+@property (weak, nonatomic) IBOutlet UILabel *parametersUsed2;
+
+
 
 @end

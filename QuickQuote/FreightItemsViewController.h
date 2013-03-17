@@ -8,21 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "QuickQuoteMasterViewController.h"
-#import "FreightItemEditViewController.h"
 
 @class FreightItem;
 @class QuoteRequest;
 
 @interface FreightItemsViewController : UITableViewController
                                     <UITableViewDelegate, SubstitutableDetailViewController,
-                                    FreightItemEditViewControllerDelegate, NSFetchedResultsControllerDelegate>
+                                     NSFetchedResultsControllerDelegate>
 {
 
 }
 
 @property (nonatomic, retain) FreightItem* selectedFreight;
 
-//@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) NSMutableDictionary* huMap;
 
 @property (strong, nonatomic) UIPopoverController *detailPopoverController;
 

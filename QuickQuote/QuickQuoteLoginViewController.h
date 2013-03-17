@@ -27,6 +27,9 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 @property (strong, nonatomic) UIPopoverController *companyPickerViewController;
 @property (strong, nonatomic) UIPopoverController *enterprisePickerViewController;
 
+@property (strong, nonatomic) UIPopoverController *companyPickerViewController;
+@property (strong, nonatomic) UIPopoverController *enterprisePickerViewController;
+
 @property (weak, nonatomic) IBOutlet UILabel *redLabel;
 @property (weak, nonatomic) IBOutlet UILabel *greenLabel;
 
@@ -36,6 +39,8 @@ CompanyPickerViewControllerDelegate, EnterprisePickerViewControllerDelegate, UIT
 @property (strong, nonatomic) IBOutlet UIButton *companyButton;
 @property (strong, nonatomic) IBOutlet UIButton *enterpriseButton;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
+
+@property (strong, nonatomic) NSManagedObjectContext* managedObjectContext;
 
 // Interface Builder actions are used for custom click events
 - (IBAction)signInAction:(id)sender;
