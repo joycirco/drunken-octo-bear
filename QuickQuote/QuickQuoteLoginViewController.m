@@ -137,7 +137,7 @@
 
 - (IBAction)signInAction:(id)sender
 {
-    if ([self authenticateUser])
+    if ([self authenticateUser:TRUE])
     {
         [self.delegate quickQuoteLoginViewControllerDidFinish];
     }
@@ -155,7 +155,7 @@
 
 -(void)textFieldEdited
 {
-    [self preAuthenticateUser];
+    [self preAuthenticateUser:FALSE];
 }
 
 
@@ -168,7 +168,7 @@
     NSLog(@"Welcome Legit User");
 }
 
--(BOOL)preAuthenticateUser
+-(BOOL)preAuthenticateUser:(BOOL*)signInClicked
 {
     NSString *userTextFieldString = [userTextField.text stringByTrimmingCharactersInSet:
                                      [NSCharacterSet whitespaceCharacterSet]];
@@ -200,13 +200,15 @@
             return true;
         }
     }
-    [self resetControls];
+    
+    if (!signInClicked)
+        [self resetControls];
     return false;
 }
 
--(BOOL)authenticateUser
+-(BOOL)authenticateUser:(BOOL*)signInClicked
 {
-    if ([self preAuthenticateUser])
+    if ([self preAuthenticateUser:signInClicked])
     {
         return true;
     }
@@ -216,7 +218,15 @@
         [passwordTextField.text isEqualToString:[@"" stringByTrimmingCharactersInSet:
                                                  [NSCharacterSet whitespaceCharacterSet]]])
     {
+        // Skip sign in and rate anonymously for now...
+        if (redLabel.hidden == false)
+        {
+            // load default sign in information at some point or just have it loaded and don't override it
+            return true;
+        }
+        
         redLabel.text = @"Please enter all required information before continuing";
+        greenLabel.hidden = false; 
         redLabel.hidden = false;
     }
     else
@@ -239,8 +249,6 @@
 }
 -(void)configureButtonVisibility: (NSArray*)arrayToCheck : (UIButton*)button : (BOOL*)isEnterprise
 {
-    // User *currentUser = [DataModel sharedInstance].currentUser;
-    
     if ([arrayToCheck count] > 1)
     {
         if (isEnterprise)
