@@ -57,6 +57,14 @@
     passwordTextField.delegate = self;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:FALSE];
+    
+    // if I do it immediately it doesn't work...
+    [self performSelector:@selector(configureButtonPositions) withObject:nil afterDelay:0.1f];
+}
+
 -(void)resetControls
 {
     [companyButton setHidden:true];
@@ -104,13 +112,14 @@
 {
     // this top line appears to be resetting the view to original button positions
     [self.companyButton setTitle:selectedCompanyName forState:UIControlStateNormal];
-    //[self updateLoginScreen]; // not as expected
+    // we need to dispatch event or figure out a proper way to do this
+    [self performSelector:@selector(updateLoginScreen) withObject:nil afterDelay:0.05f];
 }
 
 -(void)selectedAEnterprise:(NSString*)selectedEnterpriseName
 {
     [self.enterpriseButton setTitle:selectedEnterpriseName forState:UIControlStateNormal];
-    [self updateLoginScreen]; // nbot as expected
+     [self performSelector:@selector(updateLoginScreen) withObject:nil afterDelay:0.05f];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
@@ -251,6 +260,7 @@
 {
     if ([arrayToCheck count] > 1)
     {
+        
         if (isEnterprise)
         {
             if ([enterpriseButton.titleLabel.text isEqualToString:@"Select Enterprise"])
