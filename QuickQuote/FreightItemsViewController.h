@@ -27,9 +27,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnAddFreight;
 
--(IBAction)cancelledFreightItemEdit:(UIStoryboardSegue *)segue;
--(IBAction)saveFreightItemEdit:(UIStoryboardSegue *)segue;
-
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) QuoteRequest *quoteRequest;
