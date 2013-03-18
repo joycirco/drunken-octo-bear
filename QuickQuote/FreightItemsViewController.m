@@ -90,13 +90,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    //NSArray *tempArray2= [[NSArray alloc] initWithObjects:self.btnAddFreight,self.editButtonItem,nil];
-    //self.navigationItem.rightBarButtonItems=tempArray2;
+    
+    NSArray *btnArray= [[NSArray alloc] initWithObjects:self.btnAddFreight,self.editButtonItem,nil];
+    self.navigationItem.rightBarButtonItems=btnArray;
 
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.btnAddFreight;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.editButtonItem.title = @"Delete";
     
-    self.navigationItem.rightBarButtonItem = self.btnAddFreight;
     
     // load map for handling units
     _huMap = [[NSMutableDictionary alloc]init];
