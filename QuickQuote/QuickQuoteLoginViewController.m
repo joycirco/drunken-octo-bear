@@ -58,6 +58,7 @@
     // note: This is NOT the best way to do this, just quick and dirty
     QuickQuoteAppDelegate *appDelegate =  (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
     managedObjectContext = [appDelegate managedObjectContext];
+    [DataModel sharedInstance].managedObjectContext = appDelegate.managedObjectContext;
 
     userTextField.delegate = self;
     passwordTextField.delegate = self;
@@ -125,6 +126,7 @@
 -(void)selectedAEnterprise:(NSString*)selectedEnterpriseName
 {
     [self.enterpriseButton setTitle:selectedEnterpriseName forState:UIControlStateNormal];
+    [self.companyButton setTitle:@"Select Company" forState:UIControlStateNormal];
      [self performSelector:@selector(updateLoginScreen) withObject:nil afterDelay:0.05f];
 }
 
