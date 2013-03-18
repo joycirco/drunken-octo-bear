@@ -28,6 +28,7 @@ NSString *firstLogin = @"yes"; // just for now
 
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize loginViewController;
+@synthesize managedObjectContext;
 
 #pragma mark - Managing the detail item
 

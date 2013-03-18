@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *centerMarker;
 @property (strong, nonatomic) UIViewController *loginViewController;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

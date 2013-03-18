@@ -43,7 +43,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *enterpriseButton;
 @property (weak, nonatomic) IBOutlet UIButton *signinButton;
 
+<<<<<<< HEAD
+@property (strong, nonatomic) NSManagedObjectContext* managedObjectContext;
+=======
 //@property (strong, nonatomic) DataModel *dataModel;
+>>>>>>> TS50-login
 
 // Interface Builder actions are used for custom click events
 - (IBAction)signInAction:(id)sender;

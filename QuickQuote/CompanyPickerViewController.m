@@ -8,7 +8,7 @@
 
 #import "CompanyPickerViewController.h"
 #import "Company.h"
-#import "Data.h"
+#import "DataModel.h"
 
 @interface CompanyPickerViewController ()
 
@@ -16,7 +16,7 @@
 
 @implementation CompanyPickerViewController
 
-@synthesize fakeCompaniesDataArray;
+@synthesize companies;
 @synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -34,12 +34,17 @@
     // this should be fixed...
     
     // clear & reallocate memory
-    self.fakeCompaniesDataArray = [[NSMutableArray alloc] init];
+    self.companies = [[NSMutableArray alloc] init];
     
-    // reload
-    for (Company* c in [Data sharedInstance].user.companies)
+    NSArray *enterprises = [DataModel sharedInstance].currentUser.enterprises.allObjects;
+    
+    for (Enterprise *enterprise in enterprises)
     {
-        [self.fakeCompaniesDataArray addObject:c.company_display];
+        if (enterprise.enterpriseId == [DataModel sharedInstance].currentUser.selectedEnterpriseId)
+        {
+            self.enterprise = enterprise;
+            self.companies = self.enterprise.companies.allObjects;
+        }
     }
 }
 
@@ -63,24 +68,22 @@
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    NSLog(@"%i @", [self.fakeCompaniesDataArray count]);
-    return [self.fakeCompaniesDataArray count];
+    //NSLog(@"%i @", [self.companiesDataArray count]);
+    return [self.companies count];
  
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [self.fakeCompaniesDataArray objectAtIndex:row];
+    Company *company = [self.companies objectAtIndex:row];
+    return company.companyName;
 }
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row   inComponent:(NSInteger)component
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSString *selectedCompany = [NSString stringWithFormat:@"%@", [fakeCompaniesDataArray objectAtIndex:row]];
-    [Data sharedInstance].user.selectedCompany = selectedCompany;
-    //NSLog(@"%@", [Data sharedInstance].selectedCompany);
-    
-    [self.delegate selectedACompany];
-    // send a message to the parent view controller to go ahead and update the button with the text...
+    Company *selectedCompany = [companies objectAtIndex:row];
+    [DataModel sharedInstance].currentUser.selectedCompanyId = selectedCompany.companyId;
+    [self.delegate selectedACompany:selectedCompany.companyName];
     
 }
 

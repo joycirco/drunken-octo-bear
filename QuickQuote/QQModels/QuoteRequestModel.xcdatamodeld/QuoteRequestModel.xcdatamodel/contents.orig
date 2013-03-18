@@ -98,13 +98,22 @@
         <relationship name="enterprises" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Enterprise" inverseName="user" inverseEntity="Enterprise" syncable="YES"/>
     </entity>
     <elements>
+<<<<<<< HEAD
         <element name="Accessorial" positionX="-11" positionY="123" width="128" height="194"/>
         <element name="AccessorialType" positionX="160" positionY="204" width="128" height="75"/>
+        <element name="Credentials" positionX="-225" positionY="78" width="128" height="120"/>
+        <element name="FreightItem" positionX="-198" positionY="324" width="128" height="270"/>
+        <element name="HandlingUnitType" positionX="306" positionY="108" width="128" height="90"/>
+        <element name="PersistedAccessorial" positionX="160" positionY="99" width="128" height="90"/>
+=======
+        <element name="Accessorial" positionX="-11" positionY="123" width="128" height="135"/>
+        <element name="AccessorialType" positionX="160" positionY="192" width="128" height="90"/>
         <element name="Company" positionX="-504" positionY="473" width="128" height="103"/>
         <element name="Credentials" positionX="-225" positionY="78" width="128" height="120"/>
         <element name="Enterprise" positionX="-702" positionY="530" width="128" height="118"/>
         <element name="FreightItem" positionX="-216" positionY="333" width="128" height="270"/>
         <element name="HandlingUnitType" positionX="160" positionY="99" width="128" height="90"/>
+>>>>>>> TS50-login
         <element name="QuoteRequest" positionX="-459" positionY="99" width="128" height="224"/>
         <element name="User" positionX="-245" positionY="648" width="128" height="163"/>
     </elements>

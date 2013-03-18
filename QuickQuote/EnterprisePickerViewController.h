@@ -13,7 +13,7 @@
 @protocol EnterprisePickerViewControllerDelegate
 @required
 -(void)enterprisePickerViewControllerDidFinish:(EnterprisePickerViewController *)controller;
--(void)selectedAEnterprise;
+-(void)selectedAEnterprise:(NSString*)enterpriseName;
 @end
 
 @interface EnterprisePickerViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
