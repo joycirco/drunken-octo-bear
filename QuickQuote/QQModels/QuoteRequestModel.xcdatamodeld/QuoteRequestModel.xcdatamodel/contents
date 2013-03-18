@@ -105,6 +105,7 @@
         <element name="Enterprise" positionX="-702" positionY="530" width="128" height="118"/>
         <element name="FreightItem" positionX="-216" positionY="333" width="128" height="270"/>
         <element name="HandlingUnitType" positionX="160" positionY="99" width="128" height="90"/>
+        <element name="PersistedAccessorial" positionX="160" positionY="288" width="128" height="90"/>
         <element name="QuoteRequest" positionX="-459" positionY="99" width="128" height="224"/>
         <element name="User" positionX="-245" positionY="648" width="128" height="163"/>
     </elements>

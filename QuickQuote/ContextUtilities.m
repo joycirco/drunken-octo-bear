@@ -168,6 +168,10 @@
     {
         [self CreatePersistedAccessorial: [accDesc objectAtIndex:i ] : [accCode objectAtIndex:i] : [accTypes objectAtIndex:i] : context];
     }
+    
+    [self generateEnterpriseData:context];
+    [self generateCompanyData:context];
+    [self generateUserData:context];
 }
 
 -(void) CreatePersistedAccessorial:(NSString*)accName :(NSString*)accCode :(NSNumber*)accTypeID :(NSManagedObjectContext*)context
@@ -191,9 +195,6 @@
     h.handlingUnitTypeCode = hutCode;
     h.handlingUnitTypeDescription = hutDesc;
     
-    [self generateEnterpriseData:context];
-    [self generateCompanyData:context];
-    [self generateUserData:context];
     // need to associate company and enterprises with users now...
 }
 
