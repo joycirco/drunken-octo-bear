@@ -7,6 +7,7 @@
 //
 
 #import "QuickQuoteDetailViewController.h"
+//#import "QuickQuoteResultsViewController.h"
 
 @interface QuickQuoteDetailViewController ()
 {
@@ -31,6 +32,20 @@ NSString *firstLogin = @"yes"; // just for now
 
 #pragma mark - Managing the detail item
 
+/*- (void)setDetailItem:(id)newDetailItem
+{
+    if (_detailItem != newDetailItem) {
+        _detailItem = newDetailItem;
+        
+        // Update the view.
+        [self configureView];
+    }
+
+    if (self.masterPopoverController != nil) {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }        
+}*/
+
 - (void)configureView
 {
     // Update the user interface for the detail item.
@@ -48,41 +63,24 @@ NSString *firstLogin = @"yes"; // just for now
 {
     [super viewDidLoad];
     self.view.frame = self.view.bounds;
-        
-	// Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
-}
-
--(void)configureBackgroundImage
-{
-    User *currentUser = [DataModel sharedInstance].currentUser;
     
-    UIImage *image = [UIImage new];
-    if ([currentUser.getCurrentEnterprise.enterpriseName
-        isEqualToString:@"eShipping"] && ![currentUser.loginName isEqualToString:@"anonymous"])
-    {
-        image = [UIImage imageNamed: @"eShipping_Logo.png"];
-    }
-    else if ([currentUser.getCurrentEnterprise.enterpriseName
-         isEqualToString:@"Exchange"] && ![currentUser.loginName isEqualToString:@"anonymous"])
-    {
-        image = [UIImage imageNamed: @"eShipping-Exchange.png"];
-    }
-    else
-    {
-        image = [UIImage imageNamed:@"ENGAGED_TECH_LOGO_LG.png"];
-    }
-        
+    //UIImage *image = [UIImage imageNamed: @"eShipping-Exchange.png"];
+    UIImage *image = [UIImage imageNamed: @"eShipping_Logo.png"];
+    
     self.imageView.contentMode = UIViewContentModeCenter;
     self.imageView.alpha = .6;
     [self.imageView setImage:image];
+    
+    
+	// Do any additional setup after loading the view, typically from a nib.
+    [self configureView];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil
+    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -144,6 +142,31 @@ NSString *firstLogin = @"yes"; // just for now
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+<<<<<<< HEAD
+=======
+/*
+// overrides the split/detail view and pulls up the login screen for us.
+// Split Navigation views have to be the root, but that's okay...
+// I turned animation off so there is no sneak peak at the inner
+// portion of the application before the login screen is displayed...
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (firstLogin == @"yes")
+    {
+         firstLogin = @"no";
+        [super viewDidAppear:animated];
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [vc setModalPresentationStyle:UIModalPresentationFullScreen];
+        
+        [self presentViewController:vc animated:NO completion:nil];
+    }
+    
+}
+*/
+
+>>>>>>> TS50-login
 #pragma mark - SubstitutableDetailViewController
 #pragma mark Managing the popover
 
@@ -163,16 +186,14 @@ NSString *firstLogin = @"yes"; // just for now
     //if (_progress_ind == nil && _subView == nil)
     if (_progress_ind == nil)
     {
-       _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _progress_ind.center = self.view.center;
         _progress_ind.alpha = 1.0;
-       _subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-       [_subView addSubview:_progress_ind];
-       [self.imageView.superview addSubview:_subView];
-       [self.imageView addSubview:_progress_ind];
-        _subView.center = self.view.center;
-        // center hack, because center to the view or image view isn't working well
-        _progress_ind.frame = CGRectMake(300, 333, 100, 100);
+        //_subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+        //[_subView addSubview:_progress_ind];
+        //[self.view.superview addSubview:_subView];
+        [self.view.superview addSubview:_progress_ind];
+        //_progress_ind.center = _subView.center;
     }
 
     [_progress_ind startAnimating];
@@ -180,7 +201,18 @@ NSString *firstLogin = @"yes"; // just for now
 
 -(void)stopActivityIndicator
 {
-    [_progress_ind stopAnimating];
+    if (_progress_ind != nil)
+    {
+        [_progress_ind stopAnimating];
+        [_progress_ind removeFromSuperview];
+        _progress_ind = nil;
+    }
+    
+    if (_subView != nil)
+    {
+        [_subView removeFromSuperview];
+        _subView = nil;
+    }
 }
 
 @end
