@@ -53,6 +53,8 @@ NSString *firstLogin = @"yes"; // just for now
     [self configureView];
 }
 
+// there is also a reference to this in the rate call...to pop the right image back in place
+// the screen keeps reverting back to storyboard settings...
 -(void)configureBackgroundImage
 {
     User *currentUser = [DataModel sharedInstance].currentUser;
@@ -176,6 +178,7 @@ NSString *firstLogin = @"yes"; // just for now
     }
 
     [_progress_ind startAnimating];
+    [self configureBackgroundImage]; // it keeps getting overwritten... put it back. (look into this more in depth)
 }
 
 -(void)stopActivityIndicator
