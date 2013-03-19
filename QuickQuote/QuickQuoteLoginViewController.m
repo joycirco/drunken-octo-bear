@@ -178,7 +178,7 @@
 -(void)loadUser:(User*)userToLoad
 {
     [DataModel sharedInstance].currentUser = userToLoad;
-    [greenLabel setHidden:true];
+
     [redLabel setHidden:true];
     [self updateLoginScreen];
     NSLog(@"Welcome Legit User");
@@ -249,7 +249,6 @@
         }
         
         redLabel.text = @"Please enter all required information before continuing";
-        greenLabel.hidden = FALSE;
         redLabel.hidden = FALSE;
     }
 
