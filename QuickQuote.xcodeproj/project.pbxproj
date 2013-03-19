@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A400437D16BF41A200D25DF6 /* QuickQuoteLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A400437C16BF41A200D25DF6 /* QuickQuoteLoginViewController.m */; };
+		A412908D16F7BE220066E335 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = A412908C16F7BE210066E335 /* Company.m */; };
+		A412909016F7BE230066E335 /* Enterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = A412908F16F7BE230066E335 /* Enterprise.m */; };
+		A412909616F7BE270066E335 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = A412909516F7BE270066E335 /* User.m */; };
+		A412909916F7BE840066E335 /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = A412909816F7BE830066E335 /* Credentials.m */; };
+		A412909C16F7BEF50066E335 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A412909B16F7BEF50066E335 /* QuoteRequest.m */; };
 		A421476216B2306A003FDF9C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476116B2306A003FDF9C /* UIKit.framework */; };
 		A421476416B2306A003FDF9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476316B2306A003FDF9C /* Foundation.framework */; };
 		A421476616B2306A003FDF9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476516B2306A003FDF9C /* CoreGraphics.framework */; };
@@ -26,9 +31,6 @@
 		A421479316B2306B003FDF9C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A421479116B2306B003FDF9C /* InfoPlist.strings */; };
 		A421479616B2306B003FDF9C /* QuickQuoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A421479516B2306B003FDF9C /* QuickQuoteTests.m */; };
 		A42147A516B243F5003FDF9C /* LoginSeague.m in Sources */ = {isa = PBXBuildFile; fileRef = A42147A416B243F5003FDF9C /* LoginSeague.m */; };
-		A46459E416F6B20D00A78387 /* Enterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = A46459E316F6B20D00A78387 /* Enterprise.m */; };
-		A46459E716F6B20D00A78387 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = A46459E616F6B20D00A78387 /* User.m */; };
-		A46459EA16F6B20D00A78387 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = A46459E916F6B20D00A78387 /* Company.m */; };
 		A46459ED16F6B32F00A78387 /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A46459EC16F6B32F00A78387 /* DataModel.m */; };
 		A477081F16EEC21400F67473 /* AccessorialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A477081616EEC21300F67473 /* AccessorialCell.m */; };
 		A477082116EEC21400F67473 /* CompanyPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A477081A16EEC21300F67473 /* CompanyPickerViewController.m */; };
@@ -142,8 +144,6 @@
 		FFC6E38D16ED4C0A00D7B026 /* FreightItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */; };
 		FFDBC56C16EA494E00255B6B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDBC56B16EA494E00255B6B /* CoreData.framework */; };
 		FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */; };
-		FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865B316EAC9D900222386 /* QuoteRequest.m */; };
-		FFE865BD16EAC9DA00222386 /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865BC16EAC9DA00222386 /* Credentials.m */; };
 		FFF3EB4F16E290FA007F9E92 /* FreightItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF3EB4E16E290FA007F9E92 /* FreightItemsViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -160,6 +160,16 @@
 /* Begin PBXFileReference section */
 		A400437B16BF41A200D25DF6 /* QuickQuoteLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickQuoteLoginViewController.h; sourceTree = "<group>"; };
 		A400437C16BF41A200D25DF6 /* QuickQuoteLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickQuoteLoginViewController.m; sourceTree = "<group>"; };
+		A412908B16F7BE210066E335 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
+		A412908C16F7BE210066E335 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
+		A412908E16F7BE220066E335 /* Enterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enterprise.h; sourceTree = "<group>"; };
+		A412908F16F7BE230066E335 /* Enterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enterprise.m; sourceTree = "<group>"; };
+		A412909416F7BE260066E335 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		A412909516F7BE270066E335 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		A412909716F7BE830066E335 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
+		A412909816F7BE830066E335 /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Credentials.m; sourceTree = "<group>"; };
+		A412909A16F7BEF50066E335 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoteRequest.h; sourceTree = "<group>"; };
+		A412909B16F7BEF50066E335 /* QuoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoteRequest.m; sourceTree = "<group>"; };
 		A421475D16B2306A003FDF9C /* QuickQuote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickQuote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A421476116B2306A003FDF9C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A421476316B2306A003FDF9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -186,12 +196,6 @@
 		A421479516B2306B003FDF9C /* QuickQuoteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickQuoteTests.m; sourceTree = "<group>"; };
 		A42147A316B243F5003FDF9C /* LoginSeague.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSeague.h; sourceTree = "<group>"; };
 		A42147A416B243F5003FDF9C /* LoginSeague.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSeague.m; sourceTree = "<group>"; };
-		A46459E216F6B20D00A78387 /* Enterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enterprise.h; sourceTree = "<group>"; };
-		A46459E316F6B20D00A78387 /* Enterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enterprise.m; sourceTree = "<group>"; };
-		A46459E516F6B20D00A78387 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		A46459E616F6B20D00A78387 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		A46459E816F6B20D00A78387 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
-		A46459E916F6B20D00A78387 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		A46459EB16F6B32F00A78387 /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
 		A46459EC16F6B32F00A78387 /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		A477081516EEC21300F67473 /* AccessorialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialCell.h; sourceTree = "<group>"; };
@@ -409,10 +413,6 @@
 		FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FreightItem.m; path = QuickQuote/FreightItem.m; sourceTree = "<group>"; };
 		FFDBC56B16EA494E00255B6B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FFDBC57116EA529500255B6B /* QuoteRequestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuoteRequestModel.xcdatamodel; sourceTree = "<group>"; };
-		FFE865B216EAC9D900222386 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
-		FFE865B316EAC9D900222386 /* QuoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuoteRequest.m; path = QuickQuote/QuoteRequest.m; sourceTree = "<group>"; };
-		FFE865BB16EAC9DA00222386 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Credentials.h; path = QuickQuote/Credentials.h; sourceTree = "<group>"; };
-		FFE865BC16EAC9DA00222386 /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Credentials.m; path = QuickQuote/Credentials.m; sourceTree = "<group>"; };
 		FFF3EB4D16E290FA007F9E92 /* FreightItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemsViewController.h; sourceTree = "<group>"; };
 		FFF3EB4E16E290FA007F9E92 /* FreightItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -805,22 +805,22 @@
 				FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */,
 				FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */,
 				FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */,
-				A46459E816F6B20D00A78387 /* Company.h */,
-				A46459E916F6B20D00A78387 /* Company.m */,
-				A46459E516F6B20D00A78387 /* User.h */,
-				A46459E616F6B20D00A78387 /* User.m */,
-				A46459E216F6B20D00A78387 /* Enterprise.h */,
-				A46459E316F6B20D00A78387 /* Enterprise.m */,
+				A412909A16F7BEF50066E335 /* QuoteRequest.h */,
+				A412909B16F7BEF50066E335 /* QuoteRequest.m */,
+				A412909716F7BE830066E335 /* Credentials.h */,
+				A412909816F7BE830066E335 /* Credentials.m */,
+				A412908B16F7BE210066E335 /* Company.h */,
+				A412908C16F7BE210066E335 /* Company.m */,
+				A412909416F7BE260066E335 /* User.h */,
+				A412909516F7BE270066E335 /* User.m */,
+				A412908E16F7BE220066E335 /* Enterprise.h */,
+				A412908F16F7BE230066E335 /* Enterprise.m */,
 				FF1EE9BA16F013D100A973C0 /* Accessorial.h */,
 				FF1EE9BB16F013D100A973C0 /* Accessorial.m */,
 				FF1EE9B716F0139A00A973C0 /* AccessorialType.h */,
 				FF1EE9B816F0139A00A973C0 /* AccessorialType.m */,
 				FFC6E38B16ED4C0A00D7B026 /* FreightItem.h */,
 				FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */,
-				FFE865BB16EAC9DA00222386 /* Credentials.h */,
-				FFE865BC16EAC9DA00222386 /* Credentials.m */,
-				FFE865B216EAC9D900222386 /* QuoteRequest.h */,
-				FFE865B316EAC9D900222386 /* QuoteRequest.m */,
 				FF0D2A4616ED1433006B547F /* Keep.h */,
 				FF0D2A4716ED1433006B547F /* Keep.m */,
 				FF0D2A5216ED1A2D006B547F /* ContextUtilities.h */,
@@ -1040,8 +1040,6 @@
 				FF916DA116D981F100131DB8 /* ArrayOfRateResponse.m in Sources */,
 				FFF3EB4F16E290FA007F9E92 /* FreightItemsViewController.m in Sources */,
 				FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */,
-				FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */,
-				FFE865BD16EAC9DA00222386 /* Credentials.m in Sources */,
 				FF77867116EBA4C200CAAF81 /* FreightItemViewController.m in Sources */,
 				FF0D2A4516ED0DA9006B547F /* AccessorialsViewController.m in Sources */,
 				FF0D2A4816ED1433006B547F /* Keep.m in Sources */,
@@ -1058,10 +1056,12 @@
 				FF118A7016F4D9DF0065DFB3 /* RateResultCell.m in Sources */,
 				FF9060F916F4F4750040FFC6 /* LogoImageView.m in Sources */,
 				FF9060FC16F4F7B50040FFC6 /* PersistedAccessorial.m in Sources */,
-				A46459E416F6B20D00A78387 /* Enterprise.m in Sources */,
-				A46459E716F6B20D00A78387 /* User.m in Sources */,
-				A46459EA16F6B20D00A78387 /* Company.m in Sources */,
 				A46459ED16F6B32F00A78387 /* DataModel.m in Sources */,
+				A412908D16F7BE220066E335 /* Company.m in Sources */,
+				A412909016F7BE230066E335 /* Enterprise.m in Sources */,
+				A412909616F7BE270066E335 /* User.m in Sources */,
+				A412909916F7BE840066E335 /* Credentials.m in Sources */,
+				A412909C16F7BEF50066E335 /* QuoteRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

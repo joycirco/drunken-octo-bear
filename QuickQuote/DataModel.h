@@ -12,7 +12,6 @@
 @interface DataModel : NSObject
 
 @property (nonatomic, retain) User *currentUser;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 + (DataModel*)sharedInstance;
 

@@ -2,7 +2,7 @@
 //  QuoteRequest.m
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/8/13.
+//  Created by Steven Tuckness on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -22,7 +22,6 @@
 @dynamic accessorials;
 @dynamic credentials;
 @dynamic freightItems;
-
 
 - (id) init
 {

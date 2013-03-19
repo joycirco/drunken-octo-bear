@@ -24,6 +24,7 @@
 #import "RSPArrayOfRateResponsePrivileged.h"
 #import "RateResponse.h"
 #import "QuoteReturn.h"
+#import "Company.h"
 
 
 @interface QuickQuoteMasterViewController ()
@@ -568,6 +569,10 @@
     {
     
         [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
+
+        Enterprise *e = [[DataModel sharedInstance].currentUser getCurrentEnterprise];
+        Company *c = [e getCurrentCompany];
+        _quoteRequest.credentials = c.credentials;
         
         // Create the service
         RSPRateServicePrivileged* service = [[RSPRateServicePrivileged alloc] init];

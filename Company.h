@@ -2,14 +2,14 @@
 //  Company.h
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/17/13.
+//  Created by Steven Tuckness on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Enterprise;
+@class Credentials, Enterprise;
 
 @interface Company : NSManagedObject
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * companyName;
 @property (nonatomic, retain) NSDate * timeStamp;
 @property (nonatomic, retain) NSSet *enterprise;
+@property (nonatomic, retain) Credentials *credentials;
 @end
 
 @interface Company (CoreDataGeneratedAccessors)

@@ -38,7 +38,6 @@
 @synthesize signinButton;
 
 @synthesize delegate;
-//@synthesize dataModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +57,6 @@
     // note: This is NOT the best way to do this, just quick and dirty
     QuickQuoteAppDelegate *appDelegate =  (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
     managedObjectContext = [appDelegate managedObjectContext];
-    [DataModel sharedInstance].managedObjectContext = appDelegate.managedObjectContext;
 
     userTextField.delegate = self;
     passwordTextField.delegate = self;
@@ -194,7 +192,6 @@
     
     // get reference to app delegate
     QuickQuoteAppDelegate *appDelegate = (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [DataModel sharedInstance].managedObjectContext = appDelegate.managedObjectContext;
     managedObjectContext = appDelegate.managedObjectContext;
     
     
@@ -223,11 +220,18 @@
     return false;
 }
 
+// reorganize this mess
 -(BOOL)authenticateUser:(BOOL*)signInClicked
 {
+    BOOL *userNameAndPasswordCorrect = FALSE;
+    
     if ([self preAuthenticateUser:signInClicked])
     {
-        return true;
+        userNameAndPasswordCorrect = TRUE;
+        
+        if ([self validateButtonSelections])
+            return TRUE;
+        // everything is good
     }
     
     if ([userTextField.text isEqualToString:[@"" stringByTrimmingCharactersInSet:
@@ -236,23 +240,77 @@
                                                  [NSCharacterSet whitespaceCharacterSet]]])
     {
         // Skip sign in and rate anonymously for now...
-        if (redLabel.hidden == false)
+        if (redLabel.hidden == FALSE &&
+            [redLabel.text isEqualToString:@"Please enter all required information before continuing"])
         {
-            // load default sign in information at some point or just have it loaded and don't override it
-            return true;
+            [self loadAnonymousUser];
+            return TRUE;
         }
         
         redLabel.text = @"Please enter all required information before continuing";
-        greenLabel.hidden = false; 
-        redLabel.hidden = false;
+        greenLabel.hidden = FALSE;
+        redLabel.hidden = FALSE;
     }
-    else
+
+    if (userNameAndPasswordCorrect == FALSE && redLabel.hidden)
     {
-        redLabel.text = @"The username for password you entered is incorrect";
-        [redLabel setHidden:false];
+        redLabel.text = @"The username for the password you entered is incorrect";
+        [redLabel setHidden:FALSE];
+    }
+      
+    return FALSE;
+}
+
+-(void)loadAnonymousUser
+{
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"Could not save: %@", [error localizedDescription]);
     }
     
-    return false;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User"
+                                              inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    User *user = [User alloc];
+                  
+    user = [fetchedObjects objectAtIndex:3];
+    [self loadUser:user];
+    NSLog(@"loaded anonymous user");
+}
+
+// validate that they have selected an enterprise and a company
+// if they are not logging as anonymous
+-(BOOL)validateButtonSelections
+{
+    if ([self validateButtonSelection:@"Select Enterprise" : enterpriseButton] &&
+        [self validateButtonSelection:@"Select Company" : companyButton])
+ 
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+-(BOOL)validateButtonSelection : (NSString*)title : (UIButton*)button
+{
+    if (![button.titleLabel.text isEqualToString:title])
+    {
+        return TRUE;
+    }
+    
+    if ([button.titleLabel.text isEqualToString:@"Select Company"])
+    {
+        redLabel.text = @"Please select a Company";
+    }
+    
+    if ([button.titleLabel.text isEqualToString:@"Select Enterprise"])
+    {
+        redLabel.text = @"Please select a Enterprise";
+    }
+    redLabel.hidden = FALSE;
+    return FALSE;
 }
 
 -(void)updateLoginScreen
@@ -260,7 +318,7 @@
     User *currentUser = [DataModel sharedInstance].currentUser;
     
     [self configurePreSelections:currentUser];
-    [self configureButtonVisibility: [self getCurrentEnterprise].companies.allObjects :companyButton :FALSE];
+    [self configureButtonVisibility: [currentUser getCurrentEnterprise].companies.allObjects :companyButton :FALSE];
     [self configureButtonVisibility:currentUser.enterprises.allObjects :enterpriseButton :TRUE];
     [self configureButtonPositions];
 }
@@ -296,14 +354,18 @@
     {
         Enterprise *enterprise = enterprises[0];
         currentUser.selectedEnterpriseId = enterprise.enterpriseId;
+        [enterpriseButton setTitle:enterprise.enterpriseName forState:UIControlStateNormal];
+        [self performSelector:@selector(configureButtonPositions) withObject:nil afterDelay:0.05];
     }
     
-    Enterprise *enterprise = [self getCurrentEnterprise];
+    Enterprise *enterprise = [[DataModel sharedInstance].currentUser getCurrentEnterprise];
     
     if (enterprise.companies.count == 1)
     {
         Company *company = enterprise.companies.allObjects[0];
         currentUser.selectedCompanyId = company.companyId;
+        [companyButton setTitle:company.companyName forState:UIControlStateNormal];
+        [self performSelector:@selector(configureButtonPositions) withObject:nil afterDelay:0.05];
     }
 }
 
@@ -388,18 +450,5 @@
     //[self.tableView endUpdates];
 }
 
-- (Enterprise*)getCurrentEnterprise
-{
-    User *currentUser = [DataModel sharedInstance].currentUser;
-    
-    for (Enterprise *enterprise in currentUser.enterprises)
-    {
-        if (enterprise.enterpriseId == currentUser.selectedEnterpriseId)
-        {
-            return enterprise;
-        }
-    }
-    return nil; // didn't find it
-}
 
 @end
