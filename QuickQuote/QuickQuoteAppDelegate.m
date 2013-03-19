@@ -25,18 +25,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    /***  Old navigation code ***/
-    // Override point for customization after application launch.
-    //UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    //UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    //splitViewController.delegate = (id)navigationController.topViewController;
-    //return YES;
- 
     [self deleteExistingPersistentStore];
 
     // test create & save?
     NSManagedObjectContext *context = [self managedObjectContext];
-    QuoteRequest *quoteRequest = [NSEntityDescription
+    
+    /*QuoteRequest *quoteRequest = [NSEntityDescription
                                   insertNewObjectForEntityForName:@"QuoteRequest"
                                   inManagedObjectContext:context];
     [quoteRequest setDefaults];
@@ -50,9 +44,8 @@
     cred.accountId = @"32700120";
     cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
     
-    quoteRequest.credentials = cred;
+    quoteRequest.credentials = cred;*/
  
-    
     ContextUtilities* cu = [[ContextUtilities alloc] init];
     
     [cu generateApplicationData:context];
@@ -79,7 +72,7 @@
     }
     
     // Test listing all QuoteRequests from the store
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    /*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"QuoteRequest"
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
@@ -91,7 +84,7 @@
         {
             NSLog(@"%.2g", [f.weight doubleValue]);
         }
-    }
+    }*/
     
     /******  Swapable Detail View Code ******/
     // Override point for customization after application launch.

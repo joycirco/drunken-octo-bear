@@ -8,6 +8,8 @@
 
 #import "User.h"
 #import "Enterprise.h"
+#import "QuoteRequest.h"
+#import "UserSettings.h"
 
 
 @implementation User
@@ -20,5 +22,7 @@
 @dynamic selectedEnterpriseId;
 @dynamic timestamp;
 @dynamic enterprises;
+@dynamic userSettings;
+@dynamic savedQuoteRequests;
 
 @end

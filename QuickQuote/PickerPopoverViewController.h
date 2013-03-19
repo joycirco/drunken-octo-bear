@@ -18,6 +18,7 @@
 @interface PickerPopoverViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) id <PickerPopoverViewControllerDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
 - (IBAction)doneAction:(id)sender;
@@ -28,6 +29,8 @@
 
 @property (assign, nonatomic) int selectedRow;
 @property (retain, nonatomic) NSString* titleForSelectedRow;
+@property (retain, nonatomic) NSString* popoverTitleText;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBarItem;
 
 @end
 

@@ -12,7 +12,7 @@
 @interface DataModel : NSObject
 
 @property (nonatomic, retain) User *currentUser;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, assign) BOOL isLoaded;
 
 + (DataModel*)sharedInstance;
 

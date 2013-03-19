@@ -11,6 +11,7 @@
 #import "QuickQuoteResultsViewController.h"
 #import "FreightItemsViewController.h"
 #import "AccessorialsViewController.h"
+#import "UserSettingsViewController.h"
 
 #import "QuoteRequest.h"
 #import "Credentials.h"
@@ -24,7 +25,10 @@
 #import "RSPArrayOfRateResponsePrivileged.h"
 #import "RateResponse.h"
 #import "QuoteReturn.h"
+#import "UserSettings.h"
 
+#import "DataModel.h"
+#import "User.h"
 
 @interface QuickQuoteMasterViewController ()
 {
@@ -33,10 +37,13 @@
     
     UIActivityIndicatorView* _progress_ind;
     NSMutableDictionary* huMap;
+    UserSettings* _userSettings;
+   
 }
 
 - (void)configureView;
 - (BOOL)canQuote;
+-(QuoteRequest*) createNewQuoteRequest:(NSManagedObjectContext*)context :(UserSettings*)userSettings;
 
 @end
 
@@ -72,8 +79,15 @@
 {
     [super viewDidLoad];
 
+    _userSettings = [DataModel sharedInstance].currentUser.userSettings;
+    
     // get quote request from data store (1st one for now)
-    _quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+    //_quoteRequest = [[self.fetchedResultsController fetchedObjects] objectAtIndex:0];
+
+    // create new quote request if necessary
+    if (_quoteRequest == nil)
+        _quoteRequest = [self createNewQuoteRequest:_managedObjectContext :_userSettings];
+    
 
     // load map for handling units
     huMap = [[NSMutableDictionary alloc]init];
@@ -91,7 +105,7 @@
         [huMap setObject:h forKey:h.handlingUnitTypeID];
     }
     
-    [self configureView];
+    //[self configureView];
 }
 
 - (void)viewDidUnload
@@ -104,6 +118,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self configureView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -129,6 +145,20 @@
 
 - (void)configureView
 {
+    User* currentUser = [DataModel sharedInstance].currentUser;
+    if (currentUser != nil && currentUser.loginName != nil)
+    {
+        self.btnUserSettings.enabled = true;
+        self.btnUserSettings.title = [DataModel sharedInstance].currentUser.loginName;
+    }
+    else
+    {
+        self.btnUserSettings.enabled = false;
+        self.btnUserSettings.title = @"anonymous";
+    }
+
+    _userSettings = [DataModel sharedInstance].currentUser.userSettings;
+
     self.originZip.delegate = self;
     self.destinationZip.delegate = self;
     self.storeLocationCode.delegate = self;
@@ -199,14 +229,16 @@
     {
         DatePopoverViewController* datePickerView = [segue destinationViewController];
         datePickerView.delegate = self;
-        [[segue destinationViewController] setDelegate:self];
         linkedDateCell = (UITableViewCell*)sender;
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM/dd/yyyy"];
-        //_dateToSet = [dateFormatter dateFromString:linkedDateCell.detailTextLabel.text];
         datePickerView.intitialDate = [dateFormatter dateFromString:linkedDateCell.detailTextLabel.text];
+        if ([segueId isEqualToString:@"datePopoverSeguePU"])
+            datePickerView.titleText = @"Pickup Date";
+        else
+            datePickerView.titleText = @"Delivery Date";
 
-        [[segue destinationViewController] setDelegate:self];
+        //[[segue destinationViewController] setDelegate:self];
         UIPopoverController *popoverDateController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.datePopoverController = popoverDateController;
         popoverDateController.delegate = self;
@@ -220,6 +252,7 @@
         || [segueId isEqualToString:@"deliveryAccessorialsSegue"]
         || [segueId isEqualToString:@"shipmentAccessorialsSegue"]
         || [segueId isEqualToString:@"ratingInProgress"]
+        || [segueId isEqualToString:@"userSettingsSegue"]
         )
     {
         UIViewController<SubstitutableDetailViewController>* detailViewController = (UIViewController<SubstitutableDetailViewController>*)[segue.destinationViewController topViewController];
@@ -275,6 +308,13 @@
             accView.managedObjectContext = self.managedObjectContext;
             accView.quoteRequest = _quoteRequest;
             accView.accessorialTypeID = [NSNumber numberWithInt:3];
+        }
+
+        // send necessary data to Detail View
+        if ([segueId isEqualToString:@"userSettingsSegue"])
+        {
+            UserSettingsViewController* uView = (UserSettingsViewController*)detailViewController;
+            uView.managedObjectContext = self.managedObjectContext;
         }
         
         if (rootPopoverButtonItem != nil)
@@ -549,16 +589,47 @@
     return YES;
 }
 
-#pragma mark - QuoickQuoteMasterView Actions
-
-- (IBAction)saveAction:(id)sender
+-(QuoteRequest*)createNewQuoteRequest:(NSManagedObjectContext *)context :(UserSettings*)userSettings
 {
-
+    QuoteRequest *request = [NSEntityDescription
+                                  insertNewObjectForEntityForName:@"QuoteRequest"
+                                  inManagedObjectContext:context];
+    [request setDefaults];
+    
+    if (userSettings.defaultOriginPostalCode != nil )
+        request.originPostalCode = userSettings.defaultOriginPostalCode;
+    
+    if (userSettings.defaultDestinationPostalCode != nil )
+        request.destinationPostalCode = userSettings.defaultDestinationPostalCode;
+    
+    Credentials *cred = [NSEntityDescription
+                         insertNewObjectForEntityForName:@"Credentials"
+                         inManagedObjectContext:context];
+    
+    cred.loginName = @"testbot";
+    cred.password = @"supersecret468";
+    cred.accountId = @"32700120";
+    cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
+    
+    request.credentials = cred;
+    
+    return request;
 }
 
-- (IBAction)infoAction:(id)sender
-{
+#pragma mark - QuoickQuoteMasterView Actions
 
+- (IBAction)resetAction:(id)sender
+{
+    if (_quoteRequest != nil)
+    {
+        [_managedObjectContext deleteObject:_quoteRequest];
+    }
+    
+    _quoteRequest = [self createNewQuoteRequest:_managedObjectContext :_userSettings];
+    
+    [self configureView];
+
+    //[self performSegueWithIdentifier:@"homeViewSegue" sender:self];
 }
 
 - (IBAction)rateAction:(id)sender

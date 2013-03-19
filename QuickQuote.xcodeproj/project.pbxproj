@@ -130,19 +130,23 @@
 		FF69717C16CB3689008788B0 /* QuickQuoteResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF69717B16CB3689008788B0 /* QuickQuoteResultsViewController.m */; };
 		FF77867116EBA4C200CAAF81 /* FreightItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF77867016EBA4C200CAAF81 /* FreightItemViewController.m */; };
 		FF9060F916F4F4750040FFC6 /* LogoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9060F816F4F4750040FFC6 /* LogoImageView.m */; };
-		FF9060FC16F4F7B50040FFC6 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9060FB16F4F7B50040FFC6 /* PersistedAccessorial.m */; };
 		FF9060FF16F4F83F0040FFC6 /* eShipping_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */; };
 		FF90610016F4F83F0040FFC6 /* eShipping-Exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */; };
 		FF916D9816D9818400131DB8 /* ArrayOfAccessorialPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF916D9716D9818300131DB8 /* ArrayOfAccessorialPricingDetail.m */; };
 		FF916D9B16D981A700131DB8 /* ArrayOfTerminalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FF916D9A16D981A600131DB8 /* ArrayOfTerminalInfo.m */; };
 		FF916D9E16D981CB00131DB8 /* ArrayOfFreightPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF916D9D16D981CB00131DB8 /* ArrayOfFreightPricingDetail.m */; };
 		FF916DA116D981F100131DB8 /* ArrayOfRateResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = FF916DA016D981F100131DB8 /* ArrayOfRateResponse.m */; };
+		FFBBDD5A16F7863000F13CA5 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD5916F7863000F13CA5 /* QuoteRequest.m */; };
+		FFBBDD6916F78C5800F13CA5 /* UserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD6816F78C5800F13CA5 /* UserSettingsViewController.m */; };
+		FFBBDD6C16F7982900F13CA5 /* PickerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD6B16F7982800F13CA5 /* PickerHelper.m */; };
+		FFBBDD6F16F7D8E100F13CA5 /* DefaultAccessorialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */; };
+		FFBBDD7216F7E53100F13CA5 /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD7116F7E53100F13CA5 /* UserSettings.m */; };
+		FFBBDD7516F7E92300F13CA5 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */; };
 		FFC6E38716ED40DA00D7B026 /* PickerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38616ED40DA00D7B026 /* PickerItem.m */; };
 		FFC6E38A16ED4BE900D7B026 /* HandlingUnitType.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */; };
 		FFC6E38D16ED4C0A00D7B026 /* FreightItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */; };
 		FFDBC56C16EA494E00255B6B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFDBC56B16EA494E00255B6B /* CoreData.framework */; };
 		FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */; };
-		FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865B316EAC9D900222386 /* QuoteRequest.m */; };
 		FFE865BD16EAC9DA00222386 /* Credentials.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE865BC16EAC9DA00222386 /* Credentials.m */; };
 		FFF3EB4F16E290FA007F9E92 /* FreightItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF3EB4E16E290FA007F9E92 /* FreightItemsViewController.m */; };
 /* End PBXBuildFile section */
@@ -389,8 +393,6 @@
 		FF77867016EBA4C200CAAF81 /* FreightItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemViewController.m; sourceTree = "<group>"; };
 		FF9060F716F4F4750040FFC6 /* LogoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoImageView.h; sourceTree = "<group>"; };
 		FF9060F816F4F4750040FFC6 /* LogoImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoImageView.m; sourceTree = "<group>"; };
-		FF9060FA16F4F7B50040FFC6 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistedAccessorial.h; path = QuickQuote/PersistedAccessorial.h; sourceTree = "<group>"; };
-		FF9060FB16F4F7B50040FFC6 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistedAccessorial.m; path = QuickQuote/PersistedAccessorial.m; sourceTree = "<group>"; };
 		FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eShipping_Logo.png; path = QuickQuote/eShipping_Logo.png; sourceTree = "<group>"; };
 		FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "eShipping-Exchange.png"; path = "QuickQuote/eShipping-Exchange.png"; sourceTree = "<group>"; };
 		FF916D9616D9818300131DB8 /* ArrayOfAccessorialPricingDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayOfAccessorialPricingDetail.h; sourceTree = "<group>"; };
@@ -401,6 +403,18 @@
 		FF916D9D16D981CB00131DB8 /* ArrayOfFreightPricingDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayOfFreightPricingDetail.m; sourceTree = "<group>"; };
 		FF916D9F16D981F100131DB8 /* ArrayOfRateResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayOfRateResponse.h; sourceTree = "<group>"; };
 		FF916DA016D981F100131DB8 /* ArrayOfRateResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayOfRateResponse.m; sourceTree = "<group>"; };
+		FFBBDD5816F7863000F13CA5 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
+		FFBBDD5916F7863000F13CA5 /* QuoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuoteRequest.m; path = QuickQuote/QuoteRequest.m; sourceTree = "<group>"; };
+		FFBBDD6716F78C5800F13CA5 /* UserSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettingsViewController.h; sourceTree = "<group>"; };
+		FFBBDD6816F78C5800F13CA5 /* UserSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingsViewController.m; sourceTree = "<group>"; };
+		FFBBDD6A16F7982800F13CA5 /* PickerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerHelper.h; sourceTree = "<group>"; };
+		FFBBDD6B16F7982800F13CA5 /* PickerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerHelper.m; sourceTree = "<group>"; };
+		FFBBDD6D16F7D8E000F13CA5 /* DefaultAccessorialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultAccessorialsViewController.h; sourceTree = "<group>"; };
+		FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultAccessorialsViewController.m; sourceTree = "<group>"; };
+		FFBBDD7016F7E53100F13CA5 /* UserSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettings.h; path = QuickQuote/UserSettings.h; sourceTree = "<group>"; };
+		FFBBDD7116F7E53100F13CA5 /* UserSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettings.m; path = QuickQuote/UserSettings.m; sourceTree = "<group>"; };
+		FFBBDD7316F7E92300F13CA5 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistedAccessorial.h; path = QuickQuote/PersistedAccessorial.h; sourceTree = "<group>"; };
+		FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistedAccessorial.m; path = QuickQuote/PersistedAccessorial.m; sourceTree = "<group>"; };
 		FFC6E38516ED40DA00D7B026 /* PickerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerItem.h; sourceTree = "<group>"; };
 		FFC6E38616ED40DA00D7B026 /* PickerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerItem.m; sourceTree = "<group>"; };
 		FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HandlingUnitType.h; path = QuickQuote/HandlingUnitType.h; sourceTree = "<group>"; };
@@ -409,8 +423,6 @@
 		FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FreightItem.m; path = QuickQuote/FreightItem.m; sourceTree = "<group>"; };
 		FFDBC56B16EA494E00255B6B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		FFDBC57116EA529500255B6B /* QuoteRequestModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuoteRequestModel.xcdatamodel; sourceTree = "<group>"; };
-		FFE865B216EAC9D900222386 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
-		FFE865B316EAC9D900222386 /* QuoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuoteRequest.m; path = QuickQuote/QuoteRequest.m; sourceTree = "<group>"; };
 		FFE865BB16EAC9DA00222386 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Credentials.h; path = QuickQuote/Credentials.h; sourceTree = "<group>"; };
 		FFE865BC16EAC9DA00222386 /* Credentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Credentials.m; path = QuickQuote/Credentials.m; sourceTree = "<group>"; };
 		FFF3EB4D16E290FA007F9E92 /* FreightItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemsViewController.h; sourceTree = "<group>"; };
@@ -529,6 +541,12 @@
 				FFC6E38616ED40DA00D7B026 /* PickerItem.m */,
 				FF118A6E16F4D9DF0065DFB3 /* RateResultCell.h */,
 				FF118A6F16F4D9DF0065DFB3 /* RateResultCell.m */,
+				FFBBDD6716F78C5800F13CA5 /* UserSettingsViewController.h */,
+				FFBBDD6816F78C5800F13CA5 /* UserSettingsViewController.m */,
+				FFBBDD6A16F7982800F13CA5 /* PickerHelper.h */,
+				FFBBDD6B16F7982800F13CA5 /* PickerHelper.m */,
+				FFBBDD6D16F7D8E000F13CA5 /* DefaultAccessorialsViewController.h */,
+				FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */,
 			);
 			path = QuickQuote;
 			sourceTree = "<group>";
@@ -800,11 +818,15 @@
 		FFE9B3C016EA58520049B24C /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				FF9060FA16F4F7B50040FFC6 /* PersistedAccessorial.h */,
-				FF9060FB16F4F7B50040FFC6 /* PersistedAccessorial.m */,
+				FFBBDD7316F7E92300F13CA5 /* PersistedAccessorial.h */,
+				FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */,
 				FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */,
 				FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */,
+				FFBBDD7016F7E53100F13CA5 /* UserSettings.h */,
+				FFBBDD7116F7E53100F13CA5 /* UserSettings.m */,
 				FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */,
+				FFBBDD5816F7863000F13CA5 /* QuoteRequest.h */,
+				FFBBDD5916F7863000F13CA5 /* QuoteRequest.m */,
 				A46459E816F6B20D00A78387 /* Company.h */,
 				A46459E916F6B20D00A78387 /* Company.m */,
 				A46459E516F6B20D00A78387 /* User.h */,
@@ -819,8 +841,6 @@
 				FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */,
 				FFE865BB16EAC9DA00222386 /* Credentials.h */,
 				FFE865BC16EAC9DA00222386 /* Credentials.m */,
-				FFE865B216EAC9D900222386 /* QuoteRequest.h */,
-				FFE865B316EAC9D900222386 /* QuoteRequest.m */,
 				FF0D2A4616ED1433006B547F /* Keep.h */,
 				FF0D2A4716ED1433006B547F /* Keep.m */,
 				FF0D2A5216ED1A2D006B547F /* ContextUtilities.h */,
@@ -1040,7 +1060,6 @@
 				FF916DA116D981F100131DB8 /* ArrayOfRateResponse.m in Sources */,
 				FFF3EB4F16E290FA007F9E92 /* FreightItemsViewController.m in Sources */,
 				FFDBC57216EA529500255B6B /* QuoteRequestModel.xcdatamodeld in Sources */,
-				FFE865B416EAC9D900222386 /* QuoteRequest.m in Sources */,
 				FFE865BD16EAC9DA00222386 /* Credentials.m in Sources */,
 				FF77867116EBA4C200CAAF81 /* FreightItemViewController.m in Sources */,
 				FF0D2A4516ED0DA9006B547F /* AccessorialsViewController.m in Sources */,
@@ -1057,11 +1076,16 @@
 				FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */,
 				FF118A7016F4D9DF0065DFB3 /* RateResultCell.m in Sources */,
 				FF9060F916F4F4750040FFC6 /* LogoImageView.m in Sources */,
-				FF9060FC16F4F7B50040FFC6 /* PersistedAccessorial.m in Sources */,
 				A46459E416F6B20D00A78387 /* Enterprise.m in Sources */,
 				A46459E716F6B20D00A78387 /* User.m in Sources */,
 				A46459EA16F6B20D00A78387 /* Company.m in Sources */,
 				A46459ED16F6B32F00A78387 /* DataModel.m in Sources */,
+				FFBBDD5A16F7863000F13CA5 /* QuoteRequest.m in Sources */,
+				FFBBDD6916F78C5800F13CA5 /* UserSettingsViewController.m in Sources */,
+				FFBBDD6C16F7982900F13CA5 /* PickerHelper.m in Sources */,
+				FFBBDD6F16F7D8E100F13CA5 /* DefaultAccessorialsViewController.m in Sources */,
+				FFBBDD7216F7E53100F13CA5 /* UserSettings.m in Sources */,
+				FFBBDD7516F7E92300F13CA5 /* PersistedAccessorial.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -38,7 +38,6 @@
 @synthesize signinButton;
 
 @synthesize delegate;
-//@synthesize dataModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,11 +52,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
-    // Get a reference to the Managed Object Context
-    // note: This is NOT the best way to do this, just quick and dirty
-    QuickQuoteAppDelegate *appDelegate =  (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
-    managedObjectContext = [appDelegate managedObjectContext];
 
     userTextField.delegate = self;
     passwordTextField.delegate = self;
@@ -160,19 +154,12 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-
 }
 
 -(void)textFieldEdited
 {
     [self preAuthenticateUser:FALSE];
 }
-
 
 -(void)loadUser:(User*)userToLoad
 {
@@ -192,7 +179,6 @@
     
     // get reference to app delegate
     QuickQuoteAppDelegate *appDelegate = (QuickQuoteAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [DataModel sharedInstance].managedObjectContext = appDelegate.managedObjectContext;
     managedObjectContext = appDelegate.managedObjectContext;
     
     
@@ -205,7 +191,7 @@
     NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
        
     // look for a user based of the entered information
-     for (User *user in fetchedObjects)
+    for (User *user in fetchedObjects)
     {
         if (([userTextFieldString caseInsensitiveCompare:user.loginName] == NSOrderedSame ||
              [userTextFieldString caseInsensitiveCompare:user.email] == NSOrderedSame) &&
@@ -360,7 +346,7 @@
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    
+    return nil;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
