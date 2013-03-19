@@ -2,14 +2,14 @@
 //  QuoteRequest.h
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/18/13.
+//  Created by Darin Raffety on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Accessorial, Credentials, FreightItem;
+@class Accessorial, Credentials, FreightItem, User;
 
 @interface QuoteRequest : NSManagedObject
 
@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSSet *accessorials;
 @property (nonatomic, retain) Credentials *credentials;
 @property (nonatomic, retain) NSSet *freightItems;
+@property (nonatomic, retain) User *user;
 @end
 
 @interface QuoteRequest (CoreDataGeneratedAccessors)
@@ -30,6 +31,7 @@
 - (void)addAccessorials:(NSSet *)values;
 - (void)removeAccessorials:(NSSet *)values;
 
+
 - (void)addFreightItemsObject:(FreightItem *)value;
 - (void)removeFreightItemsObject:(FreightItem *)value;
 - (void)addFreightItems:(NSSet *)values;
@@ -37,7 +39,6 @@
 
 - (id) init;
 - (id) initWithDefaults;
-
-- (void)setDefaults;
+- (void) setDefaults;
 
 @end

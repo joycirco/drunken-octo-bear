@@ -1,12 +1,12 @@
 //
-//  AccessorialsViewController.m
+//  DefaultAccessorialsViewController.m
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/10/13.
+//  Created by Darin Raffety on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
-#import "AccessorialsViewController.h"
+#import "DefaultAccessorialsViewController.h"
 #import "Accessorial.h"
 #import "PersistedAccessorial.h"
 #import "QuoteRequest.h"
@@ -15,36 +15,27 @@
 #import "UserSettings.h"
 #import "DataModel.h"
 
-@interface AccessorialsViewController ()
+@interface DefaultAccessorialsViewController ()
 {
-    UIPopoverController *masterPopoverController;
     AccessorialType* accessorialType;
-    NSArray* _accessorials;
 }
 
 - (void)configureView;
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
-- (void)loadAccessorials;
-
-
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
 @property (strong, nonatomic) AccessorialType *accessorialType;
 
+
 @end
 
-@implementation AccessorialsViewController
+@implementation DefaultAccessorialsViewController
 
-@synthesize masterPopoverController = _masterPopoverController;
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize quoteRequest = _quoteRequest;
-@synthesize userSettings = _userSettings;
 
 @synthesize accessorialTypeID = _accessorialTypeID;
 @synthesize accessorialType = _accessorialType;
+@synthesize userSettings = _userSettings;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -60,12 +51,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.fetchedResultsController = nil;
     
     [self configureView];
 }
@@ -110,28 +103,6 @@
 	return NO;
 }
 
-#pragma mark - SubstitutableDetailViewController
-#pragma mark Managing the popover
-
-- (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
-    
-    barButtonItem.title = NSLocalizedString(@"Shipment Information", @"Shipment Information");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-}
-
-- (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
-    
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-}
-
-- (void)startActivityIndicator
-{
-}
-
--(void)stopActivityIndicator
-{
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -161,23 +132,26 @@
         self.title =  [NSString stringWithFormat:@"%@ Accessorials", _accessorialType.accessorialTypeName];
     }
     
-    _userSettings = [DataModel sharedInstance].currentUser.userSettings;
+    //int count = self.fetchedResultsController.fetchedObjects.count;
     
-    [self loadAccessorials];
+    //[self.tableView reloadData];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     BOOL bIsOn = NO;
     
-    PersistedAccessorial *pAcc = [_accessorials objectAtIndex:indexPath.row];
+    PersistedAccessorial *pAcc = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    for(Accessorial* a in _quoteRequest.accessorials)
+    if (_userSettings.defaultAccessorials != nil)
     {
-        if ([a.accessorialCode isEqualToString:pAcc.accessorialCode])
+        for (PersistedAccessorial* p in _userSettings.defaultAccessorials)
         {
-            bIsOn = YES;
-            break;
+            if ([p.accessorialCode isEqualToString:pAcc.accessorialCode])
+            {
+                bIsOn = YES;
+                break;
+            }
         }
     }
     
@@ -189,7 +163,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _accessorials.count;
+    // Return the number of rows in the section.
+    return self.fetchedResultsController.fetchedObjects.count;
+    //return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -204,43 +180,43 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Table view delegate
 
@@ -255,38 +231,6 @@
      */
 }
 
-
--(void) loadAccessorials
-{
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialTypeID];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"accessorialName" ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-
-    if (_userSettings.defaultAccessorials != nil && _userSettings.defaultAccessorials.count > 0)
-    {
-        NSSet* set = [_userSettings.defaultAccessorials filteredSetUsingPredicate:predicate];
-        
-        _accessorials = [set sortedArrayUsingDescriptors:sortDescriptors];
-    }
-    else
-    {
-        // get accessorial type from data store
-        NSError* error;
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersistedAccessorial"
-                                                  inManagedObjectContext:_managedObjectContext];
-        [fetchRequest setEntity:entity];
-        
-        // Set predicate to only accessorials for this _quoteRequest
-        [fetchRequest setPredicate:predicate];
-        
-        // sort
-        [fetchRequest setSortDescriptors:sortDescriptors];
-
-        _accessorials = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    }
-}
-
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
@@ -299,7 +243,6 @@
     // Set up the fetched results controller.
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersistedAccessorial" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -307,10 +250,12 @@
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    NSPredicate* predicate = nil;
+    // Set predicate to only accessorials for this _quoteRequest
+    //NSPredicate* predicate = [NSPredicate predicateWithFormat:@"quoteRequest=%@", _quoteRequest];
+    //[fetchRequest setPredicate:predicate];
     
-    predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialTypeID];
-
+    // Set predicate to only accessorials for this _accessorialTypeID
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accessorialTypeID=%@", _accessorialTypeID];
     [fetchRequest setPredicate:predicate];
     
     // Edit the sort key as appropriate.
@@ -335,62 +280,27 @@
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-
+    
     return _fetchedResultsController;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    //[self.tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    /*  switch(type)
-     {
-     case NSFetchedResultsChangeInsert:
-     [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-     break;
-     
-     case NSFetchedResultsChangeDelete:
-     [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-     break;
-     }*/
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    /*
-    UITableView *tableView = self.tableView;
-    
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-     */
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    //[self.tableView endUpdates];
 }
 
 
@@ -406,45 +316,26 @@
 #pragma AccessorialCellDelegate
 - (void)stateChanged:(BOOL)newState : (PersistedAccessorial*)accessorial
 {
-    Accessorial* removeMe = nil;
-    
     if (accessorial != nil)
     {
         // if adding
         if (newState)
         {
-            Accessorial *acc = [NSEntityDescription
-                                insertNewObjectForEntityForName:@"Accessorial"
-                                inManagedObjectContext: _managedObjectContext];
-            
-            acc.accessorialName = accessorial.accessorialName;
-            acc.accessorialCode = accessorial.accessorialCode;
-            acc.accessorialTypeID = accessorial.accessorialTypeID;
-            acc.timeStamp = [NSDate date];
-            [_quoteRequest addAccessorialsObject:acc];
+            // add default
+            if (_userSettings != nil)
+                [_userSettings addDefaultAccessorialsObject:accessorial];
         }
         else
         {
-            for (Accessorial* acc in _quoteRequest.accessorials)
-            {
-                if ([acc.accessorialCode isEqualToString:accessorial.accessorialCode])
-                {
-                    removeMe = acc;
-                    break;
-                }
-            }
-        }
-
-        if (removeMe != nil)
-        {
-            [_quoteRequest removeAccessorialsObject:removeMe];
+            if (_userSettings != nil)
+                [_userSettings removeDefaultAccessorialsObject:accessorial];
         }
         
-        //NSError *error;
-        //if (![_managedObjectContext save:&error])
-        //{
-        //    NSLog(@"Could not save: %@", [error localizedDescription]);
-        //}
+//        NSError *error;
+//        if (![_managedObjectContext save:&error])
+//        {
+//            NSLog(@"Could not save: %@", [error localizedDescription]);
+//        }
     }
 }
 

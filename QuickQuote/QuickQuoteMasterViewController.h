@@ -50,9 +50,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *originZip;
 @property (weak, nonatomic) IBOutlet UITextField *destinationZip;
 @property (weak, nonatomic) IBOutlet UITextField *storeLocationCode;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSettings;
 @property (weak, nonatomic) IBOutlet UIButton *btnRate;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnUserSettings;
 @property (nonatomic, retain) NSDate* dateToSet;
 @property (nonatomic, retain) QuoteReturn* quoteReturn;
 @property (nonatomic, retain) QuoteRequest* quoteRequest;
@@ -70,8 +70,8 @@
 
 - (IBAction)rateAction:(id)sender;
 
-- (IBAction)saveAction:(id)sender;
-- (IBAction)infoAction:(id)sender;
+- (IBAction)resetAction:(id)sender;
+
 - (void)setDateFromPopover:(NSDate *)aDate;
 
 @end

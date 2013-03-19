@@ -26,6 +26,8 @@
 @property (weak, nonatomic) id <DatePopoverViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 @property (retain, nonatomic) NSString* dateString;
+@property (retain, nonatomic) NSString* titleText;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationBar;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, strong) NSDate* intitialDate;
 

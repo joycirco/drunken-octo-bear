@@ -2,13 +2,12 @@
 //  Enterprise.h
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/18/13.
+//  Created by Darin Raffety on 3/19/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "DataModel.h"
 
 @class Company, User;
 
@@ -19,6 +18,9 @@
 @property (nonatomic, retain) NSDate * timeStamp;
 @property (nonatomic, retain) NSSet *companies;
 @property (nonatomic, retain) NSSet *user;
+
+- (Company*)getCurrentCompany;
+
 @end
 
 @interface Enterprise (CoreDataGeneratedAccessors)
@@ -32,7 +34,5 @@
 - (void)removeUserObject:(User *)value;
 - (void)addUser:(NSSet *)values;
 - (void)removeUser:(NSSet *)values;
-
--(Company*)getCurrentCompany;
 
 @end

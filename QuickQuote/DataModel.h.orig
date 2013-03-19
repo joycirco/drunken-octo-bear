@@ -12,7 +12,10 @@
 @interface DataModel : NSObject
 
 @property (nonatomic, retain) User *currentUser;
+<<<<<<< HEAD
+=======
 @property (nonatomic, assign) BOOL isLoaded;
+>>>>>>> man-dog-liger
 
 + (DataModel*)sharedInstance;
 

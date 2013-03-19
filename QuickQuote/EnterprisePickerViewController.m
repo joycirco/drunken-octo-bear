@@ -19,6 +19,12 @@
 @synthesize delegate;
 @synthesize enterpriseArray;
 
+- (void)awakeFromNib
+{
+    self.contentSizeForViewInPopover = CGSizeMake(320.0, 250.0);
+    [super awakeFromNib];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

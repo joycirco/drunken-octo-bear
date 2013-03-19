@@ -19,6 +19,7 @@
 
 @synthesize dateString = _dateString;
 @synthesize intitialDate = _intitialDate;
+@synthesize titleText = _titleText;
 
 - (void)awakeFromNib
 {
@@ -31,6 +32,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     _datePicker.date = _intitialDate; // ((QuickQuoteMasterViewController*)self.delegate).dateToSet;
+    //self.title = _titleText;
+    self.navigationBar.title = _titleText;
 }
 
 - (void)didReceiveMemoryWarning

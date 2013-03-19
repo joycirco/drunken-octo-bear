@@ -1,8 +1,8 @@
 //
-//  AccessorialsViewController.h
+//  DefaultAccessorialsViewController.h
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/10/13.
+//  Created by Darin Raffety on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -10,11 +10,11 @@
 #import "QuickQuoteMasterViewController.h"
 #import "AccessorialCell.h"
 
-@class Accessorial, QuoteRequest, AccessorialType, UserSettings;
+@class UserSettings;
 
-@interface AccessorialsViewController : UITableViewController <UITableViewDelegate,
-                                        SubstitutableDetailViewController,NSFetchedResultsControllerDelegate,
-                                        AccessorialCellDelegate>
+@interface DefaultAccessorialsViewController  : UITableViewController <UITableViewDelegate,
+                                                                       NSFetchedResultsControllerDelegate,
+                                                                       AccessorialCellDelegate>
 {
     
 }
@@ -23,7 +23,6 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) QuoteRequest* quoteRequest;
 @property (strong, nonatomic) UserSettings* userSettings;
 
 @end

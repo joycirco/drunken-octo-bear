@@ -11,40 +11,36 @@
 #import "QuoteRequest.h"
 #import "PickerItem.h"
 #import "HandlingUnitType.h"
+#import "PickerHelper.h"
+#import "DataModel.h"
+#import "UserSettings.h"
 
 @interface FreightItemViewController ()
 {
-    UIPopoverController *masterPopoverController;
-
     NSNumberFormatter *decimalFormatter;
     NSNumberFormatter *noStyleFormatter;
     NSString* currentPickerSegue;
     NSString* validationErrorTitle;
+    
+    UserSettings* _userSettings;
 }
-
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
 - (void)configureView;
 - (void)saveFreightItem;
-- (void)initPickerItems;
-- (NSString*)getHandlingUnitName:(NSNumber*)htID;
-- (NSNumber*)getHandlingUnitTypeID:(NSString*)htName;
 - (BOOL) isValid;
 
 @end
 
 @implementation FreightItemViewController
 
-@synthesize masterPopoverController = _masterPopoverController;
 @synthesize freightItem = _freightItem;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize quoteRequest = _quoteRequest;
 @synthesize isAdding = _isAdding;
 
-@synthesize freightClasses = _freightClasses;
-@synthesize handlingUnitTypes = _handlingUnitTypes;
-
 @synthesize redLabel = _redLabel;
+
+@synthesize pickerHelper = _pickerHelper;
 
 - (void)awakeFromNib
 {
@@ -65,12 +61,14 @@
     noStyleFormatter = [[NSNumberFormatter alloc]init];
     [noStyleFormatter setNumberStyle:NSNumberFormatterNoStyle];
 
-    [self configureView];
-    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [_redLabel setHidden:true];
+    
+    _pickerHelper = [[PickerHelper alloc] initWithContext:_managedObjectContext];
+
+    [self configureView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -91,33 +89,13 @@
 	return NO;
 }
 
-#pragma mark - SubstitutableDetailViewController
-#pragma mark Managing the popover
-
-- (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
-    
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-}
-
-- (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
-    
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-}
-
-- (void)startActivityIndicator
-{
-}
-
--(void)stopActivityIndicator
-{
-}
-
 - (void)configureView
 {
+    _userSettings = [DataModel sharedInstance].currentUser.userSettings;
+
     validationErrorTitle = @"Validation Error";
     
-    [self initPickerItems];
+    [_pickerHelper initPickerItems];
     
     // Update the user interface for the freight item.
     if (_isAdding)
@@ -129,6 +107,12 @@
         [_freightItem setDefaults];
         _freightItem.weight = nil;
         _freightItem.handlingUnits = nil;
+        
+        if (_userSettings.defaultHandlingUnitTypeID != nil)
+            _freightItem.handlingUnitTypeID = _userSettings.defaultHandlingUnitTypeID;
+        
+        if (_userSettings.defaultFreightClass != nil)
+            _freightItem.freightClass = _userSettings.defaultFreightClass;
         
         self.title = @"Add Freight Item...";
     }
@@ -168,7 +152,7 @@
         
         self.units.text = [noStyleFormatter stringFromNumber: _freightItem.handlingUnits];
         [self.btnFreightClass setTitle:[decimalFormatter stringFromNumber:_freightItem.freightClass]forState:UIControlStateNormal];
-        [self.btnHandlingUnitType setTitle:[self getHandlingUnitName:_freightItem.handlingUnitTypeID] forState:UIControlStateNormal];
+        [self.btnHandlingUnitType setTitle:[_pickerHelper getHandlingUnitName:_freightItem.handlingUnitTypeID] forState:UIControlStateNormal];
         
         if (_freightItem.freightDescription != nil && _freightItem.freightDescription.length)
             self.freightDescription.text = _freightItem.freightDescription;
@@ -188,7 +172,7 @@
     bool bEditing;
     
     // turn off any error messages
-    [_redLabel setHidden:true];
+    //[_redLabel setHidden:true];
     
     [super setEditing:flag animated:animated];
     
@@ -221,6 +205,7 @@
         }
         else
         {
+            [_redLabel setHidden:true];
             // Save the changes if needed and change the views to noneditable.
             bEditing = false;
             self.weight.enabled = false;
@@ -349,6 +334,8 @@
 {
     BOOL bValid = YES;
 
+    [_redLabel setHidden:true];
+    
     // validate input
     double weight = [self.weight.text doubleValue];
     int handlingUnits = [self.units.text intValue];
@@ -385,7 +372,7 @@
     _freightItem.freightClass = [NSDecimalNumber decimalNumberWithString:self.btnFreightClass.titleLabel.text];
     _freightItem.freightDescription = self.freightDescription.text;
     _freightItem.handlingUnits = [noStyleFormatter numberFromString: self.units.text];
-    _freightItem.handlingUnitTypeID = [self getHandlingUnitTypeID:self.btnHandlingUnitType.titleLabel.text];
+    _freightItem.handlingUnitTypeID = [_pickerHelper getHandlingUnitTypeID:self.btnHandlingUnitType.titleLabel.text];
     //_freightItem.isStackable = FALSE;
     _freightItem.length = [NSDecimalNumber decimalNumberWithString:self.length.text];
     _freightItem.width = [NSDecimalNumber decimalNumberWithString:self.width.text];
@@ -414,8 +401,9 @@
         UIPopoverController *popoverViewController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.pickerPopoverController = popoverViewController;
         currentPickerSegue = segueId;
-        pickerView.myPickerItems = _handlingUnitTypes;
+        pickerView.myPickerItems = _pickerHelper.handlingUnitTypes;
         pickerView.titleForSelectedRow = self.btnHandlingUnitType.titleLabel.text;
+        pickerView.popoverTitleText = @"Handling Unit";
         popoverViewController.delegate = self;
     }
 
@@ -426,8 +414,9 @@
         UIPopoverController *popoverViewController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.pickerPopoverController = popoverViewController;
         currentPickerSegue = segueId;
-        pickerView.myPickerItems = _freightClasses;
+        pickerView.myPickerItems = _pickerHelper.freightClasses;
         pickerView.titleForSelectedRow = self.btnFreightClass.titleLabel.text;
+        pickerView.popoverTitleText = @"Freight Class";
         popoverViewController.delegate = self;
     }
 }
@@ -477,6 +466,7 @@
     }
 }
 
+/*
 -(void)initPickerItems
 {
     _handlingUnitTypes = [[NSMutableArray alloc]init];
@@ -551,6 +541,7 @@
     
     return ret;
 }
+*/
 
 - (IBAction)selectHandlingUnit:(id)sender
 {

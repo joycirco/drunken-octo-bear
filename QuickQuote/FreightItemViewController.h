@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PickerPopoverViewController.h"
-#import "QuickQuoteMasterViewController.h"
 
-@class QuoteRequest, FreightItem;
+@class QuoteRequest, FreightItem, PickerHelper;
 
 @interface FreightItemViewController : UIViewController <UITextFieldDelegate,
                                                         UITextViewDelegate,
-                                                        PickerPopoverViewControllerDelegate,
-                                                        SubstitutableDetailViewController>
+                                                        PickerPopoverViewControllerDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *weight;
 @property (weak, nonatomic) IBOutlet UITextField *units;
 @property (weak, nonatomic) IBOutlet UITextField *length;
@@ -35,13 +34,12 @@
 @property (strong, nonatomic) QuoteRequest* quoteRequest;
 @property (strong, nonatomic) FreightItem* freightItem;
 
-@property (strong, nonatomic) UIPopoverController *detailPopoverController;
+//@property (strong, nonatomic) UIPopoverController *detailPopoverController;
 @property (strong, nonatomic) UIPopoverController *pickerPopoverController;
 
 @property (nonatomic,assign) bool isAdding;
 
-@property (retain, nonatomic) NSMutableArray* freightClasses;
-@property (retain, nonatomic) NSMutableArray* handlingUnitTypes;
+@property (retain, nonatomic) PickerHelper* pickerHelper;
 
 - (IBAction)selectHandlingUnit:(id)sender;
 - (IBAction)selectFreightClass:(id)sender;

@@ -2,7 +2,7 @@
 //  User.h
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/19/13.
+//  Created by Steven Tuckness on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -21,11 +21,8 @@
 @property (nonatomic, retain) NSNumber * selectedEnterpriseId;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSSet *enterprises;
-@property (nonatomic, retain) NSSet *savedQuoteRequests;
 @property (nonatomic, retain) UserSettings *userSettings;
-
-- (Enterprise*)getCurrentEnterprise;
-
+@property (nonatomic, retain) NSSet *savedQuoteRequests;
 @end
 
 @interface User (CoreDataGeneratedAccessors)
@@ -35,9 +32,13 @@
 - (void)addEnterprises:(NSSet *)values;
 - (void)removeEnterprises:(NSSet *)values;
 
+<<<<<<< HEAD
+- (Enterprise*)getCurrentEnterprise;
+=======
 - (void)addSavedQuoteRequestsObject:(QuoteRequest *)value;
 - (void)removeSavedQuoteRequestsObject:(QuoteRequest *)value;
 - (void)addSavedQuoteRequests:(NSSet *)values;
 - (void)removeSavedQuoteRequests:(NSSet *)values;
+>>>>>>> man-dog-liger
 
 @end

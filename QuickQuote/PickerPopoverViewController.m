@@ -20,6 +20,7 @@
 @synthesize myPickerItems = _pickerItems;
 @synthesize selectedRow = _selectedRow;
 @synthesize titleForSelectedRow = _titleForSelectedRow;
+@synthesize popoverTitleText = _popoverTitleText;
 
 - (void)awakeFromNib
 {
@@ -53,6 +54,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navBarItem.title = _popoverTitleText;
 }
 
 - (void)viewDidAppear:(BOOL)animated
