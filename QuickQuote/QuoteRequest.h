@@ -2,7 +2,7 @@
 //  QuoteRequest.h
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/18/13.
+//  Created by Darin Raffety on 3/19/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -18,10 +18,16 @@
 @property (nonatomic, retain) NSDate * pickupDateTime;
 @property (nonatomic, retain) NSString * storeLocationCode;
 @property (nonatomic, retain) NSDate * timeStamp;
+@property (nonatomic, retain) NSDate * deliveryDateTime;
 @property (nonatomic, retain) NSSet *accessorials;
 @property (nonatomic, retain) Credentials *credentials;
 @property (nonatomic, retain) NSSet *freightItems;
 @property (nonatomic, retain) User *user;
+
+- (id) init;
+- (id) initWithDefaults;
+- (void) setDefaults;
+
 @end
 
 @interface QuoteRequest (CoreDataGeneratedAccessors)
@@ -31,14 +37,9 @@
 - (void)addAccessorials:(NSSet *)values;
 - (void)removeAccessorials:(NSSet *)values;
 
-
 - (void)addFreightItemsObject:(FreightItem *)value;
 - (void)removeFreightItemsObject:(FreightItem *)value;
 - (void)addFreightItems:(NSSet *)values;
 - (void)removeFreightItems:(NSSet *)values;
-
-- (id) init;
-- (id) initWithDefaults;
-- (void) setDefaults;
 
 @end

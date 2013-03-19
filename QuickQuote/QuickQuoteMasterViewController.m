@@ -175,9 +175,11 @@
         [dateFormat setDateFormat:@"MM/dd/yyyy"];
         
         self.cellPickupDate.detailTextLabel.text = [dateFormat stringFromDate:_quoteRequest.pickupDateTime];
+        self.cellDeliveryDate.detailTextLabel.text = [dateFormat stringFromDate:_quoteRequest.deliveryDateTime];
         
         self.originZip.text = _quoteRequest.originPostalCode;
         self.destinationZip.text = _quoteRequest.destinationPostalCode;
+        self.storeLocationCode.text = _quoteRequest.storeLocationCode;
         self.cellFreightSummary.detailTextLabel.text = @"0";
         
         if (_quoteRequest.freightItems != nil)
@@ -515,6 +517,10 @@
         // set pickup date for quote as well
         if (linkedDateCell == self.cellPickupDate)
             _quoteRequest.pickupDateTime = aDate;
+
+        // set delivery date for quote as well
+        if (linkedDateCell == self.cellDeliveryDate)
+            _quoteRequest.deliveryDateTime = aDate;
     }
 }
 
@@ -606,7 +612,7 @@
     if (userSettings.defaultDestinationPostalCode != nil )
         request.destinationPostalCode = userSettings.defaultDestinationPostalCode;
     
-    Credentials *cred = [NSEntityDescription
+    /*Credentials *cred = [NSEntityDescription
                          insertNewObjectForEntityForName:@"Credentials"
                          inManagedObjectContext:context];
     
@@ -615,7 +621,7 @@
     cred.accountId = @"32700120";
     cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
     
-    request.credentials = cred;
+    request.credentials = cred;*/
     
     return request;
 }
@@ -668,9 +674,10 @@
         
         reqRRP.reqPickupDate = _quoteRequest.pickupDateTime;
         
-        int daysToAdd = 3;
-        NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
-        reqRRP.reqDropDate = newDate1;
+        //int daysToAdd = 3;
+        //NSDate *newDate1 = [_quoteRequest.pickupDateTime dateByAddingTimeInterval:60*60*24*daysToAdd];
+        //reqRRP.reqDropDate = newDate1;
+        reqRRP.reqDropDate = _quoteRequest.deliveryDateTime;
         
         // keep track if any freight is stackable
         BOOL isStackable = NO;
@@ -778,8 +785,26 @@
     {
         _quoteReturn = [QuoteReturn createWithRSPRateReturn:result];
         
-        //[view setRateResponseList:qr.rateResponses];
-        [self performSegueWithIdentifier:@"quoteResultsSegue" sender:self];
+        if (_quoteReturn != nil && _quoteReturn.rateResponses != nil && _quoteReturn.rateResponses.count > 0)
+        {
+            [self performSegueWithIdentifier:@"quoteResultsSegue" sender:self];
+        }
+        else
+        {
+            if (_quoteReturn.rateErrors != nil && _quoteReturn.rateErrors.count > 0)
+            {
+                [self HandleRSPError:_quoteReturn.rateErrors[0]];
+            }
+            else
+            {
+                NSString* errorString = @"No carriers returned for the given quote request paramters.";
+                UIAlertView *errorView =
+                [[UIAlertView alloc] initWithTitle:@"No rates returned." message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+                [errorView show];
+            }
+            
+            [self performSegueWithIdentifier:@"homeViewSegue" sender:self];
+        }
     }
 }
 
@@ -796,6 +821,15 @@
     
     NSString *errorString = error.description;
     NSString *errorTitle = [NSString stringWithFormat:@"SOAP Error (%@)", error.faultCode];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+-(void) HandleRSPError:(RSPRateError*) error{
+    
+    NSString *errorString = error.errorMessage;
+    NSString *errorTitle = [NSString stringWithFormat:@"RateService Error (%d)", error.errorId];
     UIAlertView *errorView =
     [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
     [errorView show];

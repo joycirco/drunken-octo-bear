@@ -2,7 +2,7 @@
 //  QuoteRequest.m
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/18/13.
+//  Created by Darin Raffety on 3/19/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -20,10 +20,12 @@
 @dynamic pickupDateTime;
 @dynamic storeLocationCode;
 @dynamic timeStamp;
+@dynamic deliveryDateTime;
 @dynamic accessorials;
 @dynamic credentials;
 @dynamic freightItems;
 @dynamic user;
+
 
 - (id) init
 {
@@ -57,16 +59,9 @@
     self.destinationPostalCode = @"66048";
     self.storeLocationCode =  @"13310001";
     self.pickupDateTime = [NSDate date];
+    self.deliveryDateTime = [NSDate date];
     self.timeStamp = [NSDate date];
-    //self.credentials = [[Credentials alloc]init];
-    //self.credentials.loginName = @"testbot";
-    //self.credentials.password = @"supersecret468";
-    //self.credentials.accountId = @"32700120";
-    //self.credentials.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    //self.freightItems = nil;
-    //self.accessorials = nil;
 }
-
 
 
 @end
