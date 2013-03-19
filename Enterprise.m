@@ -9,6 +9,7 @@
 #import "Enterprise.h"
 #import "Company.h"
 #import "User.h"
+#import "DataModel.h"
 
 
 @implementation Enterprise
@@ -34,5 +35,6 @@
     }
     return nil;
 }
+
 
 @end

@@ -8,9 +8,12 @@
 
 #import "User.h"
 #import "Enterprise.h"
+<<<<<<< HEAD
 #import "DataModel.h"
+=======
 #import "QuoteRequest.h"
 #import "UserSettings.h"
+>>>>>>> man-dog-liger
 
 
 @implementation User
@@ -26,7 +29,6 @@
 @dynamic userSettings;
 @dynamic savedQuoteRequests;
 
-
 - (Enterprise*)getCurrentEnterprise
 {
     User *currentUser = [DataModel sharedInstance].currentUser;
@@ -40,5 +42,6 @@
     }
     return nil; // didn't find it
 }
+
 
 @end

@@ -2,7 +2,7 @@
 //  QuoteRequest.m
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/18/13.
+//  Created by Darin Raffety on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -10,6 +10,7 @@
 #import "Accessorial.h"
 #import "Credentials.h"
 #import "FreightItem.h"
+#import "User.h"
 
 
 @implementation QuoteRequest
@@ -22,6 +23,7 @@
 @dynamic accessorials;
 @dynamic credentials;
 @dynamic freightItems;
+@dynamic user;
 
 - (id) init
 {
@@ -64,5 +66,7 @@
     //self.freightItems = nil;
     //self.accessorials = nil;
 }
+
+
 
 @end

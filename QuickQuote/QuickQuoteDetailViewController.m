@@ -7,7 +7,6 @@
 //
 
 #import "QuickQuoteDetailViewController.h"
-//#import "QuickQuoteResultsViewController.h"
 
 @interface QuickQuoteDetailViewController ()
 {
@@ -31,20 +30,6 @@ NSString *firstLogin = @"yes"; // just for now
 @synthesize managedObjectContext;
 
 #pragma mark - Managing the detail item
-
-/*- (void)setDetailItem:(id)newDetailItem
-{
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
-        // Update the view.
-        [self configureView];
-    }
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
-}*/
 
 - (void)configureView
 {

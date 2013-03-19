@@ -10,8 +10,12 @@
 
 @implementation DataModel
 
+<<<<<<< HEAD
+@synthesize currentUser;
+=======
 @synthesize currentUser = _currentUser;
 @synthesize isLoaded = _isLoaded;
+>>>>>>> man-dog-liger
 
 static DataModel *sharedObject = nil;
 
@@ -22,6 +26,12 @@ static DataModel *sharedObject = nil;
     dispatch_once(&pred, ^ {
         
         sharedObject = [[super allocWithZone:NULL] init];
+<<<<<<< HEAD
+        
+        sharedObject.currentUser = [User alloc];
+        
+=======
+>>>>>>> man-dog-liger
     });
     return sharedObject;
 }

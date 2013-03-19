@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Accessorial" representedClassName="Accessorial" syncable="YES">
         <attribute name="accessorialCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accessorialName" optional="YES" attributeType="String" syncable="YES"/>
@@ -69,6 +69,19 @@
         <attribute name="accessorialCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accessorialName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="accessorialTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="userSettings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UserSettings" inverseName="defaultAccessorials" inverseEntity="UserSettings" syncable="YES"/>
+        <fetchedProperty name="deliveryAcceesorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="PersistedAccessorial" predicateString="accessorialTypeID=2"/>
+        </fetchedProperty>
+        <fetchedProperty name="freightAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="PersistedAccessorial" predicateString="accessorialTypeID=4"/>
+        </fetchedProperty>
+        <fetchedProperty name="pickupAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="PersistedAccessorial" predicateString="accessorialTypeID=1"/>
+        </fetchedProperty>
+        <fetchedProperty name="shipmentAccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="PersistedAccessorial" predicateString="accessorialTypeID=3"/>
+        </fetchedProperty>
     </entity>
     <entity name="QuoteRequest" representedClassName="QuoteRequest" syncable="YES">
         <attribute name="destinationPostalCode" optional="YES" attributeType="String" syncable="YES"/>
@@ -79,15 +92,7 @@
         <relationship name="accessorials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Accessorial" inverseName="quoteRequest" inverseEntity="Accessorial" syncable="YES"/>
         <relationship name="credentials" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Credentials" inverseName="quoteRequest" inverseEntity="Credentials" syncable="YES"/>
         <relationship name="freightItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FreightItem" inverseName="quoteRequest" inverseEntity="FreightItem" syncable="YES"/>
-        <fetchedProperty name="deliveryAccessorials" optional="YES" syncable="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="QuoteRequest" predicateString="(accessorialType == 2)"/>
-        </fetchedProperty>
-        <fetchedProperty name="pickupAccessorials" optional="YES" syncable="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="QuoteRequest" predicateString="(accessorialType == 1)"/>
-        </fetchedProperty>
-        <fetchedProperty name="shipmentAccessorials" optional="YES" syncable="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="QuoteRequest" predicateString="(accessorialType == 3)"/>
-        </fetchedProperty>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="savedQuoteRequests" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="accountId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -98,6 +103,19 @@
         <attribute name="selectedEnterpriseId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="enterprises" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="Enterprise" inverseName="user" inverseEntity="Enterprise" syncable="YES"/>
+        <relationship name="savedQuoteRequests" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="QuoteRequest" inverseName="user" inverseEntity="QuoteRequest" syncable="YES"/>
+        <relationship name="userSettings" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="UserSettings" inverseName="user" inverseEntity="UserSettings" syncable="YES"/>
+        <fetchedProperty name="userdefaultaccessorials" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="PersistedAccessorial" predicateString="ANY userSettings.defaultAccessorials == $FETCH_SOURCE"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="UserSettings" representedClassName="UserSettings" parentEntity="User" syncable="YES">
+        <attribute name="defaultDestinationPostalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="defaultFreightClass" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="defaultHandlingUnitTypeID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="defaultOriginPostalCode" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="defaultAccessorials" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PersistedAccessorial" inverseName="userSettings" inverseEntity="PersistedAccessorial" syncable="YES"/>
+        <relationship name="user" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="userSettings" inverseEntity="User" syncable="YES"/>
     </entity>
     <elements>
         <element name="Accessorial" positionX="-11" positionY="123" width="128" height="194"/>
@@ -107,8 +125,9 @@
         <element name="Enterprise" positionX="-702" positionY="530" width="128" height="118"/>
         <element name="FreightItem" positionX="-216" positionY="333" width="128" height="270"/>
         <element name="HandlingUnitType" positionX="160" positionY="99" width="128" height="90"/>
-        <element name="PersistedAccessorial" positionX="160" positionY="288" width="128" height="90"/>
-        <element name="QuoteRequest" positionX="-549" positionY="207" width="128" height="224"/>
-        <element name="User" positionX="-245" positionY="648" width="128" height="163"/>
+        <element name="PersistedAccessorial" positionX="142" positionY="327" width="128" height="179"/>
+        <element name="QuoteRequest" positionX="-459" positionY="99" width="128" height="180"/>
+        <element name="User" positionX="-245" positionY="648" width="128" height="224"/>
+        <element name="UserSettings" positionX="117" positionY="621" width="128" height="135"/>
     </elements>
 </model>
