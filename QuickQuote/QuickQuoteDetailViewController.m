@@ -97,7 +97,7 @@ NSString *firstLogin = @"yes"; // just for now
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    // e.g. self.myOutlet = nil
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -178,14 +178,16 @@ NSString *firstLogin = @"yes"; // just for now
     //if (_progress_ind == nil && _subView == nil)
     if (_progress_ind == nil)
     {
-        _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+       _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _progress_ind.center = self.view.center;
         _progress_ind.alpha = 1.0;
-        //_subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-        //[_subView addSubview:_progress_ind];
-        //[self.view.superview addSubview:_subView];
-        [self.view.superview addSubview:_progress_ind];
-        //_progress_ind.center = _subView.center;
+       _subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+       [_subView addSubview:_progress_ind];
+       [self.imageView.superview addSubview:_subView];
+       [self.imageView addSubview:_progress_ind];
+        _subView.center = self.view.center;
+        // center hack, because center to the view or image view isn't working well
+        _progress_ind.frame = CGRectMake(300, 333, 100, 100);
     }
 
     [_progress_ind startAnimating];
@@ -193,18 +195,7 @@ NSString *firstLogin = @"yes"; // just for now
 
 -(void)stopActivityIndicator
 {
-    if (_progress_ind != nil)
-    {
-        [_progress_ind stopAnimating];
-        [_progress_ind removeFromSuperview];
-        _progress_ind = nil;
-    }
-    
-    if (_subView != nil)
-    {
-        [_subView removeFromSuperview];
-        _subView = nil;
-    }
+    [_progress_ind stopAnimating];
 }
 
 @end
