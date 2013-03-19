@@ -2,7 +2,7 @@
 //  User.h
 //  QuickQuote
 //
-//  Created by Steven Tuckness on 3/17/13.
+//  Created by Steven Tuckness on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
@@ -29,5 +29,7 @@
 - (void)removeEnterprisesObject:(Enterprise *)value;
 - (void)addEnterprises:(NSSet *)values;
 - (void)removeEnterprises:(NSSet *)values;
+
+- (Enterprise*)getCurrentEnterprise;
 
 @end

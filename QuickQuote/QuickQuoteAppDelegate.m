@@ -14,6 +14,7 @@
 #import "AccessorialType.h"
 #import "HandlingUnitType.h"
 #import "ContextUtilities.h"
+#import "DataModel.h"
 
 @implementation QuickQuoteAppDelegate
 
@@ -41,6 +42,7 @@
                                   inManagedObjectContext:context];
     [quoteRequest setDefaults];
 
+    /* moved this to generatedContext so it's element 0 for anonymous
     Credentials *cred = [NSEntityDescription
                          insertNewObjectForEntityForName:@"Credentials"
                          inManagedObjectContext:context];
@@ -49,9 +51,7 @@
     cred.password = @"supersecret468";
     cred.accountId = @"32700120";
     cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    
-    quoteRequest.credentials = cred;
- 
+     */
     
     ContextUtilities* cu = [[ContextUtilities alloc] init];
     

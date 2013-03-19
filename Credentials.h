@@ -2,14 +2,14 @@
 //  Credentials.h
 //  QuickQuote
 //
-//  Created by Darin Raffety on 3/8/13.
+//  Created by Steven Tuckness on 3/18/13.
 //  Copyright (c) 2013 EngagedTechnologies. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class QuoteRequest;
+@class Company, QuoteRequest;
 
 @interface Credentials : NSManagedObject
 
@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * token;
 @property (nonatomic, retain) QuoteRequest *quoteRequest;
+@property (nonatomic, retain) Company *company;
 
 @end

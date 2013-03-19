@@ -11,7 +11,6 @@
 @implementation DataModel
 
 @synthesize currentUser;
-@synthesize managedObjectContext;
 
 static DataModel *sharedObject = nil;
 
@@ -24,7 +23,6 @@ static DataModel *sharedObject = nil;
         sharedObject = [[super allocWithZone:NULL] init];
         
         sharedObject.currentUser = [User alloc];
-        sharedObject.managedObjectContext = [NSManagedObjectContext alloc];
         
     });
     return sharedObject;
