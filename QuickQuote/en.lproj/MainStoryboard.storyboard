@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="20" width="703" height="748"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="eShipping_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="VCh-bh-CGL"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="VCh-bh-CGL"/>
                         </subviews>
                         <color key="backgroundColor" red="0.84192425270000004" green="0.84192425270000004" blue="0.84192425270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2052,10 +2052,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <subviews>
                             <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="ytv-BK-38l">
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Skip sign in and rate anonymously for now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW0-Ys-u9U">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Skip sign in and rate anonymously for now" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW0-Ys-u9U">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="4OO-HB-wmK"/>
-                                            <constraint firstAttribute="width" constant="336" id="qeb-GS-9tD"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.094117656349999995" green="0.48235297199999999" blue="0.09803922474" alpha="1" colorSpace="deviceRGB"/>
@@ -2063,6 +2062,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </label>
                                     <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="e4y-v0-VpA">
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="451" id="Vlf-oB-Isg"/>
+                                        </constraints>
                                         <items>
                                             <navigationItem title="Sign In" id="tE5-c2-Obm"/>
                                         </items>
@@ -2133,7 +2135,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <action selector="textFieldEdited" destination="eY0-NB-rhQ" eventType="editingChanged" id="O1u-fC-Zez"/>
                                         </connections>
                                     </textField>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enter required fields before continuing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VY-dD-1LP">
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enter required fields before continuing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VY-dD-1LP">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Uwd-ay-T2z"/>
                                             <constraint firstAttribute="width" constant="365" id="sJ8-d5-irp"/>
@@ -2187,16 +2189,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="trailing" secondItem="ycx-1z-mc0" secondAttribute="trailing" type="default" id="CYk-N3-ZsI"/>
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="trailing" secondItem="vXK-3G-Lz3" secondAttribute="trailing" type="default" id="GHP-7F-Bj9"/>
                                     <constraint firstItem="e4y-v0-VpA" firstAttribute="leading" secondItem="ytv-BK-38l" secondAttribute="leading" type="default" id="JZa-LL-Uq2"/>
-                                    <constraint firstItem="R9s-9p-zxO" firstAttribute="centerX" secondItem="ytv-BK-38l" secondAttribute="centerX" type="default" id="KgV-hd-P8g"/>
                                     <constraint firstItem="vXK-3G-Lz3" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="212" scoringType="5" id="NWS-PF-Jvs"/>
                                     <constraint firstItem="e4y-v0-VpA" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" type="default" id="QPG-1l-T0X"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="49" id="Rx1-CB-M5i"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="leading" secondItem="thz-bE-q8G" secondAttribute="leading" type="default" id="S3B-CW-P5z"/>
                                     <constraint firstItem="thz-bE-q8G" firstAttribute="trailing" secondItem="9VY-dD-1LP" secondAttribute="trailing" type="default" id="TYN-Lo-xV4"/>
+                                    <constraint firstItem="VW0-Ys-u9U" firstAttribute="trailing" secondItem="R9s-9p-zxO" secondAttribute="trailing" type="default" id="VD1-Dd-jrh"/>
                                     <constraint firstAttribute="bottom" secondItem="R9s-9p-zxO" secondAttribute="bottom" constant="59" id="XbZ-th-8CA"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="leading" secondItem="thz-bE-q8G" secondAttribute="leading" type="default" id="Xhx-Vt-bYE"/>
                                     <constraint firstItem="x75-Kr-ShR" firstAttribute="trailing" secondItem="wCk-QZ-Zod" secondAttribute="trailing" type="default" id="aOd-Ni-Hxa"/>
-                                    <constraint firstItem="yh3-RM-KGb" firstAttribute="leading" secondItem="ytv-BK-38l" secondAttribute="leading" constant="43" id="aSu-X3-QJn"/>
                                     <constraint firstItem="wCk-QZ-Zod" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="85" id="aoB-Oz-SIi"/>
                                     <constraint firstItem="R9s-9p-zxO" firstAttribute="leading" secondItem="VW0-Ys-u9U" secondAttribute="leading" type="default" id="eWw-St-XQn"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="centerY" secondItem="x75-Kr-ShR" secondAttribute="centerY" type="default" id="hbl-L5-eK5"/>
@@ -2205,6 +2206,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstItem="R9s-9p-zxO" firstAttribute="leading" secondItem="vXK-3G-Lz3" secondAttribute="leading" type="default" id="mAC-lg-Gjq"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="centerX" secondItem="e4y-v0-VpA" secondAttribute="centerX" type="default" id="nYa-bt-0CI"/>
                                     <constraint firstAttribute="bottom" secondItem="VW0-Ys-u9U" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="qXS-Ra-ing"/>
+                                    <constraint firstItem="e4y-v0-VpA" firstAttribute="trailing" secondItem="ytv-BK-38l" secondAttribute="trailing" type="default" id="qeT-sc-Ddm"/>
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="leading" secondItem="ycx-1z-mc0" secondAttribute="leading" type="default" id="t1r-Ao-wef"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="trailing" secondItem="thz-bE-q8G" secondAttribute="trailing" type="default" id="t8t-RB-YDs"/>
                                 </constraints>
@@ -2308,9 +2310,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="-75" y="706"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="eShipping_Logo.png" width="360" height="206"/>
-    </resources>
     <classes>
         <class className="AccessorialCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialCell.h"/>
@@ -2390,6 +2389,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="QuickQuoteDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteDetailViewController.h"/>
             <relationships>
+                <relationship kind="action" name="logOut:"/>
                 <relationship kind="outlet" name="centerMarker" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
             </relationships>
@@ -2478,7 +2478,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </relationships>
         </class>
     </classes>
->>>>>>> man-dog-liger
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
