@@ -37,6 +37,7 @@
 		A477082316EEC21400F67473 /* EnterprisePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A477081E16EEC21400F67473 /* EnterprisePickerViewController.m */; };
 		A47A5FB316B256C400A533A9 /* SplashGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = A47A5FB216B256C400A533A9 /* SplashGradient.png */; };
 		A47A5FB616B256E900A533A9 /* SplashGradient2.png in Resources */ = {isa = PBXBuildFile; fileRef = A47A5FB516B256E900A533A9 /* SplashGradient2.png */; };
+		A4EDBBFC16F8BD7900A6915A /* ENGAGED_TECH_LOGO_LG.png in Resources */ = {isa = PBXBuildFile; fileRef = A4EDBBFB16F8BD7800A6915A /* ENGAGED_TECH_LOGO_LG.png */; };
 		A4FE5A6D16B8EF88009A3AEC /* Icon_Ipad_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FE5A6C16B8EF88009A3AEC /* Icon_Ipad_retina.png */; };
 		A4FE5A6F16B8EFE7009A3AEC /* Icon_Ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FE5A6E16B8EFE7009A3AEC /* Icon_Ipad.png */; };
 		FF0D2A4516ED0DA9006B547F /* AccessorialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0D2A4416ED0DA9006B547F /* AccessorialsViewController.m */; };
@@ -206,6 +207,7 @@
 		A477081E16EEC21400F67473 /* EnterprisePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnterprisePickerViewController.m; sourceTree = "<group>"; };
 		A47A5FB216B256C400A533A9 /* SplashGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashGradient.png; sourceTree = "<group>"; };
 		A47A5FB516B256E900A533A9 /* SplashGradient2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SplashGradient2.png; sourceTree = "<group>"; };
+		A4EDBBFB16F8BD7800A6915A /* ENGAGED_TECH_LOGO_LG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ENGAGED_TECH_LOGO_LG.png; sourceTree = "<group>"; };
 		A4FE5A6C16B8EF88009A3AEC /* Icon_Ipad_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_Ipad_retina.png; sourceTree = "<group>"; };
 		A4FE5A6E16B8EFE7009A3AEC /* Icon_Ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_Ipad.png; sourceTree = "<group>"; };
 		FF0D2A4316ED0DA9006B547F /* AccessorialsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialsViewController.h; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */,
+				A4EDBBFB16F8BD7800A6915A /* ENGAGED_TECH_LOGO_LG.png */,
 				FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */,
 				FF25A63916F22EB000C0ADF9 /* Settings.bundle */,
 				FFE9B3C016EA58520049B24C /* Core Data */,
@@ -913,6 +916,7 @@
 				FF25A63A16F22EB000C0ADF9 /* Settings.bundle in Resources */,
 				FF9060FF16F4F83F0040FFC6 /* eShipping_Logo.png in Resources */,
 				FF90610016F4F83F0040FFC6 /* eShipping-Exchange.png in Resources */,
+				A4EDBBFC16F8BD7900A6915A /* ENGAGED_TECH_LOGO_LG.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

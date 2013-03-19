@@ -33,7 +33,7 @@
             return enterprise;
         }
     }
-    return nil; // didn't find it
+    return nil; 
 }
 
 

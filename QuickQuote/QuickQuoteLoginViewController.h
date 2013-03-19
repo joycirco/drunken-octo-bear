@@ -17,6 +17,7 @@
 @protocol PresentedLoginViewControllerDelegate <NSObject>
 @required
 - (void)quickQuoteLoginViewControllerDidFinish;
+- (void)configureBackgroundImage;
 @end
 
 @interface QuickQuoteLoginViewController : UIViewController <UIPopoverControllerDelegate,

@@ -63,17 +63,34 @@ NSString *firstLogin = @"yes"; // just for now
 {
     [super viewDidLoad];
     self.view.frame = self.view.bounds;
+        
+	// Do any additional setup after loading the view, typically from a nib.
+    [self configureView];
+}
+
+-(void)configureBackgroundImage
+{
+    User *currentUser = [DataModel sharedInstance].currentUser;
     
-    //UIImage *image = [UIImage imageNamed: @"eShipping-Exchange.png"];
-    UIImage *image = [UIImage imageNamed: @"eShipping_Logo.png"];
-    
+    UIImage *image = [UIImage new];
+    if ([currentUser.getCurrentEnterprise.enterpriseName
+        isEqualToString:@"eShipping"] && ![currentUser.loginName isEqualToString:@"anonymous"])
+    {
+        image = [UIImage imageNamed: @"eShipping_Logo.png"];
+    }
+    else if ([currentUser.getCurrentEnterprise.enterpriseName
+         isEqualToString:@"Exchange"] && ![currentUser.loginName isEqualToString:@"anonymous"])
+    {
+        image = [UIImage imageNamed: @"eShipping-Exchange.png"];
+    }
+    else
+    {
+        image = [UIImage imageNamed:@"ENGAGED_TECH_LOGO_LG.png"];
+    }
+        
     self.imageView.contentMode = UIViewContentModeCenter;
     self.imageView.alpha = .6;
     [self.imageView setImage:image];
-    
-    
-	// Do any additional setup after loading the view, typically from a nib.
-    [self configureView];
 }
 
 - (void)viewDidUnload
