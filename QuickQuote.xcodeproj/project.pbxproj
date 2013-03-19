@@ -40,6 +40,15 @@
 		FF0D2A5716ED2FC6006B547F /* PickerPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0D2A5616ED2FC6006B547F /* PickerPopoverViewController.m */; };
 		FF118A7016F4D9DF0065DFB3 /* RateResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FF118A6F16F4D9DF0065DFB3 /* RateResultCell.m */; };
 		FF19677316F901AA0063F1E8 /* QuoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677216F901AA0063F1E8 /* QuoteRequest.m */; };
+		FF19678716F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677616F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m */; };
+		FF19678816F912A90063F1E8 /* CFCArrayOf_xsd_string.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677816F912A90063F1E8 /* CFCArrayOf_xsd_string.m */; };
+		FF19678916F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677A16F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.m */; };
+		FF19678A16F912A90063F1E8 /* CFCCFCInvocationException.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677C16F912A90063F1E8 /* CFCCFCInvocationException.m */; };
+		FF19678B16F912A90063F1E8 /* CFCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19677E16F912A90063F1E8 /* CFCMap.m */; };
+		FF19678C16F912A90063F1E8 /* CFCmapItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678016F912A90063F1E8 /* CFCmapItem.m */; };
+		FF19678D16F912A90063F1E8 /* CFCPrintService.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678216F912A90063F1E8 /* CFCPrintService.m */; };
+		FF19678E16F912A90063F1E8 /* CFCQueryBean.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678416F912A90063F1E8 /* CFCQueryBean.m */; };
+		FF19678F16F912A90063F1E8 /* CFCSudzc.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678616F912A90063F1E8 /* CFCSudzc.m */; };
 		FF1D4D0616D5C69C00FA710C /* RateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */; };
 		FF1EE9B916F0139B00A973C0 /* AccessorialType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9B816F0139A00A973C0 /* AccessorialType.m */; };
 		FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9BB16F013D100A973C0 /* Accessorial.m */; };
@@ -216,6 +225,24 @@
 		FF118A6F16F4D9DF0065DFB3 /* RateResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateResultCell.m; sourceTree = "<group>"; };
 		FF19677116F901AA0063F1E8 /* QuoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuoteRequest.h; path = QuickQuote/QuoteRequest.h; sourceTree = "<group>"; };
 		FF19677216F901AA0063F1E8 /* QuoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuoteRequest.m; path = QuickQuote/QuoteRequest.m; sourceTree = "<group>"; };
+		FF19677516F912A90063F1E8 /* CFCArrayOf_xsd_anyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCArrayOf_xsd_anyType.h; sourceTree = "<group>"; };
+		FF19677616F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCArrayOf_xsd_anyType.m; sourceTree = "<group>"; };
+		FF19677716F912A90063F1E8 /* CFCArrayOf_xsd_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCArrayOf_xsd_string.h; sourceTree = "<group>"; };
+		FF19677816F912A90063F1E8 /* CFCArrayOf_xsd_string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCArrayOf_xsd_string.m; sourceTree = "<group>"; };
+		FF19677916F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCArrayOfArrayOf_xsd_anyType.h; sourceTree = "<group>"; };
+		FF19677A16F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCArrayOfArrayOf_xsd_anyType.m; sourceTree = "<group>"; };
+		FF19677B16F912A90063F1E8 /* CFCCFCInvocationException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCCFCInvocationException.h; sourceTree = "<group>"; };
+		FF19677C16F912A90063F1E8 /* CFCCFCInvocationException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCCFCInvocationException.m; sourceTree = "<group>"; };
+		FF19677D16F912A90063F1E8 /* CFCMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCMap.h; sourceTree = "<group>"; };
+		FF19677E16F912A90063F1E8 /* CFCMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCMap.m; sourceTree = "<group>"; };
+		FF19677F16F912A90063F1E8 /* CFCmapItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCmapItem.h; sourceTree = "<group>"; };
+		FF19678016F912A90063F1E8 /* CFCmapItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCmapItem.m; sourceTree = "<group>"; };
+		FF19678116F912A90063F1E8 /* CFCPrintService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCPrintService.h; sourceTree = "<group>"; };
+		FF19678216F912A90063F1E8 /* CFCPrintService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCPrintService.m; sourceTree = "<group>"; };
+		FF19678316F912A90063F1E8 /* CFCQueryBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCQueryBean.h; sourceTree = "<group>"; };
+		FF19678416F912A90063F1E8 /* CFCQueryBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCQueryBean.m; sourceTree = "<group>"; };
+		FF19678516F912A90063F1E8 /* CFCSudzc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCSudzc.h; sourceTree = "<group>"; };
+		FF19678616F912A90063F1E8 /* CFCSudzc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCSudzc.m; sourceTree = "<group>"; };
 		FF1D4D0416D5C69C00FA710C /* RateDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateDetailViewController.h; sourceTree = "<group>"; };
 		FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateDetailViewController.m; sourceTree = "<group>"; };
 		FF1EE9B716F0139A00A973C0 /* AccessorialType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccessorialType.h; path = QuickQuote/AccessorialType.h; sourceTree = "<group>"; };
@@ -457,6 +484,7 @@
 		A421475216B2306A003FDF9C = {
 			isa = PBXGroup;
 			children = (
+				FF19677416F912A90063F1E8 /* PrintService */,
 				FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */,
 				FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */,
 				FF25A63916F22EB000C0ADF9 /* Settings.bundle */,
@@ -590,6 +618,32 @@
 				A47A5FB216B256C400A533A9 /* SplashGradient.png */,
 			);
 			name = Graphics;
+			sourceTree = "<group>";
+		};
+		FF19677416F912A90063F1E8 /* PrintService */ = {
+			isa = PBXGroup;
+			children = (
+				FF19677516F912A90063F1E8 /* CFCArrayOf_xsd_anyType.h */,
+				FF19677616F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m */,
+				FF19677716F912A90063F1E8 /* CFCArrayOf_xsd_string.h */,
+				FF19677816F912A90063F1E8 /* CFCArrayOf_xsd_string.m */,
+				FF19677916F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.h */,
+				FF19677A16F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.m */,
+				FF19677B16F912A90063F1E8 /* CFCCFCInvocationException.h */,
+				FF19677C16F912A90063F1E8 /* CFCCFCInvocationException.m */,
+				FF19677D16F912A90063F1E8 /* CFCMap.h */,
+				FF19677E16F912A90063F1E8 /* CFCMap.m */,
+				FF19677F16F912A90063F1E8 /* CFCmapItem.h */,
+				FF19678016F912A90063F1E8 /* CFCmapItem.m */,
+				FF19678116F912A90063F1E8 /* CFCPrintService.h */,
+				FF19678216F912A90063F1E8 /* CFCPrintService.m */,
+				FF19678316F912A90063F1E8 /* CFCQueryBean.h */,
+				FF19678416F912A90063F1E8 /* CFCQueryBean.m */,
+				FF19678516F912A90063F1E8 /* CFCSudzc.h */,
+				FF19678616F912A90063F1E8 /* CFCSudzc.m */,
+			);
+			name = PrintService;
+			path = QuickQuote/PrintService;
 			sourceTree = "<group>";
 		};
 		FF3186BF16C31BA6001B9D3B /* RateService */ = {
@@ -1082,6 +1136,15 @@
 				FFA179F416F8F1F600AF9068 /* User.m in Sources */,
 				FFA179F716F8F66F00AF9068 /* Enterprise.m in Sources */,
 				FF19677316F901AA0063F1E8 /* QuoteRequest.m in Sources */,
+				FF19678716F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m in Sources */,
+				FF19678816F912A90063F1E8 /* CFCArrayOf_xsd_string.m in Sources */,
+				FF19678916F912A90063F1E8 /* CFCArrayOfArrayOf_xsd_anyType.m in Sources */,
+				FF19678A16F912A90063F1E8 /* CFCCFCInvocationException.m in Sources */,
+				FF19678B16F912A90063F1E8 /* CFCMap.m in Sources */,
+				FF19678C16F912A90063F1E8 /* CFCmapItem.m in Sources */,
+				FF19678D16F912A90063F1E8 /* CFCPrintService.m in Sources */,
+				FF19678E16F912A90063F1E8 /* CFCQueryBean.m in Sources */,
+				FF19678F16F912A90063F1E8 /* CFCSudzc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
