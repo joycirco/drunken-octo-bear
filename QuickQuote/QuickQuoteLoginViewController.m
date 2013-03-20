@@ -149,7 +149,6 @@
 {
     if ([self authenticateUser:TRUE])
     {
-        [self.delegate configureBackgroundImage];
         [self.delegate quickQuoteLoginViewControllerDidFinish];
     }
 }

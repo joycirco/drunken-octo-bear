@@ -90,6 +90,8 @@ NSString *firstLogin = @"yes"; // just for now
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    [self configureBackgroundImage];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -178,7 +180,6 @@ NSString *firstLogin = @"yes"; // just for now
     }
 
     [_progress_ind startAnimating];
-    [self configureBackgroundImage]; // it keeps getting overwritten... put it back. (look into this more in depth)
 }
 
 -(void)stopActivityIndicator

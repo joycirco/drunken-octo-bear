@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -2254,7 +2254,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQZ-xU-tUJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2497" y="770"/>
+            <point key="canvasLocation" x="-2425" y="770"/>
         </scene>
         <!--Default Accessorials View Controller - FreightItems-->
         <scene sceneID="ubd-fA-bqz">
@@ -2310,176 +2310,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="-75" y="706"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="AccessorialCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialCell.h"/>
-            <relationships>
-                <relationship kind="action" name="actionSwitchChanged:"/>
-                <relationship kind="outlet" name="controlSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AccessorialsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialsViewController.h"/>
-        </class>
-        <class className="CompanyPickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CompanyPickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="picker" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="DatePopoverViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatePopoverViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="action" name="setDate:"/>
-                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="DefaultAccessorialsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DefaultAccessorialsViewController.h"/>
-        </class>
-        <class className="EnterprisePickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterprisePickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="picker" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="FreightItemViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FreightItemViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="selectFreightClass:"/>
-                <relationship kind="action" name="selectHandlingUnit:"/>
-                <relationship kind="action" name="stackableChanged:"/>
-                <relationship kind="action" name="togglePopover:"/>
-                <relationship kind="outlet" name="btnFreightClass" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnHandlingUnitType" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="freightDescription" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="height" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="length" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nmfc" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="redLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stackable" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="units" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="width" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="FreightItemsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FreightItemsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="btnAddFreight" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PickerPopoverViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PickerPopoverViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navBarItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOut:"/>
-                <relationship kind="outlet" name="centerMarker" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="signInAction:"/>
-                <relationship kind="action" name="textFieldEdited"/>
-                <relationship kind="outlet" name="companyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="enterpriseButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="greenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="redLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="signinButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="userTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteMasterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteMasterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="rateAction:"/>
-                <relationship kind="action" name="resetAction:"/>
-                <relationship kind="action" name="togglePopover:"/>
-                <relationship kind="outlet" name="btnRate" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnUserSettings" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="cellDeliveryAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellDeliveryDate" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellFreightSummary" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellPickupAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellPickupDate" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellShipmentAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="destinationZip" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="originZip" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="storeLocationCode" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteResultsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteResultsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="popOverAnchorButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="RateDetailViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RateDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeAction:"/>
-                <relationship kind="outlet" name="addressDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="addressOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="carrierNameDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="carrierNameOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cityStateZipDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cityStateZipOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="closeButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="contactDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactEmailDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactEmailOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactTitleDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactTitleOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="parametersUsed1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="parametersUsed2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="phoneFaxDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="phoneFaxOrigin" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="RateResultCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RateResultCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="carrierName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distance" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceMode" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="totalCarrierCharges" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="transitDays" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="transitMode" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UserSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionResetDefaults:"/>
-                <relationship kind="outlet" name="btnDefFreightClass" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnDefHandlingUnitType" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnResetDefaults" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="defDestinationPostalCode" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="defOriginPostalCode" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
