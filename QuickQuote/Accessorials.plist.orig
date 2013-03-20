@@ -80,7 +80,11 @@
 		<key>accessorialName</key>
 		<string>Protect from Freezing</string>
 		<key>accessorialTypeID</key>
+<<<<<<< HEAD
+		<integer>4</integer>
+=======
 		<integer>1</integer>
+>>>>>>> master
 	</dict>
 	<dict>
 		<key>accessorialCode</key>
@@ -104,7 +108,11 @@
 		<key>accessorialName</key>
 		<string>Sort Segregate</string>
 		<key>accessorialTypeID</key>
+<<<<<<< HEAD
+		<integer>4</integer>
+=======
 		<integer>1</integer>
+>>>>>>> master
 	</dict>
 	<dict>
 		<key>accessorialCode</key>

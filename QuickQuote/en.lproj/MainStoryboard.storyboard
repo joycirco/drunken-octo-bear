@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="20" width="703" height="748"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="eShipping_Logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="VCh-bh-CGL"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="VCh-bh-CGL"/>
                         </subviews>
                         <color key="backgroundColor" red="0.84192425270000004" green="0.84192425270000004" blue="0.84192425270000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -2052,10 +2052,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <subviews>
                             <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="ytv-BK-38l">
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Skip sign in and rate anonymously for now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW0-Ys-u9U">
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Skip sign in and rate anonymously for now" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW0-Ys-u9U">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="4OO-HB-wmK"/>
-                                            <constraint firstAttribute="width" constant="336" id="qeb-GS-9tD"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.094117656349999995" green="0.48235297199999999" blue="0.09803922474" alpha="1" colorSpace="deviceRGB"/>
@@ -2063,6 +2062,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </label>
                                     <navigationBar contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="e4y-v0-VpA">
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="451" id="Vlf-oB-Isg"/>
+                                        </constraints>
                                         <items>
                                             <navigationItem title="Sign In" id="tE5-c2-Obm"/>
                                         </items>
@@ -2133,7 +2135,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                             <action selector="textFieldEdited" destination="eY0-NB-rhQ" eventType="editingChanged" id="O1u-fC-Zez"/>
                                         </connections>
                                     </textField>
-                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enter required fields before continuing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VY-dD-1LP">
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please enter required fields before continuing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9VY-dD-1LP">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Uwd-ay-T2z"/>
                                             <constraint firstAttribute="width" constant="365" id="sJ8-d5-irp"/>
@@ -2187,16 +2189,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="trailing" secondItem="ycx-1z-mc0" secondAttribute="trailing" type="default" id="CYk-N3-ZsI"/>
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="trailing" secondItem="vXK-3G-Lz3" secondAttribute="trailing" type="default" id="GHP-7F-Bj9"/>
                                     <constraint firstItem="e4y-v0-VpA" firstAttribute="leading" secondItem="ytv-BK-38l" secondAttribute="leading" type="default" id="JZa-LL-Uq2"/>
-                                    <constraint firstItem="R9s-9p-zxO" firstAttribute="centerX" secondItem="ytv-BK-38l" secondAttribute="centerX" type="default" id="KgV-hd-P8g"/>
                                     <constraint firstItem="vXK-3G-Lz3" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="212" scoringType="5" id="NWS-PF-Jvs"/>
                                     <constraint firstItem="e4y-v0-VpA" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" type="default" id="QPG-1l-T0X"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="49" id="Rx1-CB-M5i"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="leading" secondItem="thz-bE-q8G" secondAttribute="leading" type="default" id="S3B-CW-P5z"/>
                                     <constraint firstItem="thz-bE-q8G" firstAttribute="trailing" secondItem="9VY-dD-1LP" secondAttribute="trailing" type="default" id="TYN-Lo-xV4"/>
+                                    <constraint firstItem="VW0-Ys-u9U" firstAttribute="trailing" secondItem="R9s-9p-zxO" secondAttribute="trailing" type="default" id="VD1-Dd-jrh"/>
                                     <constraint firstAttribute="bottom" secondItem="R9s-9p-zxO" secondAttribute="bottom" constant="59" id="XbZ-th-8CA"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="leading" secondItem="thz-bE-q8G" secondAttribute="leading" type="default" id="Xhx-Vt-bYE"/>
                                     <constraint firstItem="x75-Kr-ShR" firstAttribute="trailing" secondItem="wCk-QZ-Zod" secondAttribute="trailing" type="default" id="aOd-Ni-Hxa"/>
-                                    <constraint firstItem="yh3-RM-KGb" firstAttribute="leading" secondItem="ytv-BK-38l" secondAttribute="leading" constant="43" id="aSu-X3-QJn"/>
                                     <constraint firstItem="wCk-QZ-Zod" firstAttribute="top" secondItem="ytv-BK-38l" secondAttribute="top" constant="85" id="aoB-Oz-SIi"/>
                                     <constraint firstItem="R9s-9p-zxO" firstAttribute="leading" secondItem="VW0-Ys-u9U" secondAttribute="leading" type="default" id="eWw-St-XQn"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="centerY" secondItem="x75-Kr-ShR" secondAttribute="centerY" type="default" id="hbl-L5-eK5"/>
@@ -2205,6 +2206,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstItem="R9s-9p-zxO" firstAttribute="leading" secondItem="vXK-3G-Lz3" secondAttribute="leading" type="default" id="mAC-lg-Gjq"/>
                                     <constraint firstItem="9VY-dD-1LP" firstAttribute="centerX" secondItem="e4y-v0-VpA" secondAttribute="centerX" type="default" id="nYa-bt-0CI"/>
                                     <constraint firstAttribute="bottom" secondItem="VW0-Ys-u9U" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="qXS-Ra-ing"/>
+                                    <constraint firstItem="e4y-v0-VpA" firstAttribute="trailing" secondItem="ytv-BK-38l" secondAttribute="trailing" type="default" id="qeT-sc-Ddm"/>
                                     <constraint firstItem="yh3-RM-KGb" firstAttribute="leading" secondItem="ycx-1z-mc0" secondAttribute="leading" type="default" id="t1r-Ao-wef"/>
                                     <constraint firstItem="ycx-1z-mc0" firstAttribute="trailing" secondItem="thz-bE-q8G" secondAttribute="trailing" type="default" id="t8t-RB-YDs"/>
                                 </constraints>
@@ -2252,7 +2254,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uQZ-xU-tUJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2497" y="770"/>
+            <point key="canvasLocation" x="-2425" y="770"/>
         </scene>
         <!--Default Accessorials View Controller - FreightItems-->
         <scene sceneID="ubd-fA-bqz">
@@ -2308,179 +2310,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="-75" y="706"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="eShipping_Logo.png" width="360" height="206"/>
-    </resources>
-    <classes>
-        <class className="AccessorialCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialCell.h"/>
-            <relationships>
-                <relationship kind="action" name="actionSwitchChanged:"/>
-                <relationship kind="outlet" name="controlSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AccessorialsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialsViewController.h"/>
-        </class>
-        <class className="CompanyPickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CompanyPickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="picker" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="DatePopoverViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatePopoverViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="action" name="setDate:"/>
-                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="DefaultAccessorialsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DefaultAccessorialsViewController.h"/>
-        </class>
-        <class className="EnterprisePickerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/EnterprisePickerViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="picker" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="FreightItemViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FreightItemViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="selectFreightClass:"/>
-                <relationship kind="action" name="selectHandlingUnit:"/>
-                <relationship kind="action" name="stackableChanged:"/>
-                <relationship kind="action" name="togglePopover:"/>
-                <relationship kind="outlet" name="btnFreightClass" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnHandlingUnitType" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="freightDescription" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="height" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="length" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nmfc" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="redLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stackable" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="units" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="weight" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="width" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="FreightItemsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FreightItemsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="btnAddFreight" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PickerPopoverViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PickerPopoverViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneAction:"/>
-                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="navBarItem" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteDetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logOut:"/>
-                <relationship kind="outlet" name="centerMarker" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteLoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteLoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="signInAction:"/>
-                <relationship kind="action" name="textFieldEdited"/>
-                <relationship kind="outlet" name="companyButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="enterpriseButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="greenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="passwordTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="redLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="signinButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="userTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteMasterViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteMasterViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="rateAction:"/>
-                <relationship kind="action" name="resetAction:"/>
-                <relationship kind="action" name="togglePopover:"/>
-                <relationship kind="outlet" name="btnRate" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnUserSettings" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="cellDeliveryAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellDeliveryDate" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellFreightSummary" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellPickupAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellPickupDate" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="cellShipmentAccessorials" candidateClass="UITableViewCell"/>
-                <relationship kind="outlet" name="destinationZip" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="originZip" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="storeLocationCode" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="QuickQuoteResultsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteResultsViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="popOverAnchorButton" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="RateDetailViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RateDetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeAction:"/>
-                <relationship kind="outlet" name="addressDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="addressOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="carrierNameDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="carrierNameOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cityStateZipDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cityStateZipOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="closeButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="contactDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactEmailDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactEmailOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactTitleDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="contactTitleOrigin" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="parametersUsed1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="parametersUsed2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="phoneFaxDest" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="phoneFaxOrigin" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="RateResultCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RateResultCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="carrierName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="distance" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="serviceMode" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="totalCarrierCharges" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="transitDays" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="transitMode" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="UserSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionResetDefaults:"/>
-                <relationship kind="outlet" name="btnDefFreightClass" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnDefHandlingUnitType" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="btnResetDefaults" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="defDestinationPostalCode" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="defOriginPostalCode" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

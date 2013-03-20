@@ -229,6 +229,17 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    UIViewController* topView = [self topViewController];
+ 
+    BOOL bval = [topView isKindOfClass:[QuickQuoteMasterViewController class]];
+    bval = [topView isKindOfClass:[QuickQuoteDetailViewController class]];
+    bval = [topView isKindOfClass:[DatePopoverViewController class]];
+    bval = [topView isKindOfClass:[AccessorialsViewController class]];
+    bval = [topView isKindOfClass:[UserSettingsViewController class]];
+    bval = [topView isKindOfClass:[QuickQuoteResultsViewController class]];
+    bval = [topView isKindOfClass:[FreightItemsViewController class]];
+    bval = [topView isKindOfClass:[PickerPopoverViewController class]];
+
     NSString* segueId = [segue identifier];
     
     if (([segueId isEqualToString:@"datePopoverSeguePU"]) ||
@@ -249,90 +260,122 @@
         UIPopoverController *popoverDateController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.datePopoverController = popoverDateController;
         popoverDateController.delegate = self;
-    }
-        
-    /******  Swapable Detail View Code ******/
-    if ((rootPopoverButtonItem != nil)
-        || [segueId isEqualToString:@"quoteResultsSegue"]
-        || [segueId isEqualToString:@"freightItemsSegue"]
-        || [segueId isEqualToString:@"pickupAccessorialsSegue"]
-        || [segueId isEqualToString:@"deliveryAccessorialsSegue"]
-        || [segueId isEqualToString:@"shipmentAccessorialsSegue"]
-        || [segueId isEqualToString:@"ratingInProgress"]
-        || [segueId isEqualToString:@"userSettingsSegue"]
-        )
-    {
-        UIViewController<SubstitutableDetailViewController>* detailViewController = (UIViewController<SubstitutableDetailViewController>*)[segue.destinationViewController topViewController];
 
-        // stop any activity indicators if we are rating
-        [detailViewController stopActivityIndicator];
-        
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"ratingInProgress"])
+        //if (rootPopoverButtonItem != nil)
+        //{
+        //    if (rootPopoverButtonItem != nil)
+        //    [detailViewController showRootPopoverButtonItem:self.rootPopoverButtonItem];
+       // }
+    }
+    else
+    {
+        /******  Swapable Detail View Code ******/
+        if ((rootPopoverButtonItem != nil)
+            || [segueId isEqualToString:@"quoteResultsSegue"]
+            || [segueId isEqualToString:@"freightItemsSegue"]
+            || [segueId isEqualToString:@"pickupAccessorialsSegue"]
+            || [segueId isEqualToString:@"deliveryAccessorialsSegue"]
+            || [segueId isEqualToString:@"shipmentAccessorialsSegue"]
+            || [segueId isEqualToString:@"ratingInProgress"]
+            || [segueId isEqualToString:@"userSettingsSegue"]
+            )
         {
-            [detailViewController startActivityIndicator];
+            UIViewController<SubstitutableDetailViewController>* detailViewController = (UIViewController<SubstitutableDetailViewController>*)[segue.destinationViewController topViewController];
+
+            // stop any activity indicators if we are rating
+            [detailViewController stopActivityIndicator];
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"ratingInProgress"])
+            {
+                [detailViewController startActivityIndicator];
+            }
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"quoteResultsSegue"])
+            {
+                if (_quoteReturn != nil && _quoteReturn.rateResponses != nil)
+                {
+                    [(QuickQuoteResultsViewController*)detailViewController setRateResponseList:_quoteReturn.rateResponses];
+                }
+            }
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"freightItemsSegue"])
+            {
+                FreightItemsViewController* detailView = (FreightItemsViewController*)detailViewController;
+                detailView.managedObjectContext = self.managedObjectContext;
+                detailView.quoteRequest = _quoteRequest;
+            }
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"pickupAccessorialsSegue"])
+            {
+                AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
+                accView.managedObjectContext = self.managedObjectContext;
+                accView.quoteRequest = _quoteRequest;
+                accView.accessorialTypeID = [NSNumber numberWithInt:1];
+            }
+
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"deliveryAccessorialsSegue"])
+            {
+                AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
+                accView.managedObjectContext = self.managedObjectContext;
+                accView.quoteRequest = _quoteRequest;
+                accView.accessorialTypeID = [NSNumber numberWithInt:2];
+            }
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"shipmentAccessorialsSegue"])
+            {
+                AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
+                accView.managedObjectContext = self.managedObjectContext;
+                accView.quoteRequest = _quoteRequest;
+                accView.accessorialTypeID = [NSNumber numberWithInt:3];
+            }
+
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"userSettingsSegue"])
+            {
+                UserSettingsViewController* uView = (UserSettingsViewController*)detailViewController;
+                uView.managedObjectContext = self.managedObjectContext;
+            }
+
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"freightItemsSegue"])
+            {
+                FreightItemsViewController* detailView = (FreightItemsViewController*)detailViewController;
+                detailView.managedObjectContext = self.managedObjectContext;
+                detailView.quoteRequest = _quoteRequest;
+            }
+            
+            // send necessary data to Detail View
+            if ([segueId isEqualToString:@"homeViewSegue"])
+            {
+                QuickQuoteDetailViewController* detailView = (QuickQuoteDetailViewController*)detailViewController;
+                detailView.managedObjectContext = self.managedObjectContext;
+                //[detailView configureBackgroundImage];
+            }
+
+            if (rootPopoverButtonItem != nil)
+                [detailViewController showRootPopoverButtonItem:self.rootPopoverButtonItem];
         }
         
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"quoteResultsSegue"])
+        // don't hide for home screen reset
+        if (! [segueId isEqualToString:@"homeViewSegue"])
         {
-            if (_quoteReturn != nil && _quoteReturn.rateResponses != nil)
+            if (masterPopoverController != nil)
             {
-                [(QuickQuoteResultsViewController*)detailViewController setRateResponseList:_quoteReturn.rateResponses];
+                [masterPopoverController dismissPopoverAnimated:YES];
             }
         }
-        
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"freightItemsSegue"])
-        {
-            FreightItemsViewController* detailView = (FreightItemsViewController*)detailViewController;
-            detailView.managedObjectContext = self.managedObjectContext;
-            detailView.quoteRequest = _quoteRequest;
-        }
-        
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"pickupAccessorialsSegue"])
-        {
-            AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
-            accView.managedObjectContext = self.managedObjectContext;
-            accView.quoteRequest = _quoteRequest;
-            accView.accessorialTypeID = [NSNumber numberWithInt:1];
-        }
-
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"deliveryAccessorialsSegue"])
-        {
-            AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
-            accView.managedObjectContext = self.managedObjectContext;
-            accView.quoteRequest = _quoteRequest;
-            accView.accessorialTypeID = [NSNumber numberWithInt:2];
-        }
-        
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"shipmentAccessorialsSegue"])
-        {
-            AccessorialsViewController* accView = (AccessorialsViewController*)detailViewController;
-            accView.managedObjectContext = self.managedObjectContext;
-            accView.quoteRequest = _quoteRequest;
-            accView.accessorialTypeID = [NSNumber numberWithInt:3];
-        }
-
-        // send necessary data to Detail View
-        if ([segueId isEqualToString:@"userSettingsSegue"])
-        {
-            UserSettingsViewController* uView = (UserSettingsViewController*)detailViewController;
-            uView.managedObjectContext = self.managedObjectContext;
-        }
-        
-        if (rootPopoverButtonItem != nil)
-            [detailViewController showRootPopoverButtonItem:self.rootPopoverButtonItem];
     }
     
-    if (masterPopoverController != nil)
-    {
-        [masterPopoverController dismissPopoverAnimated:YES];
-    }
-    
+//    if (masterPopoverController != nil)
+//    {
+//        [masterPopoverController dismissPopoverAnimated:YES];
+//    }
 }
 
 #pragma mark - Fetched results controller
@@ -640,7 +683,7 @@
     
     [self configureView];
 
-    //[self performSegueWithIdentifier:@"homeViewSegue" sender:self];
+    [self performSegueWithIdentifier:@"homeViewSegue" sender:self];
 }
 
 - (IBAction)rateAction:(id)sender
@@ -834,6 +877,27 @@
     UIAlertView *errorView =
     [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
     [errorView show];
+}
+
+
+- (UIViewController *)topViewController{
+    return [self topViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController *)topViewController:(UIViewController *)rootViewController
+{
+    if (rootViewController.presentedViewController == nil) {
+        return rootViewController;
+    }
+    
+    if ([rootViewController.presentedViewController isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController *navigationController = (UINavigationController *)rootViewController.presentedViewController;
+        UIViewController *lastViewController = [[navigationController viewControllers] lastObject];
+        return [self topViewController:lastViewController];
+    }
+    
+    UIViewController *presentedViewController = (UIViewController *)rootViewController.presentedViewController;
+    return [self topViewController:presentedViewController];
 }
 
 @end
