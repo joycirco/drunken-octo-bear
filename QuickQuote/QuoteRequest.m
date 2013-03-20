@@ -57,7 +57,7 @@
 {
     self.originPostalCode = @"50801";
     self.destinationPostalCode = @"66048";
-    self.storeLocationCode =  @"13310001";
+    self.storeLocationCode =  @"";
     self.pickupDateTime = [NSDate date];
     self.deliveryDateTime = [NSDate date];
     self.timeStamp = [NSDate date];

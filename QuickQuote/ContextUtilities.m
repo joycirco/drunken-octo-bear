@@ -14,6 +14,10 @@
 #import "Company.h"
 #import "Credentials.h"
 #import "PersistedAccessorial.h"
+#import "PersistedContext.h"
+#import "AccessorialTypeQQ.h"
+#import "AccessorialQQ.h"
+#import "HandlingUnitTypeQQ.h"
 
 @interface ContextUtilities()
 {
@@ -26,70 +30,48 @@
 
 @implementation ContextUtilities
 
--(void) generateApplicationData:(NSManagedObjectContext*)context
+-(void) generateApplicationData:(NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
-    [self generateAccessorials:context];
+    [self generateAccessorialTypes:context:persistedContext];
+    [self generateAccessorials:context: persistedContext];
     [self generateCredentials:context];
-    [self generateHUTypes:context];
+    [self generateHUTypes:context:persistedContext];
     [self generateEnterpriseData:context];
     [self generateCompanyData:context];
     [self generateUserData:context];
     [self addAnonymousUser:context];
 }
 
--(void)generateAccessorials : (NSManagedObjectContext*)context
+-(void)generateAccessorialTypes : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
-    AccessorialType *acc1 = [NSEntityDescription
-                             insertNewObjectForEntityForName:@"AccessorialType"
-                             inManagedObjectContext:context];
-    
-    acc1.accessorialTypeID = [NSNumber numberWithInt:1];
-    acc1.accessorialTypeName = @"Pickup";
-    
-    
-    AccessorialType *acc2 = [NSEntityDescription
-                             insertNewObjectForEntityForName:@"AccessorialType"
-                             inManagedObjectContext:context];
-    
-    acc2.accessorialTypeID = [NSNumber numberWithInt:2];
-    acc2.accessorialTypeName = @"Delivery";
-    
-    
-    AccessorialType *acc3 = [NSEntityDescription
-                             insertNewObjectForEntityForName:@"AccessorialType"
-                             inManagedObjectContext:context];
-    
-    acc3.accessorialTypeID = [NSNumber numberWithInt:3];
-    acc3.accessorialTypeName = @"Shipment";
-    
-    AccessorialType *acc4 = [NSEntityDescription
-                             insertNewObjectForEntityForName:@"AccessorialType"
-                             inManagedObjectContext:context];
-    
-    acc4.accessorialTypeID = [NSNumber numberWithInt:4];
-    acc4.accessorialTypeName = @"Freight";
-    
-    NSArray* accDesc = [[NSArray alloc] initWithObjects:@"COD Fee", @"Construction Site", @"Convention/Tradeshow", @"Inside Delivery",
-                        
-                        @"Inside Pickup", @"Excessive Length", @"Liftgate Delivery", @"Limited Access", @"Notify for PU or Delivery",
-                        
-                        @"Protect from Freezing", @"Residential Delivery", @"Residential Pickup", @"Sort Segregate", @"Single Shipment",nil];
-    
-    //Accessorial Codes
-    NSArray* accCode = [[NSArray alloc]initWithObjects:@"COD", @"CONST", @"CONV", @"ISDEL", @"ISPU", @"LENGTH", @"LGDel", @"LIMACCESS", @"NOTIFY",
-                        
-                        @"PROTECTFRE", @"ResDel", @"ResPick", @"SORTSEG", @"SS", nil];
-    
-    NSArray* accTypes = [[NSArray alloc]initWithObjects: [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:3], [NSNumber numberWithInt:2],[NSNumber numberWithInt:1], [NSNumber numberWithInt:3],[NSNumber numberWithInt:2],[NSNumber numberWithInt:3],[NSNumber numberWithInt:3],[NSNumber numberWithInt:4],[NSNumber numberWithInt:2],[NSNumber numberWithInt:1],[NSNumber numberWithInt:4],[NSNumber numberWithInt:3],nil];
-    
-    for(int i=0; i < accDesc.count; i++)
+    for(AccessorialTypeQQ* atq in persistedContext.accessorialTypes)
     {
-        [self CreatePersistedAccessorial: [accDesc objectAtIndex:i ] : [accCode objectAtIndex:i] : [accTypes objectAtIndex:i] : context];
+        AccessorialType *act = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"AccessorialType"
+                                 inManagedObjectContext:context];
+        
+        act.accessorialTypeID = atq.accessorialTypeID;
+        act.accessorialTypeName = atq.accessorialTypeName;
+        
     }
 }
 
--(void) generateHUTypes : (NSManagedObjectContext*)context
+-(void)generateAccessorials : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
+    for(AccessorialQQ* acc in persistedContext.accessorials)
+    {
+        [self CreatePersistedAccessorial: acc.accessorialName : acc.accessorialCode: acc.accessorialTypeID : context];
+    }
+}
+
+-(void) generateHUTypes : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
+{
+    for (HandlingUnitTypeQQ* hq in persistedContext.handlingUnitTypes)
+    {
+        [self CreatePersistedHUType:hq.handlingUnitTypeDescription : hq.handlingUnitTypeCode : hq.handlingUnitTypeID :context];
+    }
+
+    /*
     //    1	Pallets (48 x 40)	1	PLT	Pallets (48 x 40)
     [self CreatePersistedHUType:@"Pallets (48 x 40)" :@"PLT" :[NSNumber numberWithInt:1] :context];
     
@@ -177,7 +159,7 @@
     //    158	Slip Sheet	0	SLP	Slip Sheet
     [self CreatePersistedHUType:@"Slip Sheet" :@"SLP" :[NSNumber numberWithInt:158] :context];
     
-    //    174	Trailer	0	TRU	Truck Trailer
+    //    174	Trailer	0	TRU	Truck Trailer*/
 }
 
 -(void) CreatePersistedAccessorial:(NSString*)accName :(NSString*)accCode :(NSNumber*)accTypeID :(NSManagedObjectContext*)context

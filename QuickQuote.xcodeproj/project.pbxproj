@@ -52,7 +52,6 @@
 		FF1D4D0616D5C69C00FA710C /* RateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */; };
 		FF1EE9B916F0139B00A973C0 /* AccessorialType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9B816F0139A00A973C0 /* AccessorialType.m */; };
 		FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9BB16F013D100A973C0 /* Accessorial.m */; };
-		FF25A63A16F22EB000C0ADF9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FF25A63916F22EB000C0ADF9 /* Settings.bundle */; };
 		FF31875316C31BA6001B9D3B /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C216C31BA6001B9D3B /* NSData+Base64.m */; };
 		FF31875416C31BA6001B9D3B /* NSMutableArray+Soap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C416C31BA6001B9D3B /* NSMutableArray+Soap.m */; };
 		FF31875516C31BA6001B9D3B /* Soap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3186C616C31BA6001B9D3B /* Soap.m */; };
@@ -124,6 +123,14 @@
 		FF31879716C31BA6001B9D3B /* RSPSupplement.m in Sources */ = {isa = PBXBuildFile; fileRef = FF31874E16C31BA6001B9D3B /* RSPSupplement.m */; };
 		FF31879816C31BA6001B9D3B /* RSPTerminalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FF31875016C31BA6001B9D3B /* RSPTerminalInfo.m */; };
 		FF31879916C31BA6001B9D3B /* Soap+Prefix.m in Sources */ = {isa = PBXBuildFile; fileRef = FF31875216C31BA6001B9D3B /* Soap+Prefix.m */; };
+		FF34215516F918230005D1E7 /* HandlingUnitTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF34215416F918230005D1E7 /* HandlingUnitTypes.plist */; };
+		FF34215716F91E380005D1E7 /* AccessorialTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF34215616F91E380005D1E7 /* AccessorialTypes.plist */; };
+		FF34215916F91FDF0005D1E7 /* Accessorials.plist in Resources */ = {isa = PBXBuildFile; fileRef = FF34215816F91FDF0005D1E7 /* Accessorials.plist */; };
+		FF34215C16F9284A0005D1E7 /* AccessorialTypeQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34215B16F9284A0005D1E7 /* AccessorialTypeQQ.m */; };
+		FF34215F16F92BEE0005D1E7 /* PersistedContext.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34215E16F92BEE0005D1E7 /* PersistedContext.m */; };
+		FF34216216F92C700005D1E7 /* AccessorialQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216116F92C700005D1E7 /* AccessorialQQ.m */; };
+		FF34216516F92C870005D1E7 /* HandlingUnitTypeQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216416F92C870005D1E7 /* HandlingUnitTypeQQ.m */; };
+		FF34216816F93EA10005D1E7 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216716F93EA10005D1E7 /* PersistedAccessorial.m */; };
 		FF4DF28316C09A0300AE954F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */; };
 		FF4DF28516C09A1A00AE954F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28416C09A1A00AE954F /* Security.framework */; };
 		FF4DF36916C09C7800AE954F /* AccessorialPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35816C09C7800AE954F /* AccessorialPricingDetail.m */; };
@@ -149,7 +156,6 @@
 		FFBBDD6C16F7982900F13CA5 /* PickerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD6B16F7982800F13CA5 /* PickerHelper.m */; };
 		FFBBDD6F16F7D8E100F13CA5 /* DefaultAccessorialsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */; };
 		FFBBDD7216F7E53100F13CA5 /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD7116F7E53100F13CA5 /* UserSettings.m */; };
-		FFBBDD7516F7E92300F13CA5 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */; };
 		FFC6E38716ED40DA00D7B026 /* PickerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38616ED40DA00D7B026 /* PickerItem.m */; };
 		FFC6E38A16ED4BE900D7B026 /* HandlingUnitType.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */; };
 		FFC6E38D16ED4C0A00D7B026 /* FreightItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FFC6E38C16ED4C0A00D7B026 /* FreightItem.m */; };
@@ -249,7 +255,6 @@
 		FF1EE9B816F0139A00A973C0 /* AccessorialType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccessorialType.m; path = QuickQuote/AccessorialType.m; sourceTree = "<group>"; };
 		FF1EE9BA16F013D100A973C0 /* Accessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Accessorial.h; path = QuickQuote/Accessorial.h; sourceTree = "<group>"; };
 		FF1EE9BB16F013D100A973C0 /* Accessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Accessorial.m; path = QuickQuote/Accessorial.m; sourceTree = "<group>"; };
-		FF25A63916F22EB000C0ADF9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		FF3186C116C31BA6001B9D3B /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		FF3186C216C31BA6001B9D3B /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		FF3186C316C31BA6001B9D3B /* NSMutableArray+Soap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Soap.h"; sourceTree = "<group>"; };
@@ -394,6 +399,19 @@
 		FF31875016C31BA6001B9D3B /* RSPTerminalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPTerminalInfo.m; sourceTree = "<group>"; };
 		FF31875116C31BA6001B9D3B /* Soap+Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Soap+Prefix.h"; sourceTree = "<group>"; };
 		FF31875216C31BA6001B9D3B /* Soap+Prefix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Soap+Prefix.m"; sourceTree = "<group>"; };
+		FF34215416F918230005D1E7 /* HandlingUnitTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = HandlingUnitTypes.plist; path = QuickQuote/HandlingUnitTypes.plist; sourceTree = "<group>"; };
+		FF34215616F91E380005D1E7 /* AccessorialTypes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AccessorialTypes.plist; path = QuickQuote/AccessorialTypes.plist; sourceTree = "<group>"; };
+		FF34215816F91FDF0005D1E7 /* Accessorials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Accessorials.plist; path = QuickQuote/Accessorials.plist; sourceTree = "<group>"; };
+		FF34215A16F9284A0005D1E7 /* AccessorialTypeQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialTypeQQ.h; sourceTree = "<group>"; };
+		FF34215B16F9284A0005D1E7 /* AccessorialTypeQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessorialTypeQQ.m; sourceTree = "<group>"; };
+		FF34215D16F92BEE0005D1E7 /* PersistedContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistedContext.h; sourceTree = "<group>"; };
+		FF34215E16F92BEE0005D1E7 /* PersistedContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistedContext.m; sourceTree = "<group>"; };
+		FF34216016F92C700005D1E7 /* AccessorialQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialQQ.h; sourceTree = "<group>"; };
+		FF34216116F92C700005D1E7 /* AccessorialQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessorialQQ.m; sourceTree = "<group>"; };
+		FF34216316F92C860005D1E7 /* HandlingUnitTypeQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandlingUnitTypeQQ.h; sourceTree = "<group>"; };
+		FF34216416F92C870005D1E7 /* HandlingUnitTypeQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandlingUnitTypeQQ.m; sourceTree = "<group>"; };
+		FF34216616F93EA10005D1E7 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistedAccessorial.h; path = QuickQuote/PersistedAccessorial.h; sourceTree = "<group>"; };
+		FF34216716F93EA10005D1E7 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistedAccessorial.m; path = QuickQuote/PersistedAccessorial.m; sourceTree = "<group>"; };
 		FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FF4DF28416C09A1A00AE954F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FF4DF35716C09C7800AE954F /* AccessorialPricingDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialPricingDetail.h; sourceTree = "<group>"; };
@@ -440,8 +458,6 @@
 		FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultAccessorialsViewController.m; sourceTree = "<group>"; };
 		FFBBDD7016F7E53100F13CA5 /* UserSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserSettings.h; path = QuickQuote/UserSettings.h; sourceTree = "<group>"; };
 		FFBBDD7116F7E53100F13CA5 /* UserSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserSettings.m; path = QuickQuote/UserSettings.m; sourceTree = "<group>"; };
-		FFBBDD7316F7E92300F13CA5 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistedAccessorial.h; path = QuickQuote/PersistedAccessorial.h; sourceTree = "<group>"; };
-		FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistedAccessorial.m; path = QuickQuote/PersistedAccessorial.m; sourceTree = "<group>"; };
 		FFC6E38516ED40DA00D7B026 /* PickerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerItem.h; sourceTree = "<group>"; };
 		FFC6E38616ED40DA00D7B026 /* PickerItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerItem.m; sourceTree = "<group>"; };
 		FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HandlingUnitType.h; path = QuickQuote/HandlingUnitType.h; sourceTree = "<group>"; };
@@ -487,7 +503,6 @@
 				FF19677416F912A90063F1E8 /* PrintService */,
 				FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */,
 				FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */,
-				FF25A63916F22EB000C0ADF9 /* Settings.bundle */,
 				FFE9B3C016EA58520049B24C /* Core Data */,
 				FF41F5DA16CB19C30027A6FF /* Resources */,
 				FF3186BF16C31BA6001B9D3B /* RateService */,
@@ -825,6 +840,9 @@
 		FF41F5DA16CB19C30027A6FF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FF34215416F918230005D1E7 /* HandlingUnitTypes.plist */,
+				FF34215616F91E380005D1E7 /* AccessorialTypes.plist */,
+				FF34215816F91FDF0005D1E7 /* Accessorials.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -833,6 +851,14 @@
 			isa = PBXGroup;
 			children = (
 				FF4DF35616C09C7800AE954F /* QQResponseModels */,
+				FF34215A16F9284A0005D1E7 /* AccessorialTypeQQ.h */,
+				FF34215B16F9284A0005D1E7 /* AccessorialTypeQQ.m */,
+				FF34215D16F92BEE0005D1E7 /* PersistedContext.h */,
+				FF34215E16F92BEE0005D1E7 /* PersistedContext.m */,
+				FF34216016F92C700005D1E7 /* AccessorialQQ.h */,
+				FF34216116F92C700005D1E7 /* AccessorialQQ.m */,
+				FF34216316F92C860005D1E7 /* HandlingUnitTypeQQ.h */,
+				FF34216416F92C870005D1E7 /* HandlingUnitTypeQQ.m */,
 			);
 			name = QQModels;
 			path = QuickQuote/QQModels;
@@ -870,13 +896,13 @@
 		FFE9B3C016EA58520049B24C /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				FFBBDD7316F7E92300F13CA5 /* PersistedAccessorial.h */,
-				FFBBDD7416F7E92300F13CA5 /* PersistedAccessorial.m */,
 				FFC6E38816ED4BE900D7B026 /* HandlingUnitType.h */,
 				FFC6E38916ED4BE900D7B026 /* HandlingUnitType.m */,
 				FFBBDD7016F7E53100F13CA5 /* UserSettings.h */,
 				FFBBDD7116F7E53100F13CA5 /* UserSettings.m */,
 				FFDBC57016EA529500255B6B /* QuoteRequestModel.xcdatamodeld */,
+				FF34216616F93EA10005D1E7 /* PersistedAccessorial.h */,
+				FF34216716F93EA10005D1E7 /* PersistedAccessorial.m */,
 				FF19677116F901AA0063F1E8 /* QuoteRequest.h */,
 				FF19677216F901AA0063F1E8 /* QuoteRequest.m */,
 				FFA179F516F8F66F00AF9068 /* Enterprise.h */,
@@ -982,9 +1008,11 @@
 				A47A5FB616B256E900A533A9 /* SplashGradient2.png in Resources */,
 				A4FE5A6D16B8EF88009A3AEC /* Icon_Ipad_retina.png in Resources */,
 				A4FE5A6F16B8EFE7009A3AEC /* Icon_Ipad.png in Resources */,
-				FF25A63A16F22EB000C0ADF9 /* Settings.bundle in Resources */,
 				FF9060FF16F4F83F0040FFC6 /* eShipping_Logo.png in Resources */,
 				FF90610016F4F83F0040FFC6 /* eShipping-Exchange.png in Resources */,
+				FF34215516F918230005D1E7 /* HandlingUnitTypes.plist in Resources */,
+				FF34215716F91E380005D1E7 /* AccessorialTypes.plist in Resources */,
+				FF34215916F91FDF0005D1E7 /* Accessorials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,7 +1160,6 @@
 				FFBBDD6C16F7982900F13CA5 /* PickerHelper.m in Sources */,
 				FFBBDD6F16F7D8E100F13CA5 /* DefaultAccessorialsViewController.m in Sources */,
 				FFBBDD7216F7E53100F13CA5 /* UserSettings.m in Sources */,
-				FFBBDD7516F7E92300F13CA5 /* PersistedAccessorial.m in Sources */,
 				FFA179F416F8F1F600AF9068 /* User.m in Sources */,
 				FFA179F716F8F66F00AF9068 /* Enterprise.m in Sources */,
 				FF19677316F901AA0063F1E8 /* QuoteRequest.m in Sources */,
@@ -1145,6 +1172,11 @@
 				FF19678D16F912A90063F1E8 /* CFCPrintService.m in Sources */,
 				FF19678E16F912A90063F1E8 /* CFCQueryBean.m in Sources */,
 				FF19678F16F912A90063F1E8 /* CFCSudzc.m in Sources */,
+				FF34215C16F9284A0005D1E7 /* AccessorialTypeQQ.m in Sources */,
+				FF34215F16F92BEE0005D1E7 /* PersistedContext.m in Sources */,
+				FF34216216F92C700005D1E7 /* AccessorialQQ.m in Sources */,
+				FF34216516F92C870005D1E7 /* HandlingUnitTypeQQ.m in Sources */,
+				FF34216816F93EA10005D1E7 /* PersistedAccessorial.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

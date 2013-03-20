@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+@class PersistedContext;
 
 @interface ContextUtilities : NSObject
 
--(void) generateApplicationData:(NSManagedObjectContext*)context;
+-(void) generateApplicationData:(NSManagedObjectContext*)context : (PersistedContext*)persistedContext;
 
 @end

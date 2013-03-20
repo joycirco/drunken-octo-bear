@@ -21,8 +21,7 @@
 
 @end
 
-@class QuoteReturn;
-@class QuoteRequest;
+@class QuoteReturn, QuoteRequest, PersistedContext;
 
 @interface QuickQuoteMasterViewController : UITableViewController
         <NSFetchedResultsControllerDelegate, UISplitViewControllerDelegate,
@@ -64,6 +63,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) PersistedContext *persistedContext;
 @property (nonatomic,strong) NSArray* quoteRequests;
 
 @property (strong, nonatomic) UIPopoverController *datePopoverController;

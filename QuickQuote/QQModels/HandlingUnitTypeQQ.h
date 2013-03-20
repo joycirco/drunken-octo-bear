@@ -10,4 +10,8 @@
 
 @interface HandlingUnitTypeQQ : NSObject
 
+@property (nonatomic, retain) NSString * handlingUnitTypeCode;
+@property (nonatomic, retain) NSString * handlingUnitTypeDescription;
+@property (nonatomic, retain) NSNumber * handlingUnitTypeID;
+
 @end
