@@ -15,6 +15,7 @@
 #import "HandlingUnitType.h"
 #import "ContextUtilities.h"
 #import "DataModel.h"
+#import "PersistedContext.h"
 
 @implementation QuickQuoteAppDelegate
 
@@ -23,6 +24,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize persistedContext = _persistedContext;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,13 +32,16 @@
 
     // test create & save?
     NSManagedObjectContext *context = [self managedObjectContext];
+
+    
+    //PersistedContext* persisted = [self persistedContext];
     
     /*QuoteRequest *quoteRequest = [NSEntityDescription
                                   insertNewObjectForEntityForName:@"QuoteRequest"
                                   inManagedObjectContext:context];
     [quoteRequest setDefaults];
 
-    /* moved this to generatedContext so it's element 0 for anonymous
+     moved this to generatedContext so it's element 0 for anonymous
     Credentials *cred = [NSEntityDescription
                          insertNewObjectForEntityForName:@"Credentials"
                          inManagedObjectContext:context];
@@ -50,7 +55,7 @@
  
     ContextUtilities* cu = [[ContextUtilities alloc] init];
     
-    [cu generateApplicationData:context];
+    [cu generateApplicationData:context : self.persistedContext];
     
     NSError *error;
     if (![context save:&error])
@@ -96,6 +101,7 @@
     QuickQuoteMasterViewController *controller = (QuickQuoteMasterViewController *)masterNavigationController.topViewController;
     controller.splitViewController = splitViewController;
     controller.managedObjectContext = self.managedObjectContext;
+    controller.persistedContext = self.persistedContext;
     splitViewController.delegate = (id)controller;
     return YES;
 }
@@ -145,6 +151,20 @@
         }
     }
 }
+
+
+- (PersistedContext *)persistedContext
+{
+    if (_persistedContext != nil)
+    {
+        return _persistedContext;
+    }
+    
+    _persistedContext = [[PersistedContext alloc] init];
+    
+    return _persistedContext;
+}
+
 
 #pragma mark - Core Data stack
 //

@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface PersistedContext : NSObject
+
+@property (nonatomic, retain) NSArray *accessorials;
+@property (nonatomic, retain) NSArray *accessorialTypes;
+@property (nonatomic, retain) NSArray *handlingUnitTypes;
+
+-(id) init;
+
+-(BOOL)loadDataFromPersistedStore;
+
 
 @end

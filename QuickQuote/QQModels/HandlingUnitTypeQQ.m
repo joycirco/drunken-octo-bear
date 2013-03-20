@@ -10,4 +10,8 @@
 
 @implementation HandlingUnitTypeQQ
 
+@synthesize handlingUnitTypeCode;
+@synthesize handlingUnitTypeDescription;
+@synthesize handlingUnitTypeID;
+
 @end

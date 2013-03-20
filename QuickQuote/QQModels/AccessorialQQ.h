@@ -10,4 +10,8 @@
 
 @interface AccessorialQQ : NSObject
 
+@property (nonatomic, retain) NSString * accessorialCode;
+@property (nonatomic, retain) NSString * accessorialName;
+@property (nonatomic, retain) NSNumber * accessorialTypeID;
+
 @end

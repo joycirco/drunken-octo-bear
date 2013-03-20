@@ -10,4 +10,7 @@
 
 @implementation AccessorialTypeQQ
 
+@synthesize accessorialTypeID;
+@synthesize accessorialTypeName;
+
 @end

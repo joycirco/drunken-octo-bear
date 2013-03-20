@@ -31,6 +31,8 @@
 #import "DataModel.h"
 #import "User.h"
 
+#import "PersistedContext.h"
+
 @interface QuickQuoteMasterViewController ()
 {
     NSMutableArray *_objects;
@@ -56,6 +58,7 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize quoteRequests = _quoteRequests;
+@synthesize persistedContext = _persistedContext;
 
 @synthesize dateToSet = _dateToSet;
 @synthesize quoteReturn = _quoteReturn;
@@ -89,18 +92,16 @@
     if (_quoteRequest == nil)
         _quoteRequest = [self createNewQuoteRequest:_managedObjectContext :_userSettings];
     
-
     // load map for handling units
     huMap = [[NSMutableDictionary alloc]init];
-    // get accessorial type from data store
+   
+    // get handling unit types from data store
     NSError* error;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"HandlingUnitType"
                                               inManagedObjectContext:_managedObjectContext];
     [fetchRequest setEntity:entity];
-    
     NSArray* hu = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
     for(HandlingUnitType* h in hu)
     {
         [huMap setObject:h forKey:h.handlingUnitTypeID];
