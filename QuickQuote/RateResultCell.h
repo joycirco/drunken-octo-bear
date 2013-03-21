@@ -10,13 +10,12 @@
 
 @interface RateResultCell : UITableViewCell
 
-
-
 @property (weak, nonatomic) IBOutlet UILabel *carrierName;
 @property (weak, nonatomic) IBOutlet UILabel *transitDays;
 @property (weak, nonatomic) IBOutlet UILabel *totalCarrierCharges;
 @property (weak, nonatomic) IBOutlet UILabel *transitMode;
 @property (weak, nonatomic) IBOutlet UILabel *serviceMode;
 @property (weak, nonatomic) IBOutlet UILabel *distance;
+@property (weak, nonatomic) IBOutlet UIImageView *carrierLogo;
 
 @end

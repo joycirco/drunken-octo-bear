@@ -9,17 +9,31 @@
 #import <UIKit/UIKit.h>
 #import "QuickQuoteMasterViewController.h"
 #import "RateDetailViewController.h"
+#import "PickerPopoverViewController.h"
 
-@class RateResponse;
+@class RateResponse, PickerHelper;
 
-@interface QuickQuoteResultsViewController : UITableViewController <SubstitutableDetailViewController, RateDetailViewControllerDelegate>
+@interface QuickQuoteResultsViewController : UITableViewController <SubstitutableDetailViewController
+                                                                    ,RateDetailViewControllerDelegate,
+                                                                    PickerPopoverViewControllerDelegate>
 {
     RateResponse* _selectedRate;
 }
 
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @property (nonatomic, retain) RateResponse* selectedRate;
-@property (weak, nonatomic) IBOutlet UIButton *popOverAnchorButton;
 @property (strong, nonatomic) UIPopoverController *detailPopoverController;
+@property (weak, nonatomic) IBOutlet UIButton *popOverAnchorItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *pdfButton;
+
+@property (nonatomic, retain) NSString* sortOption;
+
+@property (retain, nonatomic) PickerHelper* pickerHelper;
+@property (strong, nonatomic) UIPopoverController *pickerPopoverController;
+
+- (IBAction)createPDFAction:(id)sender;
 
 - (void)setRateResponseList:(NSMutableArray *)rateList;
 - (void)clearRateResponseList;

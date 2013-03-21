@@ -56,6 +56,7 @@
 	int _miler;
 	NSString* _milerDescription;
 	NSDate* _estimatedDelivery;
+    UIImage* _carrierImage;
 }
 
 @property (retain, nonatomic) NSDecimalNumber* accessorialTotalCost;
@@ -101,6 +102,8 @@
 @property int miler;
 @property (retain, nonatomic) NSString* milerDescription;
 @property (retain, nonatomic) NSDate* estimatedDelivery;
+
+@property (nonatomic,retain) UIImage* carrierImage;
 
 + (RateResponse*) createWithRSPRateResponse: (RSPRateResponsePrivileged*) rateResponse;
 - (id) initWithRSPRateResponse: (RSPRateResponsePrivileged*) rateResponse;

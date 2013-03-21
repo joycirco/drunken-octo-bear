@@ -28,6 +28,7 @@
 - (void)configureView;
 - (void)saveFreightItem;
 - (BOOL) isValid;
+- (void)calculateDensity;
 
 @end
 
@@ -603,5 +604,9 @@
     }
 }
 
+-(void)calculateDensity
+{
+    
+}
 
 @end

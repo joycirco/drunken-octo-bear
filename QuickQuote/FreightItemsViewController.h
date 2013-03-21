@@ -30,5 +30,6 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) QuoteRequest *quoteRequest;
+@property (nonatomic, assign) BOOL gotoAddFreight;
 
 @end

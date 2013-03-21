@@ -17,6 +17,7 @@
 @synthesize accessorials = _accessorials;
 @synthesize accessorialTypes = _accessorialTypes;
 @synthesize handlingUnitTypes = _handlingUnitTypes;
+@synthesize carrierImages = _carrierImages;
 
 -(id) init
 {
@@ -25,6 +26,7 @@
         _accessorialTypes = [[NSArray alloc] init];
         _accessorials = [[NSArray alloc] init];
         _handlingUnitTypes = [[NSArray alloc] init];
+        _carrierImages = [[NSArray alloc] init];
         
         [self loadDataFromPersistedStore];
     }
@@ -96,7 +98,25 @@
     }
     
     _handlingUnitTypes = [NSArray arrayWithArray:huTypesArray];
+
     
+    /*********** Accessorials ***************/
+    NSString* plistPath4 = [[NSBundle mainBundle] pathForResource:@"CarrierImages" ofType:@"plist"];
+    NSArray* objArray4 = [NSArray arrayWithContentsOfFile:plistPath4];
+    
+    for(id obj in objArray4)
+    {
+        NSDictionary* dict = [NSDictionary dictionaryWithDictionary:obj];
+        
+        AccessorialQQ *acc = [[AccessorialQQ alloc] init];
+        acc.accessorialTypeID = [dict valueForKey:@"accessorialTypeID"];
+        acc.accessorialName = [dict valueForKey:@"accessorialName"];
+        acc.accessorialCode = [dict valueForKey:@"accessorialCode"];
+        
+        [accArray addObject:acc];
+    }
+    
+    _accessorials = [NSArray arrayWithArray:accArray];
     return TRUE;
 }
 
