@@ -39,7 +39,6 @@
     NSMutableArray *_objects;
     UITableViewCell* linkedDateCell;
     
-    UIActivityIndicatorView* _progress_ind;
     NSMutableDictionary* huMap;
     UserSettings* _userSettings;
    
@@ -600,6 +599,11 @@
     if (_quoteRequest != nil && _quoteRequest.freightItems.count == 0)
         return NO;
     
+    if (_quoteRequest.originPostalCode == nil || _quoteRequest.originPostalCode.length < 5)
+        return NO;
+
+    if (_quoteRequest.destinationPostalCode == nil || _quoteRequest.destinationPostalCode.length < 5)
+        return NO;
     //if (! [self stringIsValid:self.originZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
     //    return NO;
 
@@ -675,7 +679,6 @@
 {
     if ([self canQuote])
     {
-    
         [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
 
         Enterprise *e = [[DataModel sharedInstance].currentUser getCurrentEnterprise];
@@ -782,26 +785,24 @@
     }
     else
     {
-        self.navigationItem.prompt = @"Origin, Destination, and Freight are required for quote request.";
+        self.navigationItem.prompt = @"* Required items *";
     }
 }
 
 // Handle the response from RateShipment.
-- (void) RateShipmentHandler: (id) value {
-
-    [_progress_ind stopAnimating];
-    [_progress_ind removeFromSuperview];
-    _progress_ind = nil;
-    
+- (void) RateShipmentHandler: (id) value
+{
 	// Handle errors
-	if([value isKindOfClass:[NSError class]]) {
+	if([value isKindOfClass:[NSError class]])
+    {
 		NSLog(@"%@", value);
         [self HandleError:value];
 		return;
 	}
     
 	// Handle faults
-	if([value isKindOfClass:[SoapFault class]]) {
+	if([value isKindOfClass:[SoapFault class]])
+    {
 		NSLog(@"%@", value);
         [self HandleSoapFault:value];
 		return;

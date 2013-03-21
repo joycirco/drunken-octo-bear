@@ -12,6 +12,8 @@
 #import "RateDetailViewController.h"
 #import "RateResultCell.h"
 #import "PickerHelper.h"
+#import "CFCPrintService.h"
+
 
 @interface QuickQuoteResultsViewController ()
 {
@@ -346,7 +348,43 @@
 #pragma mark - quotePrint
 - (IBAction)createPDFAction:(id)sender
 {
+    // Create the service
+    //CFCPrintService* service = [[CFCPrintService alloc] init];
+    //service.logging = YES;
 
+    //[service  PrintCarrierReturn:self action:action:@selector(createPDFHandler:) BolData:<#(NSMutableArray *)#> CarrierData:<#(CFCArrayOf_xsd_anyType *)#>];
 }
+
+- (void) createPDFHandler: (id) value
+{
+    
+}
+
+-(void) HandleError:(NSError*) error{
+    
+    NSString *errorString = [error localizedDescription];
+    NSString *errorTitle = [NSString stringWithFormat:@"Error (%d)", error.code];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+-(void) HandleSoapFault:(SoapFault*) error{
+    
+    NSString *errorString = error.description;
+    NSString *errorTitle = [NSString stringWithFormat:@"SOAP Error (%@)", error.faultCode];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+/*-(void) HandleRSPError:(CFCRateError*) error{
+    
+    NSString *errorString = error.errorMessage;
+    NSString *errorTitle = [NSString stringWithFormat:@"RateService Error (%d)", error.errorId];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}*/
 
 @end
