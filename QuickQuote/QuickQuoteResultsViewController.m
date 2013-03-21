@@ -76,7 +76,13 @@
     _sortOption = @"Cheapest";
     self.sortButton.title = _sortOption;
     
-	// Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(deviceOrientationDidChangeNotification:)
+        name:UIDeviceOrientationDidChangeNotification
+        object:nil];
+     
+     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
 
@@ -111,6 +117,23 @@
 {
     // Return YES for supported orientations
     return YES;
+}
+
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    switch (orientation)
+    {
+            case UIDeviceOrientationPortrait:
+                [self dismissRateDetailViewPopOverControllerIfOpen];
+                break;
+            case UIDeviceOrientationPortraitUpsideDown:
+                [self dismissRateDetailViewPopOverControllerIfOpen];
+            break;
+            default:
+            // might want to do some testing...
+            break;
+    }
 }
 
 - (void)configureView
@@ -189,6 +212,15 @@
 {
     [self.detailPopoverController dismissPopoverAnimated:YES];
     self.detailPopoverController = nil;
+}
+
+-(void)dismissRateDetailViewPopOverControllerIfOpen
+{
+    if (self.detailPopoverController != nil)
+    {
+        [self.detailPopoverController dismissPopoverAnimated:YES];
+        self.detailPopoverController = nil;
+    }
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
