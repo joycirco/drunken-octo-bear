@@ -168,6 +168,8 @@
 		FF6EC3B316FAB3980068B2C6 /* upgf.png in Resources */ = {isa = PBXBuildFile; fileRef = FF6EC39D16FAB3980068B2C6 /* upgf.png */; };
 		FF6EC3B416FAB3980068B2C6 /* vitr.png in Resources */ = {isa = PBXBuildFile; fileRef = FF6EC39E16FAB3980068B2C6 /* vitr.png */; };
 		FF6EC3B516FAB3980068B2C6 /* xxxx.png in Resources */ = {isa = PBXBuildFile; fileRef = FF6EC39F16FAB3980068B2C6 /* xxxx.png */; };
+		FF6EC3B816FAC8F00068B2C6 /* TableViewPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6EC3B716FAC8F00068B2C6 /* TableViewPopoverViewController.m */; };
+		FF6EC3BA16FACA5F0068B2C6 /* odfl.png in Resources */ = {isa = PBXBuildFile; fileRef = FF6EC3B916FACA5F0068B2C6 /* odfl.png */; };
 		FF77867116EBA4C200CAAF81 /* FreightItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF77867016EBA4C200CAAF81 /* FreightItemViewController.m */; };
 		FF9060F916F4F4750040FFC6 /* LogoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF9060F816F4F4750040FFC6 /* LogoImageView.m */; };
 		FF9060FF16F4F83F0040FFC6 /* eShipping_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */; };
@@ -485,6 +487,9 @@
 		FF6EC39D16FAB3980068B2C6 /* upgf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upgf.png; sourceTree = "<group>"; };
 		FF6EC39E16FAB3980068B2C6 /* vitr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vitr.png; sourceTree = "<group>"; };
 		FF6EC39F16FAB3980068B2C6 /* xxxx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xxxx.png; sourceTree = "<group>"; };
+		FF6EC3B616FAC8F00068B2C6 /* TableViewPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewPopoverViewController.h; sourceTree = "<group>"; };
+		FF6EC3B716FAC8F00068B2C6 /* TableViewPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewPopoverViewController.m; sourceTree = "<group>"; };
+		FF6EC3B916FACA5F0068B2C6 /* odfl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odfl.png; sourceTree = "<group>"; };
 		FF77866F16EBA4C200CAAF81 /* FreightItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemViewController.h; sourceTree = "<group>"; };
 		FF77867016EBA4C200CAAF81 /* FreightItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemViewController.m; sourceTree = "<group>"; };
 		FF9060F716F4F4750040FFC6 /* LogoImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoImageView.h; sourceTree = "<group>"; };
@@ -644,6 +649,8 @@
 				FFBBDD6B16F7982800F13CA5 /* PickerHelper.m */,
 				FFBBDD6D16F7D8E000F13CA5 /* DefaultAccessorialsViewController.h */,
 				FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */,
+				FF6EC3B616FAC8F00068B2C6 /* TableViewPopoverViewController.h */,
+				FF6EC3B716FAC8F00068B2C6 /* TableViewPopoverViewController.m */,
 			);
 			path = QuickQuote;
 			sourceTree = "<group>";
@@ -956,6 +963,7 @@
 		FF6EC38916FAB3980068B2C6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FF6EC3B916FACA5F0068B2C6 /* odfl.png */,
 				FF6EC38A16FAB3980068B2C6 /* aact.png */,
 				FF6EC38B16FAB3980068B2C6 /* avrt.png */,
 				FF6EC38C16FAB3980068B2C6 /* beav.png */,
@@ -1127,6 +1135,7 @@
 				FF6EC3B316FAB3980068B2C6 /* upgf.png in Resources */,
 				FF6EC3B416FAB3980068B2C6 /* vitr.png in Resources */,
 				FF6EC3B516FAB3980068B2C6 /* xxxx.png in Resources */,
+				FF6EC3BA16FACA5F0068B2C6 /* odfl.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1292,6 +1301,7 @@
 				FF34216516F92C870005D1E7 /* HandlingUnitTypeQQ.m in Sources */,
 				FF34216816F93EA10005D1E7 /* PersistedAccessorial.m in Sources */,
 				FF6EC38816FAAE320068B2C6 /* CarrierImage.m in Sources */,
+				FF6EC3B816FAC8F00068B2C6 /* TableViewPopoverViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
