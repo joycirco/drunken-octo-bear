@@ -130,6 +130,12 @@
 	</dict>
 	<dict>
 		<key>scac</key>
+		<string>ODFL</string>
+		<key>imageName</key>
+		<string>odfl.png</string>
+	</dict>
+	<dict>
+		<key>scac</key>
 		<string>XXXX</string>
 		<key>imageName</key>
 		<string>xxx.png</string>
