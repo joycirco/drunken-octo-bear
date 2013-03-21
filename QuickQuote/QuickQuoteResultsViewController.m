@@ -76,7 +76,13 @@
     _sortOption = @"Cheapest";
     self.sortButton.title = _sortOption;
     
-	// Do any additional setup after loading the view, typically from a nib.
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(deviceOrientationDidChangeNotification:)
+        name:UIDeviceOrientationDidChangeNotification
+        object:nil];
+     
+     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
 
@@ -111,6 +117,30 @@
 {
     // Return YES for supported orientations
     return YES;
+}
+
+
+/* Desired logic to add
+ *
+ *     When coming from landscape to portrait
+ *     dismiss popover
+ *
+ */
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    switch (orientation)
+    {
+            case UIDeviceOrientationPortrait:
+                NSLog(@"orientation changed");
+            break;
+            case UIDeviceOrientationPortraitUpsideDown:
+                NSLog(@"orientation changed");
+            break;
+            default:
+            // might want to do some testing...
+            break;
+    }
 }
 
 - (void)configureView
