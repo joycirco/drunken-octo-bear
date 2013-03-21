@@ -2407,6 +2407,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     <resources>
         <image name="upgf.png" width="540" height="180"/>
     </resources>
+                <relationship kind="outlet" name="tollFreeDest" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tollFreeOrigin" candidateClass="UILabel"/>
+                <relationship kind="action" name="logout:"/>
+                <relationship kind="outlet" name="btnLogout" candidateClass="UIButton"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

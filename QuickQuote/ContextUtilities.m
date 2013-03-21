@@ -18,6 +18,7 @@
 #import "AccessorialTypeQQ.h"
 #import "AccessorialQQ.h"
 #import "HandlingUnitTypeQQ.h"
+#import "UserSettings.h"
 
 @interface ContextUtilities()
 {
@@ -36,41 +37,104 @@
     [self generateAccessorials:context: persistedContext];
     [self generateCredentials:context];
     [self generateHUTypes:context:persistedContext];
-    [self generateEnterpriseData:context];
-    [self generateCompanyData:context];
-    [self generateUserData:context];
-    [self addAnonymousUser:context];
+    
+    // THE FOLLOWING CALLS MUST EXECUTE IN THIS ORDER!!
+    [self generateEnterpriseData:context];   // 1
+    [self generateCompanyData:context];      // 2
+    [self generateUserData:context];         // 3
+    [self addAnonymousUser:context];         // 4
+    
+    
+    // delete all existing quote requests
+    [self deleteAllObjects:@"QuoteRequest" :context];
 }
 
 -(void)generateAccessorialTypes : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
-    for(AccessorialTypeQQ* atq in persistedContext.accessorialTypes)
+    // get accessorial type from data store
+    // if count of items is not equal to persistedStore, then re-add them
+    NSString* entityName = @"AccessorialType";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != persistedContext.accessorialTypes.count)
     {
-        AccessorialType *act = [NSEntityDescription
-                                 insertNewObjectForEntityForName:@"AccessorialType"
-                                 inManagedObjectContext:context];
-        
-        act.accessorialTypeID = atq.accessorialTypeID;
-        act.accessorialTypeName = atq.accessorialTypeName;
-        
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+            
+        for(AccessorialTypeQQ* atq in persistedContext.accessorialTypes)
+        {
+            AccessorialType *act = [NSEntityDescription
+                                     insertNewObjectForEntityForName:entityName
+                                     inManagedObjectContext:context];
+            
+            act.accessorialTypeID = atq.accessorialTypeID;
+            act.accessorialTypeName = atq.accessorialTypeName;
+            
+        }
     }
 }
 
 -(void)generateAccessorials : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
-    for(AccessorialQQ* acc in persistedContext.accessorials)
+    // get Persisted Accessorials from data store
+    // if count of items is not equal to persistedStore, then re-add them
+    NSString* entityName = @"PersistedAccessorial";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != persistedContext.accessorials.count)
     {
-        [self CreatePersistedAccessorial: acc.accessorialName : acc.accessorialCode: acc.accessorialTypeID : context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+    
+        for(AccessorialQQ* acc in persistedContext.accessorials)
+        {
+            [self CreatePersistedAccessorial: acc.accessorialName : acc.accessorialCode: acc.accessorialTypeID : context];
+        }
     }
 }
 
 -(void) generateHUTypes : (NSManagedObjectContext*)context :(PersistedContext*)persistedContext
 {
-    for (HandlingUnitTypeQQ* hq in persistedContext.handlingUnitTypes)
+    // get Persisted Accessorials from data store
+    // if count of items is not equal to persistedStore, then re-add them
+    NSString* entityName = @"HandlingUnitType";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != persistedContext.handlingUnitTypes.count)
     {
-        [self CreatePersistedHUType:hq.handlingUnitTypeDescription : hq.handlingUnitTypeCode : hq.handlingUnitTypeID :context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+        
+    
+        for (HandlingUnitTypeQQ* hq in persistedContext.handlingUnitTypes)
+        {
+            [self CreatePersistedHUType:hq.handlingUnitTypeDescription : hq.handlingUnitTypeCode : hq.handlingUnitTypeID :context];
+        }
     }
-
     /*
     //    1	Pallets (48 x 40)	1	PLT	Pallets (48 x 40)
     [self CreatePersistedHUType:@"Pallets (48 x 40)" :@"PLT" :[NSNumber numberWithInt:1] :context];
@@ -190,30 +254,51 @@
     //testbot/anonymous, @"Roberts Auto Plaza",
     //@"Above Par Mortgage", @"Premier Mortgage Funding",
     //@"Triumph", @"Wier", @"Faultless Starch;
-    Credentials *cred = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"Credentials"
-                         inManagedObjectContext:context];
     
-    cred.loginName = @"testbot";
-    cred.password = @"supersecret468";
-    cred.accountId = @"32700120";
-    cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
+    // get Persisted Credential from data store
+    // if count of items is not equal to persistedStore, then re-add them
+    NSString* entityName = @"Credentials";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
     
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
     
-    NSArray *accountIds = [[NSArray alloc] initWithObjects:@"10100107", @"10100110", @"12500124",
-                           @"10100457", @"10800410", @"32700120", nil];
-    NSArray *loginNames = [[NSArray alloc] initWithObjects:@"10100107", @"10100110", @"12500124",
-                           @"10100457", @"10800410", @"32700120", nil];
-    NSArray *passwords = [[NSArray alloc] initWithObjects:@"10100107_103", @"10100110_106", @"12500124_2869",
-                          @"10100457_444", @"10800410_6141", @"32700120_5471", nil];
-    NSArray *tokens = [[NSArray alloc] initWithObjects:@"39A2C6262E6EB265C029A48D1936E9540CC5095A", @"9311FFDCD20E6FD70F2CC7C652C99FAF04EBFF4E",
-                       @"D8EF5D005310039ED949705502FC5E5AF8493B74", @"40807DBD302CF187046C9166584366188BF2C031", @"0B676787B8CFDB9A8C52D409F54EC3D29DC2A772",
-                       @"797C6E94F2B5CE4CB0988F46BE3F415C835676FB", nil];
-    
-    for (int i=0; i<accountIds.count; i++)
+    if (arr == nil || arr.count == 0 || arr.count != 7)
     {
-        [self createPersistedCredentials:[accountIds objectAtIndex:i] :[loginNames objectAtIndex:i] :
-         [passwords objectAtIndex:i] :[tokens objectAtIndex:i] : context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+
+        
+        Credentials *cred = [NSEntityDescription
+                             insertNewObjectForEntityForName:@"Credentials"
+                             inManagedObjectContext:context];
+        
+        cred.loginName = @"testbot";
+        cred.password = @"supersecret468";
+        cred.accountId = @"32700120";
+        cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
+        
+        
+        NSArray *accountIds = [[NSArray alloc] initWithObjects:@"10100107", @"10100110", @"12500124",
+                               @"10100457", @"10800410", @"32700120", nil];
+        NSArray *loginNames = [[NSArray alloc] initWithObjects:@"10100107", @"10100110", @"12500124",
+                               @"10100457", @"10800410", @"32700120", nil];
+        NSArray *passwords = [[NSArray alloc] initWithObjects:@"10100107_103", @"10100110_106", @"12500124_2869",
+                              @"10100457_444", @"10800410_6141", @"32700120_5471", nil];
+        NSArray *tokens = [[NSArray alloc] initWithObjects:@"39A2C6262E6EB265C029A48D1936E9540CC5095A", @"9311FFDCD20E6FD70F2CC7C652C99FAF04EBFF4E",
+                           @"D8EF5D005310039ED949705502FC5E5AF8493B74", @"40807DBD302CF187046C9166584366188BF2C031", @"0B676787B8CFDB9A8C52D409F54EC3D29DC2A772",
+                           @"797C6E94F2B5CE4CB0988F46BE3F415C835676FB", nil];
+        
+        for (int i=0; i<accountIds.count; i++)
+        {
+            [self createPersistedCredentials:[accountIds objectAtIndex:i] :[loginNames objectAtIndex:i] :
+             [passwords objectAtIndex:i] :[tokens objectAtIndex:i] : context];
+        }
     }
 }
 
@@ -232,17 +317,34 @@
 
 -(void)generateEnterpriseData:(NSManagedObjectContext*)context
 {
-    NSArray *enterpriseIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
-                              [NSNumber numberWithInt:1], nil];
-    NSArray *enterprises = [[NSArray alloc] initWithObjects:@"eShipping", @"Exchange", nil];
-    for(int i=0; i <enterpriseIds.count; i++)
+    // get Enterprises from data store
+    // if count of items is not equal to 2, then re-add them
+    NSString* entityName = @"Enterprise";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != 2)
     {
-        [self createPersistedEnterprise:[enterpriseIds objectAtIndex:i] :
-         [enterprises objectAtIndex:i] : context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+
+        NSArray *enterpriseIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
+                                  [NSNumber numberWithInt:1], nil];
+        NSArray *enterprises = [[NSArray alloc] initWithObjects:@"eShipping", @"Exchange", nil];
+        for(int i=0; i <enterpriseIds.count; i++)
+        {
+            [self createPersistedEnterprise:[enterpriseIds objectAtIndex:i] :
+             [enterprises objectAtIndex:i] : context];
+        }
     }
 }
-
-
 
 -(void)createPersistedEnterprise:(NSNumber*)enterpriseId : (NSString*)
                  enterpriseName :(NSManagedObjectContext*)context
@@ -258,21 +360,41 @@
 
 -(void)generateCompanyData:(NSManagedObjectContext*)context
 {
-    // these might need to change
-    NSArray *companyIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
-                           [NSNumber numberWithInt:1], [NSNumber numberWithInt:2],
-                           [NSNumber numberWithInt:3], [NSNumber numberWithInt:4],
-                           [NSNumber numberWithInt:5], nil];
-    NSArray *companyNames = [[NSArray alloc] initWithObjects:@"Roberts Auto Plaza",
-                             @"Above Par Mortgage", @"Premier Mortgage Funding",
-                             @"Triumph", @"Wier", @"Faultless Starch", nil];
+    // get Companies from data store
+    // if count of items is not equal to 6, then re-add them
+    NSString* entityName = @"Company";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
     
-    // locate proper credentials
-
-    for(int i=0; i<companyIds.count; i++)
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != 6)
     {
-        [self createPersistedCompany:[companyIds objectAtIndex:i] :
-         [companyNames objectAtIndex:i] : [self getCredentials:[NSNumber numberWithInt:i] : context] : context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+
+        // these might need to change
+        NSArray *companyIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
+                               [NSNumber numberWithInt:1], [NSNumber numberWithInt:2],
+                               [NSNumber numberWithInt:3], [NSNumber numberWithInt:4],
+                               [NSNumber numberWithInt:5], nil];
+        NSArray *companyNames = [[NSArray alloc] initWithObjects:@"Roberts Auto Plaza",
+                                 @"Above Par Mortgage", @"Premier Mortgage Funding",
+                                 @"Triumph", @"Wier", @"Faultless Starch", nil];
+        
+        // locate proper credentials
+
+        for(int i=0; i<companyIds.count; i++)
+        {
+            [self createPersistedCompany:[companyIds objectAtIndex:i] :
+             [companyNames objectAtIndex:i] : [self getCredentials:[NSNumber numberWithInt:i] : context] : context];
+        }
+
     }
 }
 
@@ -306,18 +428,37 @@
 
 -(void)generateUserData:(NSManagedObjectContext*)context
 {
-    // these might need to be real numbers soon...
-    NSArray *accountIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
-                           [NSNumber numberWithInt:1], [NSNumber numberWithInt:2], nil];
-    NSArray *loginNames = [[NSArray alloc] initWithObjects:@"steven", @"darin", @"joy", nil];
-    NSArray *passwords = [[NSArray alloc] initWithObjects:@"steven", @"darin", @"joy", nil];
-    NSArray *emails = [[NSArray alloc] initWithObjects:@"steven.tuckness@engagedtechnologies.com",
-                      @"darin.raffety@engagedtechnologies.com", @"joy.circo@engagedtechnologies.com", nil];
+    // get User from data store
+    // if count of items is not equal to 3, then re-add them
+    NSString* entityName = @"User";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
     
-    for(int i=0; i < accountIds.count; i++)
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0 || arr.count != 3)
     {
-        [self createPersistedUser:[accountIds objectAtIndex:i]: [loginNames objectAtIndex:i] :
-         [passwords objectAtIndex:i] : [emails objectAtIndex:i] : context];
+        if (arr != nil)
+        {
+            [self deleteAllObjects:entityName :context];
+        }
+
+        // these might need to be real numbers soon...
+        NSArray *accountIds = [[NSArray alloc] initWithObjects:[NSNumber numberWithInt:0],
+                               [NSNumber numberWithInt:1], [NSNumber numberWithInt:2], nil];
+        NSArray *loginNames = [[NSArray alloc] initWithObjects:@"steven", @"darin", @"joy", nil];
+        NSArray *passwords = [[NSArray alloc] initWithObjects:@"steven", @"darin", @"joy", nil];
+        NSArray *emails = [[NSArray alloc] initWithObjects:@"steven.tuckness@engagedtechnologies.com",
+                          @"darin.raffety@engagedtechnologies.com", @"joy.circo@engagedtechnologies.com", nil];
+        
+        for(int i=0; i < accountIds.count; i++)
+        {
+            [self createPersistedUser:[accountIds objectAtIndex:i]: [loginNames objectAtIndex:i] :
+             [passwords objectAtIndex:i] : [emails objectAtIndex:i] : context];
+        }
     }
 }
 
@@ -333,39 +474,86 @@
     user.password = password;
     user.email = email;
     user.timestamp = [NSDate date];
+    [self createDefaultUserSettingsForUser:user :context];
     [self addEnterprisesToUser:user :context];
     [self addCompaniesToUserEnterprises:user :context];
 }
 
--(void)addAnonymousUser:context
+-(void)createDefaultUserSettingsForUser:(User*) user :(NSManagedObjectContext*) context
 {
-    User *user = [NSEntityDescription
-                  insertNewObjectForEntityForName:@"User"
-                  inManagedObjectContext:context];
+    UserSettings* userSettings = [NSEntityDescription
+                              insertNewObjectForEntityForName:@"UserSettings"
+                              inManagedObjectContext:context];
+
+    userSettings.defaultOriginPostalCode = @"50801";
+    userSettings.defaultDestinationPostalCode = @"66048";
+    userSettings.defaultFreightClass = [NSDecimalNumber decimalNumberWithString:@"50.0"];
+    userSettings.defaultHandlingUnitTypeID = [NSNumber numberWithInt:1];
     
-    user.accountId = [NSNumber numberWithInt:3];
-    user.loginName = @"anonymous";
-    user.password = @"anonymous";
-    user.email = @"anonymous@email.com";
-    user.timestamp = [NSDate date];
+    // add all of the accessorials to the defaults
     
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Could not save: %@", [error localizedDescription]);
-    }
-    
+    NSError* error;
+    // Test listing all QuoteRequests from the store
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Enterprise"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PersistedAccessorial"
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
+    
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    Enterprise *e = fetchedObjects[1];
-    [user addEnterprisesObject:e]; // add eShipping
-    user.selectedEnterpriseId = e.enterpriseId;
+    [userSettings addDefaultAccessorials:[NSSet setWithArray:fetchedObjects]];
+    
+    user.userSettings = userSettings;
+}
 
-    NSArray *companies = e.companies.allObjects;
-    Company *c = companies[0];
-    user.selectedCompanyId = c.companyId;
+
+-(void)addAnonymousUser:context
+{
+    // get User from data store
+    // if count of items is not equal to 3, then re-add them
+    NSString* entityName = @"User";
+    NSError* error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    // Set predicate to only accessorials for this _quoteRequest
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accountId=%@", [NSNumber numberWithInt:3]];
+    [fetchRequest setPredicate:predicate];
+    
+    NSArray* arr = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (arr == nil || arr.count == 0)
+    {
+        
+        User *user = [NSEntityDescription
+                      insertNewObjectForEntityForName:@"User"
+                      inManagedObjectContext:context];
+        
+        user.accountId = [NSNumber numberWithInt:3];
+        user.loginName = @"anonymous";
+        user.password = @"anonymous";
+        user.email = @"anonymous@email.com";
+        user.timestamp = [NSDate date];
+        
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Could not save: %@", [error localizedDescription]);
+        }
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Enterprise"
+                                                  inManagedObjectContext:context];
+        [fetchRequest setEntity:entity];
+        NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+        Enterprise *e = fetchedObjects[1];
+        [user addEnterprisesObject:e]; // add eShipping
+        user.selectedEnterpriseId = e.enterpriseId;
+
+        NSArray *companies = e.companies.allObjects;
+        Company *c = companies[0];
+        user.selectedCompanyId = c.companyId;
+    }
 }
 
 -(void)addEnterprisesToUser:(User*)user : (NSManagedObjectContext*)context
@@ -542,5 +730,26 @@
     return FALSE;
 }
 
+- (void) deleteAllObjects: (NSString *) entityDescription :(NSManagedObjectContext*) context
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+    
+    
+    for (NSManagedObject *managedObject in items)
+    {
+    	[context deleteObject:managedObject];
+    	NSLog(@"%@ object deleted",entityDescription);
+    }
+    
+    if (![context save:&error]) {
+    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
+    }
+    
+}
 
 @end

@@ -649,17 +649,6 @@
     if (userSettings.defaultDestinationPostalCode != nil )
         request.destinationPostalCode = userSettings.defaultDestinationPostalCode;
     
-    /*Credentials *cred = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"Credentials"
-                         inManagedObjectContext:context];
-    
-    cred.loginName = @"testbot";
-    cred.password = @"supersecret468";
-    cred.accountId = @"32700120";
-    cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    
-    request.credentials = cred;*/
-    
     return request;
 }
 
