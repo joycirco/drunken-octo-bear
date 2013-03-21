@@ -24,7 +24,9 @@
 @property (strong, nonatomic) UIPopoverController *pickerPopoverController;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnResetDefaults;
+@property (weak, nonatomic) IBOutlet UIButton *btnLogout;
 - (IBAction)actionResetDefaults:(id)sender;
+- (IBAction)logout:(id)sender;
 @property (retain, nonatomic) PickerHelper* pickerHelper;
 
 -(void)saveSettings;

@@ -15,5 +15,6 @@
 @property (nonatomic, assign) BOOL isLoaded;
 
 + (DataModel*)sharedInstance;
++ (void)reset;
 
 @end

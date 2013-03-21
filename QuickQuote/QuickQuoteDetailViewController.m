@@ -122,12 +122,6 @@ NSString *firstLogin = @"yes"; // just for now
     return NO;
 }
 
-
-- (IBAction)logOut:(id)sender {
-    // empty models
-    
-    [self showLoginScreen];
-}
 -(void)showLoginScreen
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
@@ -170,6 +164,7 @@ NSString *firstLogin = @"yes"; // just for now
        _progress_ind = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         _progress_ind.center = self.view.center;
         _progress_ind.alpha = 1.0;
+        _progress_ind.color = [UIColor blackColor];
        _subView = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
        [_subView addSubview:_progress_ind];
        [self.imageView.superview addSubview:_subView];

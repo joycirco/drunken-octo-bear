@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="5">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -312,12 +312,15 @@
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="logout:" destination="Vw7-U0-2ug" eventType="touchDown" id="gx9-t4-dO8"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="PtU-Ex-nkH" firstAttribute="leading" secondItem="vfG-GI-sCY" secondAttribute="leading" constant="266" id="fBf-Ml-LFO"/>
+                                            <constraint firstItem="PtU-Ex-nkH" firstAttribute="centerX" secondItem="vfG-GI-sCY" secondAttribute="centerX" type="default" id="7Jt-Jk-xjp"/>
                                             <constraint firstItem="PtU-Ex-nkH" firstAttribute="centerY" secondItem="vfG-GI-sCY" secondAttribute="centerY" type="default" id="meC-Ea-Vyw"/>
                                         </constraints>
                                     </tableViewCell>
@@ -573,6 +576,7 @@
                     <connections>
                         <outlet property="btnDefFreightClass" destination="OuS-24-6nW" id="3pm-tT-7u0"/>
                         <outlet property="btnDefHandlingUnitType" destination="0Hv-eB-bN7" id="5er-ni-gxN"/>
+                        <outlet property="btnLogout" destination="PtU-Ex-nkH" id="Vwr-5U-SVo"/>
                         <outlet property="defDestinationPostalCode" destination="dg1-xt-xiv" id="Hfw-c6-A52"/>
                         <outlet property="defOriginPostalCode" destination="I7T-Rk-4Ir" id="WyU-oJ-iE8"/>
                     </connections>
@@ -2370,9 +2374,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <point key="canvasLocation" x="-777" y="745"/>
         </scene>
     </scenes>
+<<<<<<< HEAD
     <resources>
         <image name="upgf.png" width="540" height="180"/>
     </resources>
+=======
+>>>>>>> wired up logout
     <classes>
         <class className="AccessorialCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AccessorialCell.h"/>
@@ -2420,7 +2427,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="action" name="stackableChanged:"/>
                 <relationship kind="outlet" name="btnFreightClass" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="btnHandlingUnitType" candidateClass="UIButton"/>
+<<<<<<< HEAD
                 <relationship kind="outlet" name="density" candidateClass="UITextField"/>
+=======
+>>>>>>> wired up logout
                 <relationship kind="outlet" name="freightDescription" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="height" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="length" candidateClass="UITextField"/>
@@ -2492,10 +2502,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="QuickQuoteResultsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/QuickQuoteResultsViewController.h"/>
             <relationships>
+<<<<<<< HEAD
                 <relationship kind="action" name="createPDFAction:"/>
                 <relationship kind="outlet" name="pdfButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="popOverAnchorItem" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="sortButton" candidateClass="UIBarButtonItem"/>
+=======
+                <relationship kind="outlet" name="popOverAnchorButton" candidateClass="UIButton"/>
+>>>>>>> wired up logout
             </relationships>
         </class>
         <class className="RateDetailViewController" superclassName="UITableViewController">
@@ -2524,7 +2538,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <class className="RateResultCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RateResultCell.h"/>
             <relationships>
+<<<<<<< HEAD
                 <relationship kind="outlet" name="carrierLogo" candidateClass="UIImageView"/>
+=======
+>>>>>>> wired up logout
                 <relationship kind="outlet" name="carrierName" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="distance" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="serviceMode" candidateClass="UILabel"/>
@@ -2537,8 +2554,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UserSettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="actionResetDefaults:"/>
+<<<<<<< HEAD
                 <relationship kind="outlet" name="btnDefFreightClass" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="btnDefHandlingUnitType" candidateClass="UIButton"/>
+=======
+                <relationship kind="action" name="logout:"/>
+                <relationship kind="outlet" name="btnDefFreightClass" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btnDefHandlingUnitType" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="btnLogout" candidateClass="UIButton"/>
+>>>>>>> wired up logout
                 <relationship kind="outlet" name="btnResetDefaults" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="defDestinationPostalCode" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="defOriginPostalCode" candidateClass="UITextField"/>
@@ -2552,10 +2576,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Wse-LX-zz1"/>
+<<<<<<< HEAD
         <segue reference="6wr-O8-CNt"/>
         <segue reference="lbC-Hw-9nu"/>
         <segue reference="h6x-YZ-4TU"/>
         <segue reference="Uzh-td-xRD"/>
         <segue reference="tEX-kC-z5Z"/>
+=======
+        <segue reference="lbC-Hw-9nu"/>
+        <segue reference="6wr-O8-CNt"/>
+        <segue reference="tEX-kC-z5Z"/>
+        <segue reference="Uzh-td-xRD"/>
+        <segue reference="h6x-YZ-4TU"/>
+>>>>>>> wired up logout
     </inferredMetricsTieBreakers>
 </document>

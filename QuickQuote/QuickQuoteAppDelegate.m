@@ -8,6 +8,7 @@
 
 #import "QuickQuoteAppDelegate.h"
 #import "QuickQuoteMasterViewController.h"
+#import "QuickQuoteDetailViewController.h"
 #import "QuoteRequest.h"
 #import "FreightItem.h"
 #import "Credentials.h"
@@ -25,6 +26,11 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize persistedContext = _persistedContext;
+//@synthesize
+
+UISplitViewController * splitViewController;
+UINavigationController * masterNavigationController;
+QuickQuoteMasterViewController * controller;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -32,26 +38,6 @@
 
     // test create & save?
     NSManagedObjectContext *context = [self managedObjectContext];
-
-    
-    //PersistedContext* persisted = [self persistedContext];
-    
-    /*QuoteRequest *quoteRequest = [NSEntityDescription
-                                  insertNewObjectForEntityForName:@"QuoteRequest"
-                                  inManagedObjectContext:context];
-    [quoteRequest setDefaults];
-
-     moved this to generatedContext so it's element 0 for anonymous
-    Credentials *cred = [NSEntityDescription
-                         insertNewObjectForEntityForName:@"Credentials"
-                         inManagedObjectContext:context];
-
-    cred.loginName = @"testbot";
-    cred.password = @"supersecret468";
-    cred.accountId = @"32700120";
-    cred.token = @"268E46CD13B3A0B7CCC6D02CEF8DC92215C4F459";
-    
-    quoteRequest.credentials = cred;*/
  
     ContextUtilities* cu = [[ContextUtilities alloc] init];
     
@@ -95,10 +81,10 @@
     
     /******  Swapable Detail View Code ******/
     // Override point for customization after application launch.
-    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    UINavigationController *masterNavigationController = [splitViewController.viewControllers objectAtIndex:0];
+    splitViewController = (UISplitViewController *)self.window.rootViewController;
+    masterNavigationController = [splitViewController.viewControllers objectAtIndex:0];
     //UINavigationController *masterNavigationController = [splitViewController.viewControllers lastObject];
-    QuickQuoteMasterViewController *controller = (QuickQuoteMasterViewController *)masterNavigationController.topViewController;
+    controller = (QuickQuoteMasterViewController *)masterNavigationController.topViewController;
     controller.splitViewController = splitViewController;
     controller.managedObjectContext = self.managedObjectContext;
     controller.persistedContext = self.persistedContext;
@@ -287,6 +273,16 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+-(void)logout
+{
+    [controller performSegueWithIdentifier:@"homeViewSegue" sender:nil];
+    [controller resetAction:nil];
+    [controller.quickQuoteDetailViewController showLoginScreen];
+    [DataModel reset];
+    // show login screen
+    //[detailviewcontroller showLoginScreen];
 }
 
 

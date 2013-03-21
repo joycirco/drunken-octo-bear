@@ -18,9 +18,12 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property (strong, nonatomic) UINavigationController *masterNavigationController;
+
 @property (readonly, strong, nonatomic) PersistedContext *persistedContext;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (bool) deleteExistingPersistentStore;
+- (void)logout;
 @end
