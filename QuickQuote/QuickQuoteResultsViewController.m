@@ -119,23 +119,16 @@
     return YES;
 }
 
-
-/* Desired logic to add
- *
- *     When coming from landscape to portrait
- *     dismiss popover
- *
- */
 - (void)deviceOrientationDidChangeNotification:(NSNotification*)note
 {
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     switch (orientation)
     {
             case UIDeviceOrientationPortrait:
-                NSLog(@"orientation changed");
-            break;
+                [self dismissRateDetailViewPopOverControllerIfOpen];
+                break;
             case UIDeviceOrientationPortraitUpsideDown:
-                NSLog(@"orientation changed");
+                [self dismissRateDetailViewPopOverControllerIfOpen];
             break;
             default:
             // might want to do some testing...
@@ -219,6 +212,15 @@
 {
     [self.detailPopoverController dismissPopoverAnimated:YES];
     self.detailPopoverController = nil;
+}
+
+-(void)dismissRateDetailViewPopOverControllerIfOpen
+{
+    if (self.detailPopoverController != nil)
+    {
+        [self.detailPopoverController dismissPopoverAnimated:YES];
+        self.detailPopoverController = nil;
+    }
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
