@@ -64,6 +64,8 @@
 @synthesize quoteReturn = _quoteReturn;
 @synthesize quoteRequest = _quoteRequest;
 
+@synthesize quickQuoteDetailViewController; // for home
+
 - (void)awakeFromNib
 {
     self.clearsSelectionOnViewWillAppear = NO;
@@ -278,6 +280,7 @@
             || [segueId isEqualToString:@"shipmentAccessorialsSegue"]
             || [segueId isEqualToString:@"ratingInProgress"]
             || [segueId isEqualToString:@"userSettingsSegue"]
+            || [segueId isEqualToString:@"homeViewSegue"]
             )
         {
             UIViewController<SubstitutableDetailViewController>* detailViewController = (UIViewController<SubstitutableDetailViewController>*)[segue.destinationViewController topViewController];
@@ -355,6 +358,7 @@
             {
                 QuickQuoteDetailViewController* detailView = (QuickQuoteDetailViewController*)detailViewController;
                 detailView.managedObjectContext = self.managedObjectContext;
+                quickQuoteDetailViewController = detailView; // save 
                 //[detailView configureBackgroundImage];
             }
 

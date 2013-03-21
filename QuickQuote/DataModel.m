@@ -26,4 +26,9 @@ static DataModel *sharedObject = nil;
     return sharedObject;
 }
 
++(void)reset
+{
+    sharedObject = [[super allocWithZone:NULL] init];
+}
+
 @end

@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+-(void)showLoginScreen;
 
 @end

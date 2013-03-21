@@ -13,6 +13,7 @@
 #import "User.h"
 #import "UserSettings.h"
 #import "DefaultAccessorialsViewController.h"
+#import "QuickQuoteAppDelegate.h"
 
 @interface UserSettingsViewController ()
 {
@@ -33,6 +34,7 @@
 
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize btnLogout;
 
 
 #pragma mark - View lifecycle
@@ -440,5 +442,13 @@
 }
 
 - (IBAction)actionResetDefaults:(id)sender {
+}
+
+- (IBAction)logout:(id)sender
+{
+    NSLog(@"logout");
+    QuickQuoteAppDelegate *appDelegate = (QuickQuoteAppDelegate*)[[UIApplication sharedApplication] delegate];
+    [appDelegate logout];
+    //[appDelegate.masterNavigationController pushViewController:
 }
 @end

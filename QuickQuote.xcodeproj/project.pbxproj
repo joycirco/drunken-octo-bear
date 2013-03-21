@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A400437D16BF41A200D25DF6 /* QuickQuoteLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A400437C16BF41A200D25DF6 /* QuickQuoteLoginViewController.m */; };
+		A40D8C8E16FAA465001250F2 /* awesome highway silhouette.png in Resources */ = {isa = PBXBuildFile; fileRef = A40D8C8D16FAA465001250F2 /* awesome highway silhouette.png */; };
 		A421476216B2306A003FDF9C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476116B2306A003FDF9C /* UIKit.framework */; };
 		A421476416B2306A003FDF9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476316B2306A003FDF9C /* Foundation.framework */; };
 		A421476616B2306A003FDF9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A421476516B2306A003FDF9C /* CoreGraphics.framework */; };
@@ -177,6 +178,7 @@
 /* Begin PBXFileReference section */
 		A400437B16BF41A200D25DF6 /* QuickQuoteLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickQuoteLoginViewController.h; sourceTree = "<group>"; };
 		A400437C16BF41A200D25DF6 /* QuickQuoteLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickQuoteLoginViewController.m; sourceTree = "<group>"; };
+		A40D8C8D16FAA465001250F2 /* awesome highway silhouette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "awesome highway silhouette.png"; sourceTree = "<group>"; };
 		A412908B16F7BE210066E335 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		A412908C16F7BE210066E335 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		A412909716F7BE830066E335 /* Credentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credentials.h; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 		A421475216B2306A003FDF9C = {
 			isa = PBXGroup;
 			children = (
+				A40D8C8D16FAA465001250F2 /* awesome highway silhouette.png */,
 				FF19677416F912A90063F1E8 /* PrintService */,
 				FF9060FD16F4F83F0040FFC6 /* eShipping_Logo.png */,
 				FF9060FE16F4F83F0040FFC6 /* eShipping-Exchange.png */,
@@ -1013,6 +1016,7 @@
 				FF34215516F918230005D1E7 /* HandlingUnitTypes.plist in Resources */,
 				FF34215716F91E380005D1E7 /* AccessorialTypes.plist in Resources */,
 				FF34215916F91FDF0005D1E7 /* Accessorials.plist in Resources */,
+				A40D8C8E16FAA465001250F2 /* awesome highway silhouette.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
