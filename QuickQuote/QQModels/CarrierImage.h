@@ -10,7 +10,8 @@
 
 @interface CarrierImage : NSObject
 
-@property (nonatomic, retain) NSString * scac;
-@property (nonatomic, retain) NSString * imageName;
+@property (nonatomic, retain) NSString* scac;
+@property (nonatomic, retain) NSString* imageName;
+@property (nonatomic, retain) UIImage* carrierImage;
 
 @end

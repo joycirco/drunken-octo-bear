@@ -852,7 +852,7 @@
     {
         if ([ci.scac isEqualToString:rate.carrierScac])
         {
-            rate.carrierImage = [UIImage imageWithContentsOfFile:ci.imageName];
+            rate.carrierImage = ci.carrierImage;
             hasImage = YES;
             break;
         }
@@ -860,7 +860,7 @@
     
     if (!hasImage )
     {
-        rate.carrierImage = [UIImage imageWithContentsOfFile:@"xxxx.png"];
+        rate.carrierImage = [UIImage imageNamed:@"xxxx.png"];
     }
 }
 

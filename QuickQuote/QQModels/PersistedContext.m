@@ -10,6 +10,7 @@
 #import "AccessorialTypeQQ.h"
 #import "AccessorialQQ.h"
 #import "HandlingUnitTypeQQ.h"
+#import "CarrierImage.h"
 
 
 @implementation PersistedContext
@@ -39,10 +40,12 @@
     NSMutableArray* accTypesArray;
     NSMutableArray* accArray;
     NSMutableArray* huTypesArray;
+    NSMutableArray* ciArray;
 
     accTypesArray = [[NSMutableArray alloc] init];
     accArray = [[NSMutableArray alloc] init];
     huTypesArray = [[NSMutableArray alloc] init];
+    ciArray = [[NSMutableArray alloc] init];
     
     /*********** AccessorialTypes ***************/
     NSString* plistPath1 = [[NSBundle mainBundle] pathForResource:@"AccessorialTypes" ofType:@"plist"];
@@ -107,16 +110,17 @@
     for(id obj in objArray4)
     {
         NSDictionary* dict = [NSDictionary dictionaryWithDictionary:obj];
+
+        CarrierImage* ci = [[CarrierImage alloc] init];
+        ci.scac = [dict valueForKey:@"scac"];
+        ci.imageName = [dict valueForKey:@"imageName"];
+        //ci.carrierImage = [UIImage new];
+        ci.carrierImage = [UIImage imageNamed: ci.imageName];
         
-        AccessorialQQ *acc = [[AccessorialQQ alloc] init];
-        acc.accessorialTypeID = [dict valueForKey:@"accessorialTypeID"];
-        acc.accessorialName = [dict valueForKey:@"accessorialName"];
-        acc.accessorialCode = [dict valueForKey:@"accessorialCode"];
-        
-        [accArray addObject:acc];
+        [ciArray addObject:ci];
     }
     
-    _accessorials = [NSArray arrayWithArray:accArray];
+    _carrierImages = [NSArray arrayWithArray:ciArray];
     return TRUE;
 }
 

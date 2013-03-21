@@ -12,5 +12,6 @@
 
 @synthesize scac = _scac;
 @synthesize imageName = _imageName;
+@synthesize carrierImage = _carrierImage;
 
 @end
