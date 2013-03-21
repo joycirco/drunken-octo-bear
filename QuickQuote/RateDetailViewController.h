@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *contactEmailOrigin;
 @property (weak, nonatomic) IBOutlet UILabel *contactOrigin;
 @property (weak, nonatomic) IBOutlet UILabel *contactTitleOrigin;
+@property (weak, nonatomic) IBOutlet UILabel *tollFreeOrigin;
 
 @property (weak, nonatomic) IBOutlet UILabel *contactTitleDest;
 @property (weak, nonatomic) IBOutlet UILabel *carrierNameDest;
@@ -40,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *phoneFaxDest;
 @property (weak, nonatomic) IBOutlet UILabel *contactEmailDest;
 @property (weak, nonatomic) IBOutlet UILabel *contactDest;
+@property (weak, nonatomic) IBOutlet UILabel *tollFreeDest;
 
 @property (weak, nonatomic) IBOutlet UILabel *parametersUsed1;
 @property (weak, nonatomic) IBOutlet UILabel *parametersUsed2;

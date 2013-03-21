@@ -23,7 +23,7 @@
 
 - (void)awakeFromNib
 {
-    self.contentSizeForViewInPopover = CGSizeMake(350.0, 620.0);
+    self.contentSizeForViewInPopover = CGSizeMake(360.0, 620.0);
     [super awakeFromNib];
 }
 
@@ -52,27 +52,42 @@
     if (_rate != nil)
     {
         int count = 0;
-        self.parametersUsed1.text=[NSString stringWithFormat:@"Origin:%@ Destination:%@", _rate.originZip,_rate.destZip];
-        self.parametersUsed2.text=[NSString stringWithFormat:@"SCAC:%@ Mode%@", _rate.carrierScac,_rate.mode];
+        self.parametersUsed1.text=[NSString stringWithFormat:@"Origin: %@  Destination: %@", _rate.originZip,_rate.destZip];
+        self.parametersUsed2.text=[NSString stringWithFormat:@"SCAC: %@  Mode: %@", _rate.carrierScac,_rate.mode];
         for(TerminalInfo* t in _rate.terminals)
         {
             if (count == 0)
             {
-                self.carrierNameOrigin.text = @"";//_rate.carrierName;
+                self.contactTitleOrigin.text = @"Title:";
+                self.contactOrigin.text = @"Contact:";
+                self.tollFreeOrigin.text = @"Toll Free:";
+                self.phoneFaxOrigin.text = @"Phone:  @Fax:";
+                self.contactEmailOrigin.text = @"Email:";
+                
+                self.carrierNameOrigin.text = _rate.carrierName;
                 self.addressOrigin.text = [NSString stringWithFormat:@"%@ %@", t.termStreet1, t.termStreet2];
-                self.cityStateZipOrigin.text = [NSString stringWithFormat:@"%@, %@ %@", t.termCity, t.termState, t.termZip];
+                
+                if (t.termState != nil && t.termState.length > 0)
+                    self.cityStateZipOrigin.text = [NSString stringWithFormat:@"%@, %@ %@", t.termCity, t.termState, t.termZip];
+                else
+                    self.cityStateZipOrigin.text = [NSString stringWithFormat:@"%@ %@ %@", t.termCity, t.termState, t.termZip];
                 
                 NSMutableString* txt = [[NSMutableString alloc]init];
                 if (t.termTel != nil && t.termTel.length>0)
                     [txt appendFormat:@"Phone: %@",t.termTel];
                 if (t.termFax != nil && t.termFax.length>0)
                     [txt appendFormat:@"Fax: %@",t.termFax];
-                if (t.termTollFree != nil && t.termTollFree.length>0)
-                    [txt appendFormat:@"Toll Free: %@",t.termTollFree];
                 self.phoneFaxOrigin.text = txt;
-
-                self.contactEmailOrigin.text = [NSString stringWithFormat:@"Email: %@",t.termEmail];
-                self.contactOrigin.text = [NSString stringWithFormat:@"Contact: %@",t.termContact];
+                
+                if (t.termTollFree != nil && t.termTollFree.length>0)
+                    self.tollFreeOrigin.text = [NSString stringWithFormat:@"Toll Free: %@",t.termTollFree];
+                
+                if (t.termEmail != nil && t.termEmail.length > 0)
+                    self.contactEmailOrigin.text = [NSString stringWithFormat:@"Email: %@",t.termEmail];
+                
+                if (t.termContact != nil && t.termContact.length > 0)
+                    self.contactOrigin.text = [NSString stringWithFormat:@"Contact: %@",t.termContact];
+                
                 NSString* str = @"";
                 if (t.termContactTitle != nil && t.termContactTitle.length >0)
                 {
@@ -82,20 +97,36 @@
             }
             else
             {
-                self.carrierNameDest.text = @""; //_rate.carrierName;
+                self.contactTitleDest.text = @"Title:";
+                self.contactDest.text = @"Contact:";
+                self.tollFreeDest.text = @"Toll Free:";
+                self.phoneFaxDest.text = @"Phone:  @Fax:";
+                self.contactEmailDest.text = @"Email:";
+                
+                //self.carrierNameDest.text = @""; //_rate.carrierName;
                 self.addressDest.text = [NSString stringWithFormat:@"%@ %@", t.termStreet1, t.termStreet2];
-                self.cityStateZipDest.text = [NSString stringWithFormat:@"%@, %@ %@", t.termCity, t.termState, t.termZip];
+                
+                if (t.termState != nil && t.termState.length > 0)
+                    self.cityStateZipDest.text = [NSString stringWithFormat:@"%@, %@ %@", t.termCity, t.termState, t.termZip];
+                else
+                    self.cityStateZipDest.text = [NSString stringWithFormat:@"%@ %@ %@", t.termCity, t.termState, t.termZip];
+                
                 NSMutableString* txt = [[NSMutableString alloc]init];
                 if (t.termTel != nil && t.termTel.length>0)
                     [txt appendFormat:@"Phone: %@",t.termTel];
                 if (t.termFax != nil && t.termFax.length>0)
                     [txt appendFormat:@"Fax: %@",t.termFax];
-                if (t.termTollFree != nil && t.termTollFree.length>0)
-                    [txt appendFormat:@"Toll Free: %@",t.termTollFree];
                 self.phoneFaxDest.text = txt;
+
+                if (t.termTollFree != nil && t.termTollFree.length>0)
+                    self.tollFreeDest.text = [NSString stringWithFormat:@"Toll Free: %@",t.termTollFree];
+
+                if (t.termEmail != nil && t.termEmail.length > 0)
+                    self.contactEmailDest.text = [NSString stringWithFormat:@"Email: %@",t.termEmail];
+
+                if (t.termContact != nil && t.termContact.length > 0)
+                    self.contactDest.text = [NSString stringWithFormat:@"Contact: %@",t.termContact];
                 
-                self.contactEmailDest.text = [NSString stringWithFormat:@"Email: %@",t.termEmail];
-                self.contactDest.text = [NSString stringWithFormat:@"Contact: %@",t.termContact];
                 NSString* str = @"";
                 if (t.termContactTitle != nil && t.termContactTitle.length >0)
                 {

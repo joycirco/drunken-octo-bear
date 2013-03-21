@@ -123,7 +123,7 @@
 
 - (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem {
     
-    barButtonItem.title = NSLocalizedString(@"Shipment Information", @"Shipment Information");
+    barButtonItem.title = NSLocalizedString(@"Shipment Info", @"Shipment Info");
     [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
 }
 
