@@ -10,6 +10,7 @@
 #import "AccessorialTypeQQ.h"
 #import "AccessorialQQ.h"
 #import "HandlingUnitTypeQQ.h"
+#import "CarrierImage.h"
 
 
 @implementation PersistedContext
@@ -17,6 +18,7 @@
 @synthesize accessorials = _accessorials;
 @synthesize accessorialTypes = _accessorialTypes;
 @synthesize handlingUnitTypes = _handlingUnitTypes;
+@synthesize carrierImages = _carrierImages;
 
 -(id) init
 {
@@ -25,6 +27,7 @@
         _accessorialTypes = [[NSArray alloc] init];
         _accessorials = [[NSArray alloc] init];
         _handlingUnitTypes = [[NSArray alloc] init];
+        _carrierImages = [[NSArray alloc] init];
         
         [self loadDataFromPersistedStore];
     }
@@ -37,10 +40,12 @@
     NSMutableArray* accTypesArray;
     NSMutableArray* accArray;
     NSMutableArray* huTypesArray;
+    NSMutableArray* ciArray;
 
     accTypesArray = [[NSMutableArray alloc] init];
     accArray = [[NSMutableArray alloc] init];
     huTypesArray = [[NSMutableArray alloc] init];
+    ciArray = [[NSMutableArray alloc] init];
     
     /*********** AccessorialTypes ***************/
     NSString* plistPath1 = [[NSBundle mainBundle] pathForResource:@"AccessorialTypes" ofType:@"plist"];
@@ -96,7 +101,26 @@
     }
     
     _handlingUnitTypes = [NSArray arrayWithArray:huTypesArray];
+
     
+    /*********** Accessorials ***************/
+    NSString* plistPath4 = [[NSBundle mainBundle] pathForResource:@"CarrierImages" ofType:@"plist"];
+    NSArray* objArray4 = [NSArray arrayWithContentsOfFile:plistPath4];
+    
+    for(id obj in objArray4)
+    {
+        NSDictionary* dict = [NSDictionary dictionaryWithDictionary:obj];
+
+        CarrierImage* ci = [[CarrierImage alloc] init];
+        ci.scac = [dict valueForKey:@"scac"];
+        ci.imageName = [dict valueForKey:@"imageName"];
+        //ci.carrierImage = [UIImage new];
+        ci.carrierImage = [UIImage imageNamed: ci.imageName];
+        
+        [ciArray addObject:ci];
+    }
+    
+    _carrierImages = [NSArray arrayWithArray:ciArray];
     return TRUE;
 }
 

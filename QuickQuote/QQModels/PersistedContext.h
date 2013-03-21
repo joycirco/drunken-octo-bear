@@ -14,6 +14,7 @@
 @property (nonatomic, retain) NSArray *accessorials;
 @property (nonatomic, retain) NSArray *accessorialTypes;
 @property (nonatomic, retain) NSArray *handlingUnitTypes;
+@property (nonatomic, retain) NSArray *carrierImages;
 
 -(id) init;
 

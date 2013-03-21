@@ -60,7 +60,7 @@
 @synthesize miler = _miler;
 @synthesize milerDescription = _milerDescription;
 @synthesize estimatedDelivery = _etimatedDelivery;
-
+@synthesize carrierImage = _carrierImage;
 
 - (id) init
 {

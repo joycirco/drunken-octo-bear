@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *freightDescription;
 @property (weak, nonatomic) IBOutlet UISwitch *stackable;
 @property (weak, nonatomic) IBOutlet UITextField *nmfc;
+@property (weak, nonatomic) IBOutlet UITextField *density;
 
 @property (weak, nonatomic) IBOutlet UILabel *redLabel;
 

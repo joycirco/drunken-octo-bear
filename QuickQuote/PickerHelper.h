@@ -13,6 +13,7 @@
 
 @property (retain, nonatomic) NSMutableArray* freightClasses;
 @property (retain, nonatomic) NSMutableArray* handlingUnitTypes;
+@property (retain, nonatomic) NSMutableArray* sortByOptions;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

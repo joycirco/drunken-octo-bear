@@ -21,6 +21,7 @@
 
 @synthesize freightClasses = _freightClasses;
 @synthesize handlingUnitTypes = _handlingUnitTypes;
+@synthesize sortByOptions = _sortByOptions;
 @synthesize managedObjectContext = _managedObjectContext;
 
 
@@ -77,6 +78,11 @@
     [_freightClasses addObject:[[PickerItem alloc] initWithTitleObject:@"300" :[NSDecimalNumber numberWithFloat:300.0]]];
     [_freightClasses addObject:[[PickerItem alloc] initWithTitleObject:@"400" :[NSDecimalNumber numberWithFloat:400.0]]];
     [_freightClasses addObject:[[PickerItem alloc] initWithTitleObject:@"500" :[NSDecimalNumber numberWithFloat:500.0]]];
+    
+    _sortByOptions = [[NSMutableArray alloc] init];
+    [_sortByOptions addObject:[[PickerItem alloc] initWithTitleObject:@"Cheapest" : @"Cheapest"]];
+    [_sortByOptions addObject:[[PickerItem alloc] initWithTitleObject:@"Fastest" : @"Fastest"]];
+    [_sortByOptions addObject:[[PickerItem alloc] initWithTitleObject:@"Name" : @"Name"]];
 }
 
 - (NSString*)getHandlingUnitName:(NSNumber*)htID

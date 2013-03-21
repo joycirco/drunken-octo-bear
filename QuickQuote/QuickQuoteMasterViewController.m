@@ -32,13 +32,13 @@
 #import "User.h"
 
 #import "PersistedContext.h"
+#import "CarrierImage.h"
 
 @interface QuickQuoteMasterViewController ()
 {
     NSMutableArray *_objects;
     UITableViewCell* linkedDateCell;
     
-    UIActivityIndicatorView* _progress_ind;
     NSMutableDictionary* huMap;
     UserSettings* _userSettings;
    
@@ -170,7 +170,7 @@
     self.destinationZip.delegate = self;
     self.storeLocationCode.delegate = self;
 
-    self.btnRate.enabled=NO;
+    //self.btnRate.enabled=NO;
     
     if (_quoteRequest != nil)
     {
@@ -190,8 +190,6 @@
             NSNumberFormatter *numFormat = [[NSNumberFormatter alloc] init];
             [numFormat setNumberStyle:NSNumberFormatterNoStyle];
             self.cellFreightSummary.textLabel.text = [NSString stringWithFormat:@"# Items: %d", _quoteRequest.freightItems.count];
-            
-            //self.btnRate.enabled = _quoteRequest.freightItems.count > 0;
             
             float totWeight = 0;
             NSString* uomWeight = @"";
@@ -225,23 +223,12 @@
         self.cellShipmentAccessorials.detailTextLabel.text = [NSString stringWithFormat:@"%d", accShip];
     }
     
-    self.btnRate.enabled = [self canQuote];
+    //self.btnRate.enabled = [self canQuote];
 }
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    UIViewController* topView = [self topViewController];
- 
-    BOOL bval = [topView isKindOfClass:[QuickQuoteMasterViewController class]];
-    bval = [topView isKindOfClass:[QuickQuoteDetailViewController class]];
-    bval = [topView isKindOfClass:[DatePopoverViewController class]];
-    bval = [topView isKindOfClass:[AccessorialsViewController class]];
-    bval = [topView isKindOfClass:[UserSettingsViewController class]];
-    bval = [topView isKindOfClass:[QuickQuoteResultsViewController class]];
-    bval = [topView isKindOfClass:[FreightItemsViewController class]];
-    bval = [topView isKindOfClass:[PickerPopoverViewController class]];
-
     NSString* segueId = [segue identifier];
     
     if (([segueId isEqualToString:@"datePopoverSeguePU"]) ||
@@ -262,12 +249,6 @@
         UIPopoverController *popoverDateController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.datePopoverController = popoverDateController;
         popoverDateController.delegate = self;
-
-        //if (rootPopoverButtonItem != nil)
-        //{
-        //    if (rootPopoverButtonItem != nil)
-        //    [detailViewController showRootPopoverButtonItem:self.rootPopoverButtonItem];
-       // }
     }
     else
     {
@@ -299,6 +280,7 @@
             {
                 if (_quoteReturn != nil && _quoteReturn.rateResponses != nil)
                 {
+                    ((QuickQuoteResultsViewController*)detailViewController).managedObjectContext = _managedObjectContext;
                     [(QuickQuoteResultsViewController*)detailViewController setRateResponseList:_quoteReturn.rateResponses];
                 }
             }
@@ -309,6 +291,7 @@
                 FreightItemsViewController* detailView = (FreightItemsViewController*)detailViewController;
                 detailView.managedObjectContext = self.managedObjectContext;
                 detailView.quoteRequest = _quoteRequest;
+                detailView.gotoAddFreight = (_quoteRequest.freightItems.count == 0);
             }
             
             // send necessary data to Detail View
@@ -620,12 +603,18 @@
     if (_quoteRequest != nil && _quoteRequest.freightItems.count == 0)
         return NO;
     
+    if (_quoteRequest.originPostalCode == nil || _quoteRequest.originPostalCode.length < 5)
+        return NO;
+
+    if (_quoteRequest.destinationPostalCode == nil || _quoteRequest.destinationPostalCode.length < 5)
+        return NO;
     //if (! [self stringIsValid:self.originZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
     //    return NO;
 
     //if (! [self stringIsValid:self.destinationZip.text :@"^(\\d{5}(-\\d{4})?$|^([ABCEGHJKLMNPRSTVXY]{1}\\d{1}[A-Z]{1} *\\d{1}[A-Z]{1}\\d{1})?$"])
     //    return NO;
-    
+
+    self.navigationItem.prompt = nil;
     return YES;
 }
 
@@ -692,10 +681,8 @@
 
 - (IBAction)rateAction:(id)sender
 {
-
     if ([self canQuote])
     {
-    
         [self performSegueWithIdentifier:@"ratingInProgress" sender:self];
 
         Enterprise *e = [[DataModel sharedInstance].currentUser getCurrentEnterprise];
@@ -800,24 +787,26 @@
         
         [service RateShipment:self action:@selector(RateShipmentHandler:) rrp: reqRRP];
     }
+    else
+    {
+        self.navigationItem.prompt = @"* Required items *";
+    }
 }
 
 // Handle the response from RateShipment.
-- (void) RateShipmentHandler: (id) value {
-
-    [_progress_ind stopAnimating];
-    [_progress_ind removeFromSuperview];
-    _progress_ind = nil;
-    
+- (void) RateShipmentHandler: (id) value
+{
 	// Handle errors
-	if([value isKindOfClass:[NSError class]]) {
+	if([value isKindOfClass:[NSError class]])
+    {
 		NSLog(@"%@", value);
         [self HandleError:value];
 		return;
 	}
     
 	// Handle faults
-	if([value isKindOfClass:[SoapFault class]]) {
+	if([value isKindOfClass:[SoapFault class]])
+    {
 		NSLog(@"%@", value);
         [self HandleSoapFault:value];
 		return;
@@ -835,6 +824,11 @@
         
         if (_quoteReturn != nil && _quoteReturn.rateResponses != nil && _quoteReturn.rateResponses.count > 0)
         {
+            for (RateResponse* r in _quoteReturn.rateResponses)
+            {
+                [self setCarrierImage:r];
+            }
+            
             [self performSegueWithIdentifier:@"quoteResultsSegue" sender:self];
         }
         else
@@ -853,6 +847,25 @@
             
             [self performSegueWithIdentifier:@"homeViewSegue" sender:self];
         }
+    }
+}
+
+-(void)setCarrierImage:(RateResponse*)rate
+{
+    bool hasImage = NO;
+    for(CarrierImage* ci in _persistedContext.carrierImages)
+    {
+        if ([ci.scac isEqualToString:rate.carrierScac])
+        {
+            rate.carrierImage = ci.carrierImage;
+            hasImage = YES;
+            break;
+        }
+    }
+    
+    if (!hasImage )
+    {
+        rate.carrierImage = [UIImage imageNamed:@"xxxx.png"];
     }
 }
 

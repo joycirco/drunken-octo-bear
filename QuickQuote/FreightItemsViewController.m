@@ -39,6 +39,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize quoteRequest = _quoteRequest;
 @synthesize huMap = _huMap;
+@synthesize gotoAddFreight = _gotoAddFreight;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,21 +52,12 @@
     return self;
 }
 
-#pragma mark - Managing the detail item
-/*
-- (void)setDetailItem:(id)newDetailItem
+- (void)awakeFromNib
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
-        
-        // Update the view.
-        [self configureView];
-    }
-    
-    if (masterPopoverController != nil) {
-        [masterPopoverController dismissPopoverAnimated:YES];
-    }
-}*/
+    [super awakeFromNib];
+}
+
+#pragma mark - Managing the detail item
 
 - (void)didReceiveMemoryWarning
 {
@@ -127,6 +119,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    int nRows = self.fetchedResultsController.fetchedObjects.count;
+    //if (nRows == 0 && _gotoAddFreight)
+    //{
+    //    _gotoAddFreight = false;
+    //    [self performSegueWithIdentifier:@"freightItemAdd" sender:self];
+    //}
+    
+    if (nRows == 0)
+        self.navigationItem.prompt = @"Add some freight by tapping '+'";
+    else
+        self.navigationItem.prompt = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated

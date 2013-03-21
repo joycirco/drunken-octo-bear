@@ -11,6 +11,9 @@
 #import "RateResponse.h"
 #import "RateDetailViewController.h"
 #import "RateResultCell.h"
+#import "PickerHelper.h"
+#import "CFCPrintService.h"
+
 
 @interface QuickQuoteResultsViewController ()
 {
@@ -21,6 +24,7 @@
 }
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
 - (void)configureView;
 
 @end
@@ -29,14 +33,11 @@
 
 @implementation QuickQuoteResultsViewController
 
+@synthesize managedObjectContext = _managedObjectContext;
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedRate = _selectedRate;
-
-
-- (void)configureView
-{
-}
-
+@synthesize pickerHelper = _pickerHelper;
+@synthesize sortOption = _sortOption;
 
 - (void)didReceiveMemoryWarning
 {
@@ -66,6 +67,14 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    NSArray *btnArray= [[NSArray alloc] initWithObjects:self.sortButton, self.pdfButton,nil];
+    self.navigationItem.rightBarButtonItems=btnArray;
+    
+    _pickerHelper = [[PickerHelper alloc] initWithContext:_managedObjectContext];
+
+    _sortOption = @"Cheapest";
+    self.sortButton.title = _sortOption;
     
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
@@ -102,6 +111,11 @@
 {
     // Return YES for supported orientations
     return YES;
+}
+
+- (void)configureView
+{
+    [_pickerHelper initPickerItems];
 }
 
 #pragma mark - SubstitutableDetailViewController
@@ -148,12 +162,27 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"rateDetailPopover"]) {
+    NSString* segueId = [segue identifier];
+
+    if ([segueId isEqualToString:@"rateDetailPopover"]) {
         [[segue destinationViewController] setDelegate:self];
         UIPopoverController *popoverController = [(UIStoryboardPopoverSegue *)segue popoverController];
         self.detailPopoverController = popoverController;
         popoverController.delegate = self;
     }
+
+    if ([segueId isEqualToString:@"sortQuoteResultsPopover"])
+    {
+        PickerPopoverViewController* pickerView = [segue destinationViewController];
+        [[segue destinationViewController] setDelegate:self];
+        UIPopoverController *popoverViewController = [(UIStoryboardPopoverSegue *)segue popoverController];
+        self.pickerPopoverController = popoverViewController;
+        pickerView.myPickerItems = _pickerHelper.sortByOptions;
+        pickerView.titleForSelectedRow = _sortOption;
+        pickerView.popoverTitleText = @"Sort Options";
+        popoverViewController.delegate = self;
+    }
+
 }
 
 - (void)rateDetailPopoverViewControllerDidFinish:(RateDetailViewController *)controller
@@ -164,7 +193,39 @@
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    self.detailPopoverController = nil;
+    if (self.detailPopoverController != nil)
+        self.detailPopoverController = nil;
+    if (self.pickerPopoverController != nil)
+        self.pickerPopoverController = nil;
+}
+
+- (void)pickerPopoverViewControllerDidFinish:(PickerPopoverViewController *)controller
+{
+    [self.pickerPopoverController dismissPopoverAnimated:YES];
+    self.pickerPopoverController = nil;
+}
+
+- (void)setObjectFromPicker:(id)object
+{
+    NSString* sortOption;
+    sortOption = object;
+    self.sortButton.title = object;
+    self.sortOption = object;
+    
+    NSString* sortKey = @"carrierTotalCharge";
+
+    if ([object isEqualToString:@"Cheapest"])
+        sortKey = @"carrierTotalCharge";
+    else if ([object isEqualToString:@"Fastest"])
+        sortKey = @"transitDays";
+    else if ([object isEqualToString:@"Name"])
+        sortKey = @"carrierName";
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    [_rates sortUsingDescriptors:sortDescriptors];
+
+    [self.tableView reloadData];
 }
 
 - (void)insertNewObject:(id)sender
@@ -206,6 +267,7 @@
         cell.transitMode.text = rate.mode;
         cell.serviceMode.text = rate.serviceMode;
         cell.distance.text = [NSString stringWithFormat:@"%d Miles",rate.distance];
+        cell.carrierLogo.image = rate.carrierImage;
     }
     
     return cell;
@@ -226,7 +288,7 @@
     //CGRect displayFrom = CGRectMake(cell.center.x, cell.center.y , 1, 1);
     
     //Now move your anchor button to this location (again, make sure you made your constraints allow this)
-    self.popOverAnchorButton.frame = displayFrom;
+    self.popOverAnchorItem.frame = displayFrom;
     [self performSegueWithIdentifier:@"rateDetailPopover" sender:cell];
 }
 
@@ -282,5 +344,47 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+#pragma mark - quotePrint
+- (IBAction)createPDFAction:(id)sender
+{
+    // Create the service
+    //CFCPrintService* service = [[CFCPrintService alloc] init];
+    //service.logging = YES;
+
+    //[service  PrintCarrierReturn:self action:action:@selector(createPDFHandler:) BolData:<#(NSMutableArray *)#> CarrierData:<#(CFCArrayOf_xsd_anyType *)#>];
+}
+
+- (void) createPDFHandler: (id) value
+{
+    
+}
+
+-(void) HandleError:(NSError*) error{
+    
+    NSString *errorString = [error localizedDescription];
+    NSString *errorTitle = [NSString stringWithFormat:@"Error (%d)", error.code];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+-(void) HandleSoapFault:(SoapFault*) error{
+    
+    NSString *errorString = error.description;
+    NSString *errorTitle = [NSString stringWithFormat:@"SOAP Error (%@)", error.faultCode];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}
+
+/*-(void) HandleRSPError:(CFCRateError*) error{
+    
+    NSString *errorString = error.errorMessage;
+    NSString *errorTitle = [NSString stringWithFormat:@"RateService Error (%d)", error.errorId];
+    UIAlertView *errorView =
+    [[UIAlertView alloc] initWithTitle:errorTitle message:errorString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Ok", nil];
+    [errorView show];
+}*/
 
 @end
