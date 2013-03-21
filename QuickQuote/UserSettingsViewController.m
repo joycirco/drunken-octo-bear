@@ -27,6 +27,7 @@
 
 - (void)configureView;
 
+- (void)saveContext;
 
 @end
 
@@ -85,20 +86,7 @@
 {
 	[super viewWillDisappear:animated];
 
-    if (_managedObjectContext != nil)
-    {
-        NSError* error;
-        if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error])
-        {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
+    [self saveContext];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -166,8 +154,6 @@
 
 -(void) saveSettings
 {
-    NSError* error = nil;
-    
     if ([[DataModel sharedInstance].currentUser.userSettings.defaultFreightClass doubleValue] < 50.0)
     {
         [DataModel sharedInstance].currentUser.userSettings = _userSettings;
@@ -180,17 +166,7 @@
         [DataModel sharedInstance].currentUser.userSettings.defaultHandlingUnitTypeID = _userSettings.defaultHandlingUnitTypeID;
     }
     
-    if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error])
-    {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-        [self HandleError:error];
-    }
+    [self saveContext];
 }
 
 -(void) HandleError:(NSError*) error{
@@ -320,6 +296,7 @@
 
 -(void)handlingUnitTypeChanged:(int)handlingUnitTypeID
 {
+    
 }
 
 
@@ -338,8 +315,10 @@
     
     if (textField == self.defDestinationPostalCode)
         _userSettings.defaultDestinationPostalCode = self.defDestinationPostalCode.text;
-
+    
     [textField resignFirstResponder];
+
+    [self saveSettings];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -441,14 +420,35 @@
      */
 }
 
-- (IBAction)actionResetDefaults:(id)sender {
+- (IBAction)actionResetDefaults:(id)sender
+{
 }
 
 - (IBAction)logout:(id)sender
 {
+    
     NSLog(@"logout");
     QuickQuoteAppDelegate *appDelegate = (QuickQuoteAppDelegate*)[[UIApplication sharedApplication] delegate];
     [appDelegate logout];
     //[appDelegate.masterNavigationController pushViewController:
 }
+
+-(void)saveContext
+{
+    if (_managedObjectContext != nil)
+    {
+        NSError* error;
+        if ([_managedObjectContext hasChanges] && ![_managedObjectContext save:&error])
+        {
+            /*
+             Replace this implementation with code to handle the error appropriately.
+             
+             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+             */
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
 @end

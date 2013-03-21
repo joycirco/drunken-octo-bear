@@ -26,7 +26,6 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize persistedContext = _persistedContext;
-//@synthesize
 
 UISplitViewController * splitViewController;
 UINavigationController * masterNavigationController;
@@ -34,11 +33,13 @@ QuickQuoteMasterViewController * controller;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self deleteExistingPersistentStore];
+    //Uncomment this if the data store gets all FUBAR
+    //[self deleteExistingPersistentStore];
 
     // test create & save?
     NSManagedObjectContext *context = [self managedObjectContext];
  
+    // create and init any necessary data store objects
     ContextUtilities* cu = [[ContextUtilities alloc] init];
     
     [cu generateApplicationData:context : self.persistedContext];
