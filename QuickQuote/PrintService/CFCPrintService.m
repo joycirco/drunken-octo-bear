@@ -8,10 +8,10 @@
 				
 #import "Soap.h"
 	
+#import "CFCCFCInvocationException.h"
 #import "CFCArrayOf_xsd_anyType.h"
 #import "CFCArrayOf_xsd_string.h"
 #import "CFCArrayOfArrayOf_xsd_anyType.h"
-#import "CFCCFCInvocationException.h"
 #import "CFCMap.h"
 #import "CFCmapItem.h"
 #import "CFCQueryBean.h"
@@ -49,6 +49,28 @@
 		
 	// Returns NSMutableArray*
 	/*  */
+	- (SoapRequest*) printDocument: (id <SoapDelegate>) handler Type: (id) Type Key: (id) Key BolData: (id) BolData CarrierData: (id) CarrierData Packages: (id) Packages
+	{
+		return [self printDocument: handler action: nil Type: Type Key: Key BolData: BolData CarrierData: CarrierData Packages: Packages];
+	}
+
+	- (SoapRequest*) printDocument: (id) _target action: (SEL) _action Type: (id) Type Key: (id) Key BolData: (id) BolData CarrierData: (id) CarrierData Packages: (id) Packages
+		{
+		NSMutableArray* _params = [NSMutableArray array];
+		
+		[_params addObject: [[SoapParameter alloc] initWithValue: Type forName: @"Type"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: Key forName: @"Key"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: BolData forName: @"BolData"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: CarrierData forName: @"CarrierData"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: Packages forName: @"Packages"]];
+		NSString* _envelope = [Soap createEnvelope: @"printDocument" forNamespace: self.namespace withParameters: _params withHeaders: self.headers];
+		SoapRequest* _request = [SoapRequest create: _target action: _action service: self soapAction: @"" postData: _envelope deserializeTo: [CFCmapItem alloc]];
+		[_request send];
+		return _request;
+	}
+
+	// Returns NSMutableArray*
+	/*  */
 	- (SoapRequest*) PrintCarrierReturn: (id <SoapDelegate>) handler BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData
 	{
 		return [self PrintCarrierReturn: handler action: nil BolData: BolData CarrierData: CarrierData];
@@ -61,6 +83,27 @@
 		[_params addObject: [[SoapParameter alloc] initWithValue: BolData forName: @"BolData"]];
 		[_params addObject: [[SoapParameter alloc] initWithValue: CarrierData forName: @"CarrierData"]];
 		NSString* _envelope = [Soap createEnvelope: @"PrintCarrierReturn" forNamespace: self.namespace withParameters: _params withHeaders: self.headers];
+		SoapRequest* _request = [SoapRequest create: _target action: _action service: self soapAction: @"" postData: _envelope deserializeTo: [CFCmapItem alloc]];
+		[_request send];
+		return _request;
+	}
+
+	// Returns NSMutableArray*
+	/*  */
+	- (SoapRequest*) printCarrierReturnNEW: (id <SoapDelegate>) handler BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData OutputFormat: (NSString*) OutputFormat SaveFile: (NSString*) SaveFile
+	{
+		return [self printCarrierReturnNEW: handler action: nil BolData: BolData CarrierData: CarrierData OutputFormat: OutputFormat SaveFile: SaveFile];
+	}
+
+	- (SoapRequest*) printCarrierReturnNEW: (id) _target action: (SEL) _action BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData OutputFormat: (NSString*) OutputFormat SaveFile: (NSString*) SaveFile
+		{
+		NSMutableArray* _params = [NSMutableArray array];
+		
+		[_params addObject: [[SoapParameter alloc] initWithValue: BolData forName: @"BolData"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: CarrierData forName: @"CarrierData"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: OutputFormat forName: @"OutputFormat"]];
+		[_params addObject: [[SoapParameter alloc] initWithValue: SaveFile forName: @"SaveFile"]];
+		NSString* _envelope = [Soap createEnvelope: @"printCarrierReturnNEW" forNamespace: self.namespace withParameters: _params withHeaders: self.headers];
 		SoapRequest* _request = [SoapRequest create: _target action: _action service: self soapAction: @"" postData: _envelope deserializeTo: [CFCmapItem alloc]];
 		[_request send];
 		return _request;

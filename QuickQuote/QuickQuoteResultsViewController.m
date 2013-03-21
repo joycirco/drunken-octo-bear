@@ -345,9 +345,68 @@
      */
 }
 
+#pragma mark -
+#pragma mark QLPreviewControllerDataSource
+
+// Returns the number of items that the preview controller should preview
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)previewController
+{
+    return 1; //you can increase the this
+}
+
+// returns the item that the preview controller should preview
+- (id)previewController:(QLPreviewController *)previewController previewItemAtIndex:(NSInteger)idx
+{
+    NSURL* fileURL = [NSURL fileURLWithPath:@"http://test1.eshipmanager.com/pdf/carrier_return_RS20316661T.pdf?timestamp=1363901022185"];
+    return fileURL;
+}
+
 #pragma mark - quotePrint
 - (IBAction)createPDFAction:(id)sender
 {
+   /* //creating the object of the QLPreviewController
+    QLPreviewController *previewController = [[QLPreviewController alloc] init];
+    
+    //setting the datasource property to self
+    previewController.dataSource = self;
+
+    [previewController setDelegate:self];
+    
+    // start previewing the document at the current section index
+    previewController.currentPreviewItemIndex = 0;
+
+    //pusing the QLPreviewController to the navigation stack
+    [[self navigationController] pushViewController:previewController animated:YES];
+    
+    //remove the right bar print button
+    //[previewController.navigationItem setRightBarButtonItem:nil];
+    */
+    
+    /*
+    
+    if (_rates != nil)
+    {
+        // Create the service
+        //CFCPrintService* service = [[CFCPrintService alloc] init];
+        CFCPrintService* service = [CFCPrintService service];
+        service.logging = YES;
+        // service.username = @"username";
+        // service.password = @"password";
+        
+        
+        // Returns NSMutableArray
+        
+        [service PrintCarrierReturn:self action:@selector(PrintCarrierReturnHandler:) BolData: [NSMutableArray array] CarrierData: [[CFCArrayOf_xsd_anyType alloc] init]];
+        
+        // Returns NSMutableArray
+        
+        [service printCarrierReturnNEW:self action:@selector(printCarrierReturnNEWHandler:) BolData: [NSMutableArray array] CarrierData: [[CFCArrayOf_xsd_anyType alloc] init] OutputFormat: @"" SaveFile: @""];
+        
+        // Returns NSMutableArray
+        [service printDocument:self action:@selector(printDocumentHandler:) Type: @"" Key: @"" BolData: @"" CarrierData: @"" Packages: @""];
+        
+    }
+*/
     // Create the service
     //CFCPrintService* service = [[CFCPrintService alloc] init];
     //service.logging = YES;
@@ -360,7 +419,80 @@
     
 }
 
--(void) HandleError:(NSError*) error{
+// Handle the response from PrintCarrierReturn.
+
+- (void) PrintCarrierReturnHandler: (id) value {
+    
+	// Handle errors
+	if([value isKindOfClass:[NSError class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+	// Handle faults
+	if([value isKindOfClass:[SoapFault class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+    
+	// Do something with the NSMutableArray* result
+    NSMutableArray* result = (NSMutableArray*)value;
+	NSLog(@"PrintCarrierReturn returned the value: %@", result);
+    
+}
+
+
+// Handle the response from printCarrierReturnNEW.
+
+- (void) printCarrierReturnNEWHandler: (id) value {
+    
+	// Handle errors
+	if([value isKindOfClass:[NSError class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+	// Handle faults
+	if([value isKindOfClass:[SoapFault class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+    
+	// Do something with the NSMutableArray* result
+    NSMutableArray* result = (NSMutableArray*)value;
+	NSLog(@"printCarrierReturnNEW returned the value: %@", result);
+    
+}
+
+
+// Handle the response from printDocument.
+
+- (void) printDocumentHandler: (id) value {
+    
+	// Handle errors
+	if([value isKindOfClass:[NSError class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+	// Handle faults
+	if([value isKindOfClass:[SoapFault class]]) {
+		NSLog(@"%@", value);
+		return;
+	}
+    
+    
+	// Do something with the NSMutableArray* result
+    NSMutableArray* result = (NSMutableArray*)value;
+	NSLog(@"printDocument returned the value: %@", result);
+    
+}
+
+
+-(void) HandleError:(NSError*) error
+{
     
     NSString *errorString = [error localizedDescription];
     NSString *errorTitle = [NSString stringWithFormat:@"Error (%d)", error.code];
