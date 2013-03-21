@@ -158,11 +158,6 @@
         self.btnUserSettings.enabled = true;
         self.btnUserSettings.title = [DataModel sharedInstance].currentUser.loginName;
     }
-    else
-    {
-        self.btnUserSettings.enabled = false;
-        self.btnUserSettings.title = @"anonymous";
-    }
 
     _userSettings = [DataModel sharedInstance].currentUser.userSettings;
 

@@ -8,10 +8,10 @@
 	
 /* Add class references */
 				
+#import "CFCCFCInvocationException.h"
 #import "CFCArrayOf_xsd_anyType.h"
 #import "CFCArrayOf_xsd_string.h"
 #import "CFCArrayOfArrayOf_xsd_anyType.h"
-#import "CFCCFCInvocationException.h"
 #import "CFCMap.h"
 #import "CFCmapItem.h"
 #import "CFCQueryBean.h"
@@ -22,8 +22,18 @@
 		
 	// Returns NSMutableArray*
 	/*  */
+	- (SoapRequest*) printDocument: (id <SoapDelegate>) handler Type: (id) Type Key: (id) Key BolData: (id) BolData CarrierData: (id) CarrierData Packages: (id) Packages;
+	- (SoapRequest*) printDocument: (id) target action: (SEL) action Type: (id) Type Key: (id) Key BolData: (id) BolData CarrierData: (id) CarrierData Packages: (id) Packages;
+
+	// Returns NSMutableArray*
+	/*  */
 	- (SoapRequest*) PrintCarrierReturn: (id <SoapDelegate>) handler BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData;
 	- (SoapRequest*) PrintCarrierReturn: (id) target action: (SEL) action BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData;
+
+	// Returns NSMutableArray*
+	/*  */
+	- (SoapRequest*) printCarrierReturnNEW: (id <SoapDelegate>) handler BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData OutputFormat: (NSString*) OutputFormat SaveFile: (NSString*) SaveFile;
+	- (SoapRequest*) printCarrierReturnNEW: (id) target action: (SEL) action BolData: (NSMutableArray*) BolData CarrierData: (CFCArrayOf_xsd_anyType*) CarrierData OutputFormat: (NSString*) OutputFormat SaveFile: (NSString*) SaveFile;
 
 		
 	+ (CFCPrintService*) service;

@@ -262,10 +262,13 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"User"
                                               inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    User *user = [User alloc];
-                  
-    user = [fetchedObjects objectAtIndex:3];
+
+    // Set predicate to only user for id = 3
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accountId=%@", [NSNumber numberWithInt:3]];
+    [fetchRequest setPredicate:predicate];
+    
+    User *user = [[managedObjectContext executeFetchRequest:fetchRequest error:&error] objectAtIndex:0];
+
     [self loadUser:user];
     NSLog(@"loaded anonymous user");
 }

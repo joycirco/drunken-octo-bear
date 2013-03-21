@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuickLook/QuickLook.h>
 #import "QuickQuoteMasterViewController.h"
 #import "RateDetailViewController.h"
 #import "PickerPopoverViewController.h"
@@ -14,8 +15,10 @@
 @class RateResponse, PickerHelper;
 
 @interface QuickQuoteResultsViewController : UITableViewController <SubstitutableDetailViewController
-                                                                    ,RateDetailViewControllerDelegate,
-                                                                    PickerPopoverViewControllerDelegate>
+                                                                    ,RateDetailViewControllerDelegate
+                                                                    ,PickerPopoverViewControllerDelegate
+                                                                    ,QLPreviewControllerDataSource
+                                                                    ,QLPreviewControllerDelegate>
 {
     RateResponse* _selectedRate;
 }

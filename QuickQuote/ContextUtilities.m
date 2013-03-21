@@ -517,7 +517,7 @@
                                               inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
-    // Set predicate to only accessorials for this _quoteRequest
+    // Set predicate to only user for id = 3
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"accountId=%@", [NSNumber numberWithInt:3]];
     [fetchRequest setPredicate:predicate];
     
@@ -536,11 +536,6 @@
         user.email = @"anonymous@email.com";
         user.timestamp = [NSDate date];
         
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Could not save: %@", [error localizedDescription]);
-        }
-        
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Enterprise"
                                                   inManagedObjectContext:context];
@@ -553,6 +548,13 @@
         NSArray *companies = e.companies.allObjects;
         Company *c = companies[0];
         user.selectedCompanyId = c.companyId;
+        
+        [self createDefaultUserSettingsForUser:user : context];
+        
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Could not save: %@", [error localizedDescription]);
+        }
     }
 }
 

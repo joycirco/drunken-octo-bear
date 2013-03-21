@@ -50,6 +50,11 @@
 		FF19678D16F912A90063F1E8 /* CFCPrintService.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678216F912A90063F1E8 /* CFCPrintService.m */; };
 		FF19678E16F912A90063F1E8 /* CFCQueryBean.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678416F912A90063F1E8 /* CFCQueryBean.m */; };
 		FF19678F16F912A90063F1E8 /* CFCSudzc.m in Sources */ = {isa = PBXBuildFile; fileRef = FF19678616F912A90063F1E8 /* CFCSudzc.m */; };
+		FF1A4AE516FB9DA100D8C637 /* Soap+Prefixcfc.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1A4AE416FB9DA100D8C637 /* Soap+Prefixcfc.m */; };
+		FF1A4AE816FB9F8700D8C637 /* BOLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1A4AE716FB9F8700D8C637 /* BOLObject.m */; };
+		FF1A4AEB16FB9FB400D8C637 /* CarrierDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1A4AEA16FB9FB400D8C637 /* CarrierDataObject.m */; };
+		FF1A4AEE16FBA36100D8C637 /* PackageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1A4AED16FBA36100D8C637 /* PackageObject.m */; };
+		FF1A4AF116FBB59A00D8C637 /* PDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1A4AF016FBB59A00D8C637 /* PDFViewController.m */; };
 		FF1D4D0616D5C69C00FA710C /* RateDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */; };
 		FF1EE9B916F0139B00A973C0 /* AccessorialType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9B816F0139A00A973C0 /* AccessorialType.m */; };
 		FF1EE9BC16F013D100A973C0 /* Accessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1EE9BB16F013D100A973C0 /* Accessorial.m */; };
@@ -279,6 +284,16 @@
 		FF19678416F912A90063F1E8 /* CFCQueryBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCQueryBean.m; sourceTree = "<group>"; };
 		FF19678516F912A90063F1E8 /* CFCSudzc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFCSudzc.h; sourceTree = "<group>"; };
 		FF19678616F912A90063F1E8 /* CFCSudzc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFCSudzc.m; sourceTree = "<group>"; };
+		FF1A4AE316FB9DA100D8C637 /* Soap+Prefixcfc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Soap+Prefixcfc.h"; sourceTree = "<group>"; };
+		FF1A4AE416FB9DA100D8C637 /* Soap+Prefixcfc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Soap+Prefixcfc.m"; sourceTree = "<group>"; };
+		FF1A4AE616FB9F8700D8C637 /* BOLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BOLObject.h; sourceTree = "<group>"; };
+		FF1A4AE716FB9F8700D8C637 /* BOLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BOLObject.m; sourceTree = "<group>"; };
+		FF1A4AE916FB9FB400D8C637 /* CarrierDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarrierDataObject.h; sourceTree = "<group>"; };
+		FF1A4AEA16FB9FB400D8C637 /* CarrierDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarrierDataObject.m; sourceTree = "<group>"; };
+		FF1A4AEC16FBA36100D8C637 /* PackageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageObject.h; sourceTree = "<group>"; };
+		FF1A4AED16FBA36100D8C637 /* PackageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageObject.m; sourceTree = "<group>"; };
+		FF1A4AEF16FBB59A00D8C637 /* PDFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFViewController.h; sourceTree = "<group>"; };
+		FF1A4AF016FBB59A00D8C637 /* PDFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFViewController.m; sourceTree = "<group>"; };
 		FF1D4D0416D5C69C00FA710C /* RateDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateDetailViewController.h; sourceTree = "<group>"; };
 		FF1D4D0516D5C69C00FA710C /* RateDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateDetailViewController.m; sourceTree = "<group>"; };
 		FF1EE9B716F0139A00A973C0 /* AccessorialType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccessorialType.h; path = QuickQuote/AccessorialType.h; sourceTree = "<group>"; };
@@ -607,6 +622,8 @@
 			isa = PBXGroup;
 			children = (
 				A46459EB16F6B32F00A78387 /* DataModel.h */,
+				FF1A4AEF16FBB59A00D8C637 /* PDFViewController.h */,
+				FF1A4AF016FBB59A00D8C637 /* PDFViewController.m */,
 				A46459EC16F6B32F00A78387 /* DataModel.m */,
 				FF9060F716F4F4750040FFC6 /* LogoImageView.h */,
 				FF9060F816F4F4750040FFC6 /* LogoImageView.m */,
@@ -704,6 +721,8 @@
 		FF19677416F912A90063F1E8 /* PrintService */ = {
 			isa = PBXGroup;
 			children = (
+				FF1A4AE316FB9DA100D8C637 /* Soap+Prefixcfc.h */,
+				FF1A4AE416FB9DA100D8C637 /* Soap+Prefixcfc.m */,
 				FF19677516F912A90063F1E8 /* CFCArrayOf_xsd_anyType.h */,
 				FF19677616F912A90063F1E8 /* CFCArrayOf_xsd_anyType.m */,
 				FF19677716F912A90063F1E8 /* CFCArrayOf_xsd_string.h */,
@@ -722,6 +741,12 @@
 				FF19678416F912A90063F1E8 /* CFCQueryBean.m */,
 				FF19678516F912A90063F1E8 /* CFCSudzc.h */,
 				FF19678616F912A90063F1E8 /* CFCSudzc.m */,
+				FF1A4AE616FB9F8700D8C637 /* BOLObject.h */,
+				FF1A4AE716FB9F8700D8C637 /* BOLObject.m */,
+				FF1A4AE916FB9FB400D8C637 /* CarrierDataObject.h */,
+				FF1A4AEA16FB9FB400D8C637 /* CarrierDataObject.m */,
+				FF1A4AEC16FBA36100D8C637 /* PackageObject.h */,
+				FF1A4AED16FBA36100D8C637 /* PackageObject.m */,
 			);
 			name = PrintService;
 			path = QuickQuote/PrintService;
@@ -1306,6 +1331,11 @@
 				FF34216816F93EA10005D1E7 /* PersistedAccessorial.m in Sources */,
 				FF6EC38816FAAE320068B2C6 /* CarrierImage.m in Sources */,
 				FF6EC3B816FAC8F00068B2C6 /* TableViewPopoverViewController.m in Sources */,
+				FF1A4AE516FB9DA100D8C637 /* Soap+Prefixcfc.m in Sources */,
+				FF1A4AE816FB9F8700D8C637 /* BOLObject.m in Sources */,
+				FF1A4AEB16FB9FB400D8C637 /* CarrierDataObject.m in Sources */,
+				FF1A4AEE16FBA36100D8C637 /* PackageObject.m in Sources */,
+				FF1A4AF116FBB59A00D8C637 /* PDFViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
