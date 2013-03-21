@@ -38,7 +38,7 @@
             return enterprise;
         }
     }
-    return nil; 
+    return nil;
 }
 
 @end

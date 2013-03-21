@@ -23,8 +23,6 @@
 
 @property (strong, nonatomic) IBOutlet  UIPickerView *picker;
 @property (strong, nonatomic)           NSArray *companies;
-@property (strong, nonatomic)           Enterprise *enterprise;
-
 
 // interface builder actions
 -(IBAction)doneAction:(id)sender;

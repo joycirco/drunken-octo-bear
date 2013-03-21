@@ -17,7 +17,7 @@
 @implementation EnterprisePickerViewController
 
 @synthesize delegate;
-@synthesize enterpriseArray;
+@synthesize enterprises;
 
 - (void)awakeFromNib
 {
@@ -40,7 +40,8 @@
 	// Do any additional setup after loading the view.
     
     // all companies are eShipping except 26 fitness
-    self.enterpriseArray = [DataModel sharedInstance].currentUser.enterprises.allObjects;
+    self.enterprises = [DataModel sharedInstance].currentUser.enterprises.allObjects;
+    [self setPickerToSelectedEnterprise];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -63,20 +64,37 @@
 // returns the number of rows in each component...
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [self.enterpriseArray count];
+    return [self.enterprises count];
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    Enterprise *enterprise = [self.enterpriseArray objectAtIndex:row];
+    Enterprise *enterprise = [self.enterprises objectAtIndex:row];
     return enterprise.enterpriseName;
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    Enterprise *selectedEnterprise = [enterpriseArray objectAtIndex:row];
+    Enterprise *selectedEnterprise = [enterprises objectAtIndex:row];
     [DataModel sharedInstance].currentUser.selectedEnterpriseId = selectedEnterprise.enterpriseId;
     [self.delegate selectedAEnterprise:selectedEnterprise.enterpriseName];
+}
+
+- (void)setPickerToSelectedEnterprise
+{
+    User *currentUser = [DataModel sharedInstance].currentUser;
+    
+    int i=0;
+    
+    for (Enterprise *e in enterprises)
+    {
+        if (currentUser.selectedEnterpriseId == e.enterpriseId)
+        {
+            [self.picker selectRow:i inComponent:0 animated:YES];
+            break;
+        }
+        i++;
+    }
 }
 
 -(IBAction)doneAction:(id)sender

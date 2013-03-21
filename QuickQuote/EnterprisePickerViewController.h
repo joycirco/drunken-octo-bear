@@ -21,7 +21,7 @@
 @property (weak, nonatomic) id <EnterprisePickerViewControllerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIPickerView *picker;
-@property (strong, nonatomic)          NSArray *enterpriseArray;
+@property (strong, nonatomic)          NSArray *enterprises;
 
 // interface builder actions
 -(IBAction)doneAction:(id)sender;

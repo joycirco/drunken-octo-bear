@@ -96,6 +96,9 @@
     currentPopoverSegue = (UIStoryboardPopoverSegue *)segue;
     UIPopoverController *popoverController = [segue destinationViewController];
     [popoverController setDelegate:self];
+    
+    [self.view endEditing:YES];
+    // dismiss keyboard
 } // end prepareForSegue
 
 -(void)handleCompanyViewPickerSegue:(UIStoryboardSegue *)segue

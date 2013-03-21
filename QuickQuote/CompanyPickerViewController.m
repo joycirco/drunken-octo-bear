@@ -18,6 +18,7 @@
 
 @synthesize companies;
 @synthesize delegate;
+@synthesize picker;
 
 - (void)awakeFromNib
 {
@@ -37,26 +38,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // this should be fixed...
     
     // clear & reallocate memory
     self.companies = [[NSMutableArray alloc] init];
+    self.companies = [[DataModel sharedInstance].currentUser getCurrentEnterprise].companies.allObjects;
+    [self setPickerToSelectedCompany];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
     
-    NSArray *enterprises = [DataModel sharedInstance].currentUser.enterprises.allObjects;
-    
-    for (Enterprise *enterprise in enterprises)
-    {
-        if (enterprise.enterpriseId == [DataModel sharedInstance].currentUser.selectedEnterpriseId)
-        {
-            self.enterprise = enterprise;
-            self.companies = self.enterprise.companies.allObjects;
-        }
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     // make changes to viewpicker here...
+    //[self setPickerToSelectedCompany];
+  
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,7 +88,23 @@
     Company *selectedCompany = [companies objectAtIndex:row];
     [DataModel sharedInstance].currentUser.selectedCompanyId = selectedCompany.companyId;
     [self.delegate selectedACompany:selectedCompany.companyName];
+}
+
+- (void)setPickerToSelectedCompany
+{
+    User *currentUser = [DataModel sharedInstance].currentUser;
     
+    int i=0;
+        
+    for (Company *c in companies)
+    {
+        if (currentUser.selectedCompanyId == c.companyId)
+        {
+            [self.picker selectRow:i inComponent:0 animated:YES];
+            break;
+        }
+        i++;
+    }
 }
 
 - (IBAction)doneAction:(id)sender
