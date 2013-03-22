@@ -306,7 +306,7 @@
     
     freightCell.lblNMFC.text = @"";
     if (freight.nmfc != nil && freight.nmfc.length > 0)
-        freightCell.lblNMFC.text = [NSString stringWithFormat:@" NMFC:%@",freight.nmfc];
+        freightCell.lblNMFC.text = [NSString stringWithFormat:@"NMFC: %@",freight.nmfc];
     
     freightCell.lblFreightDescription.text = @"";
     if (freight.freightDescription != nil && freight.freightDescription.length > 0)
@@ -334,7 +334,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"FreightItemCellID";
-    UITableView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     // configure the cell
     if (cell != nil && _quoteRequest.freightItems != nil && _quoteRequest.freightItems.count > 0)
