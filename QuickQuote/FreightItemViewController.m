@@ -14,6 +14,7 @@
 #import "PickerHelper.h"
 #import "DataModel.h"
 #import "UserSettings.h"
+#import "EstimatedClass.h"
 
 @interface FreightItemViewController ()
 {
@@ -28,7 +29,6 @@
 - (void)configureView;
 - (void)saveFreightItem;
 - (BOOL) isValid;
-- (void)calculateDensity;
 
 @end
 
@@ -68,8 +68,9 @@
     [_redLabel setHidden:true];
     
     _pickerHelper = [[PickerHelper alloc] initWithContext:_managedObjectContext];
-
+    
     [self configureView];
+    [self doCalcs:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -141,7 +142,6 @@
 
     self.btnFreightClass.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.btnFreightClass.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
-    self.btnHandlingUnitType.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.btnHandlingUnitType.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     //self.freightDescription.editable = NO;
     
@@ -193,7 +193,7 @@
         
         //self.freightDescription.editable = YES;
         if (!_isAdding)
-            self.title = @"Edit freight Item Detail";
+            self.title = @"Edit Freight Item Detail";
     }
     else
     {
@@ -546,6 +546,7 @@
 
 - (IBAction)selectHandlingUnit:(id)sender
 {
+    
 }
 
 - (IBAction)selectFreightClass:(id)sender
@@ -604,9 +605,56 @@
     }
 }
 
--(void)calculateDensity
+-(void)trimCalcFields
 {
-    
+    [self.height.text stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
+    [self.width.text stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
+    [self.length.text stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
+    [self.units.text stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
+    [self.weight.text stringByTrimmingCharactersInSet:
+     [NSCharacterSet whitespaceCharacterSet]];
 }
+
+ 
+-(void)doCalcs:(id)sender
+{
+    [self trimCalcFields];
+    
+    if (self.height.text.length != 0 && self.width.text.length != 0 &&
+        self.length.text.length != 0 && self.units.text.length != 0 &&
+        self.weight.text.length !=0)
+    {
+        float height = [self.height.text floatValue];
+        float width = [self.width.text floatValue];
+        float length = [self.length.text floatValue];
+        float units = [self.units.text floatValue];
+        float weight = [self.weight.text floatValue];
+        float cubicFeet = [self convertToFeet:length] * [self convertToFeet:width] * [self convertToFeet:height];
+        cubicFeet = cubicFeet * units;
+        float calculatedDensity = weight/((height * width * length * units) / 1728);
+        
+        self.density.text = [NSString stringWithFormat:@"%.02f", calculatedDensity];
+        self.cubicFeet.text = [NSString stringWithFormat:@"%.02f", cubicFeet];
+        self.estClass.text = [NSString stringWithFormat:@"%.01f",
+                              [EstimatedClass getEstClass:calculatedDensity]];
+    }
+    else
+    {
+        self.density.text = @"";
+        self.cubicFeet.text = @"";
+        self.estClass.text = @"";
+    }
+}
+
+-(float)convertToFeet:(float)inches
+{
+    return inches / 12;
+}
+
+
 
 @end

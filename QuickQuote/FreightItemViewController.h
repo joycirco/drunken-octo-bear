@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *stackable;
 @property (weak, nonatomic) IBOutlet UITextField *nmfc;
 @property (weak, nonatomic) IBOutlet UITextField *density;
+@property (weak, nonatomic) IBOutlet UITextField *cubicFeet;
+@property (weak, nonatomic) IBOutlet UITextField *estClass;
 
 @property (weak, nonatomic) IBOutlet UILabel *redLabel;
 
@@ -44,5 +46,6 @@
 
 - (IBAction)selectHandlingUnit:(id)sender;
 - (IBAction)selectFreightClass:(id)sender;
+- (IBAction)doCalcs:(id)sender;
 
 @end
