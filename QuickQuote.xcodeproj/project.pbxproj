@@ -137,6 +137,7 @@
 		FF34216216F92C700005D1E7 /* AccessorialQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216116F92C700005D1E7 /* AccessorialQQ.m */; };
 		FF34216516F92C870005D1E7 /* HandlingUnitTypeQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216416F92C870005D1E7 /* HandlingUnitTypeQQ.m */; };
 		FF34216816F93EA10005D1E7 /* PersistedAccessorial.m in Sources */ = {isa = PBXBuildFile; fileRef = FF34216716F93EA10005D1E7 /* PersistedAccessorial.m */; };
+		FF4C337416FC194D008A274C /* FreightItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4C337316FC194D008A274C /* FreightItemCell.m */; };
 		FF4DF28316C09A0300AE954F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */; };
 		FF4DF28516C09A1A00AE954F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4DF28416C09A1A00AE954F /* Security.framework */; };
 		FF4DF36916C09C7800AE954F /* AccessorialPricingDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4DF35816C09C7800AE954F /* AccessorialPricingDetail.m */; };
@@ -457,6 +458,8 @@
 		FF34216416F92C870005D1E7 /* HandlingUnitTypeQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandlingUnitTypeQQ.m; sourceTree = "<group>"; };
 		FF34216616F93EA10005D1E7 /* PersistedAccessorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistedAccessorial.h; path = QuickQuote/PersistedAccessorial.h; sourceTree = "<group>"; };
 		FF34216716F93EA10005D1E7 /* PersistedAccessorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistedAccessorial.m; path = QuickQuote/PersistedAccessorial.m; sourceTree = "<group>"; };
+		FF4C337216FC194D008A274C /* FreightItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreightItemCell.h; sourceTree = "<group>"; };
+		FF4C337316FC194D008A274C /* FreightItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreightItemCell.m; sourceTree = "<group>"; };
 		FF4DF28216C09A0300AE954F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		FF4DF28416C09A1A00AE954F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FF4DF35716C09C7800AE954F /* AccessorialPricingDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessorialPricingDetail.h; sourceTree = "<group>"; };
@@ -671,6 +674,8 @@
 				FFBBDD6E16F7D8E000F13CA5 /* DefaultAccessorialsViewController.m */,
 				FF6EC3B616FAC8F00068B2C6 /* TableViewPopoverViewController.h */,
 				FF6EC3B716FAC8F00068B2C6 /* TableViewPopoverViewController.m */,
+				FF4C337216FC194D008A274C /* FreightItemCell.h */,
+				FF4C337316FC194D008A274C /* FreightItemCell.m */,
 			);
 			path = QuickQuote;
 			sourceTree = "<group>";
@@ -1336,6 +1341,7 @@
 				FF1A4AEB16FB9FB400D8C637 /* CarrierDataObject.m in Sources */,
 				FF1A4AEE16FBA36100D8C637 /* PackageObject.m in Sources */,
 				FF1A4AF116FBB59A00D8C637 /* PDFViewController.m in Sources */,
+				FF4C337416FC194D008A274C /* FreightItemCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

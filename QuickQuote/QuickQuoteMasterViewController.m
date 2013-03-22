@@ -773,7 +773,7 @@
     }
     else
     {
-        self.navigationItem.prompt = @"* Required items *";
+        self.navigationItem.prompt = @"* Required Items *";
     }
 }
 

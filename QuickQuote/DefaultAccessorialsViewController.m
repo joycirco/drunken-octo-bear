@@ -14,10 +14,12 @@
 #import "AccessorialCell.h"
 #import "UserSettings.h"
 #import "DataModel.h"
+#import "UserSettingsViewController.h"
 
 @interface DefaultAccessorialsViewController ()
 {
     AccessorialType* accessorialType;
+    UIBarButtonItem* _rootViewBarButtonItem;
 }
 
 - (void)configureView;
@@ -89,6 +91,19 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+
+    // make sure parent that pushed this view has a handle to navigate back to the root controller 
+    if (_rootViewBarButtonItem != nil)
+    {
+        for (UIViewController* vc in self.navigationController.viewControllers)
+        {
+            if ([vc isKindOfClass:[UserSettingsViewController class]])
+            {
+                [(UserSettingsViewController*)vc showRootPopoverButtonItem:_rootViewBarButtonItem ];
+            }
+            break;
+        }
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -178,6 +193,36 @@
     
     return cell;
 }
+
+
+#pragma mark - SubstitutableDetailViewController
+#pragma mark Managing the popover
+
+- (void)showRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // just hold on to the reference, and we will pass it back to our parent
+    _rootViewBarButtonItem = barButtonItem;
+}
+
+- (void)invalidateRootPopoverButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // nil it?
+    _rootViewBarButtonItem = nil;
+}
+
+- (void)startActivityIndicator
+{
+}
+
+-(void)stopActivityIndicator
+{
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.detailPopoverController = nil;
+}
+
 
 /*
  // Override to support conditional editing of the table view.

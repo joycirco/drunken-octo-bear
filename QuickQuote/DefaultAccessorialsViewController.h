@@ -12,7 +12,8 @@
 
 @class UserSettings;
 
-@interface DefaultAccessorialsViewController  : UITableViewController <UITableViewDelegate,
+@interface DefaultAccessorialsViewController  : UITableViewController <SubstitutableDetailViewController,
+                                                                       UITableViewDelegate,
                                                                        NSFetchedResultsControllerDelegate,
                                                                        AccessorialCellDelegate>
 {
@@ -24,5 +25,7 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) UserSettings* userSettings;
+
+@property (strong, nonatomic) UIPopoverController *detailPopoverController;
 
 @end
