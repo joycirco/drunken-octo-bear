@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PickerPopoverViewController.h"
+#import "QuickQuoteMasterViewController.h"
 
 @class QuoteRequest, FreightItem, PickerHelper;
 
-@interface FreightItemViewController : UIViewController <UITextFieldDelegate,
+@interface FreightItemViewController : UIViewController <SubstitutableDetailViewController,
+                                                        UITextFieldDelegate,
                                                         UITextViewDelegate,
                                                         PickerPopoverViewControllerDelegate>
 
@@ -37,7 +39,7 @@
 @property (strong, nonatomic) QuoteRequest* quoteRequest;
 @property (strong, nonatomic) FreightItem* freightItem;
 
-//@property (strong, nonatomic) UIPopoverController *detailPopoverController;
+@property (strong, nonatomic) UIPopoverController *detailPopoverController;
 @property (strong, nonatomic) UIPopoverController *pickerPopoverController;
 
 @property (nonatomic,assign) bool isAdding;

@@ -11,6 +11,7 @@
 #import "QuoteRequest.h"
 #import "HandlingUnitType.h"
 #import "FreightItemViewController.h"
+#import "FreightItemCell.h"
 
 @interface FreightItemsViewController ()
 {
@@ -127,7 +128,7 @@
     //}
     
     if (nRows == 0)
-        self.navigationItem.prompt = @"Add some freight by tapping '+'";
+        self.navigationItem.prompt = @"Add some shipment items by tapping '+'";
     else
         self.navigationItem.prompt = nil;
 }
@@ -191,14 +192,6 @@
 #pragma mark - Rate Detail Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    /*
-    if ([[segue identifier] isEqualToString:@"freightItemDetail"]) {
-        [[segue destinationViewController] setDelegate:self];
-        UIPopoverController *popoverController = [(UIStoryboardPopoverSegue *)segue popoverController];
-        self.detailPopoverController = popoverController;
-        popoverController.delegate = self;
-    }*/
-
     if ([[segue identifier] isEqualToString:@"freightItemAdd"])
     {
         //FreightItemEditViewController* destinationView = [segue destinationViewController];
@@ -253,12 +246,11 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     FreightItem *freight = [self.fetchedResultsController objectAtIndexPath:indexPath];
-  
-    NSMutableString* label;
-    NSMutableString* detail;
+ 
+    NSMutableString* dimLabel = [[NSMutableString alloc] init];
+    NSMutableString* dimLabel2 = [[NSMutableString alloc] init];
     
-    label = [[NSMutableString alloc]init];
-    detail = [[NSMutableString alloc]init];
+    FreightItemCell* freightCell = (FreightItemCell*)cell;
     
     // get handling unit from dictionary
     HandlingUnitType* hu = nil;
@@ -266,36 +258,60 @@
     {
         hu = [_huMap objectForKey:freight.handlingUnitTypeID];
     }
-    
-    [label appendString:[noStyleFormatter stringFromNumber:freight.handlingUnits]];
+
     if (hu != nil)
-        [label appendFormat:@" %@",hu.handlingUnitTypeDescription];
+        freightCell.lblhandlingUnits.text = [NSString stringWithFormat:@"%d %@",[freight.handlingUnits intValue], hu.handlingUnitTypeDescription];
+
+    BOOL hasDims = NO;
 
     if (freight.length != nil && [freight.length doubleValue] > 0)
-        [label appendFormat:@" L:%@",[noStyleFormatter stringFromNumber:freight.length]];
+    {
+        hasDims = YES;
+        [dimLabel appendFormat:@"%@",[noStyleFormatter stringFromNumber:freight.length]];
+        [dimLabel2 appendString:@"L"];
+    }
 
     if (freight.width != nil && [freight.width doubleValue] > 0)
-        [label appendFormat:@" W:%@",[noStyleFormatter stringFromNumber:freight.width]];
+    {
+        hasDims = YES;
+        [dimLabel appendFormat:@" x %@",[noStyleFormatter stringFromNumber:freight.width]];
+        if (dimLabel2.length > 0)
+            [dimLabel2 appendString:@"x"];
+        [dimLabel2 appendString:@"W"];
+    }
 
     if (freight.height != nil && [freight.height doubleValue] > 0)
-        [label appendFormat:@" H:%@",[noStyleFormatter stringFromNumber:freight.height]];
+    {
+        hasDims = YES;
+        [dimLabel appendFormat:@" x %@",[noStyleFormatter stringFromNumber:freight.height]];
+        if (dimLabel2.length > 0)
+            [dimLabel2 appendString:@"x"];
+        [dimLabel2 appendString:@"H"];
+    }
     
-    [label appendFormat:@", %@",[decimalFormatter stringFromNumber:freight.weight]];
-    [label appendString:freight.weightUOM];
-    [label appendString:@", Class:"];
-    [label appendString:[decimalFormatter stringFromNumber:freight.freightClass]];
+    if (hasDims)
+        freightCell.lblDimensions.text = [NSString stringWithFormat:@"%@    (%@)", dimLabel, dimLabel2];
+    else
+        freightCell.lblDimensions.text = [NSString stringWithFormat:@"%@%@", dimLabel, dimLabel2];
 
+    
+    freightCell.lblWeight.text = [NSString stringWithFormat:@"%@ %@", [decimalFormatter stringFromNumber:freight.weight], freight.weightUOM];
+    
+    freightCell.lblFreightClass.text = [NSString stringWithFormat:@"Freight Class: %@",[decimalFormatter stringFromNumber:freight.freightClass]];
+    
     if ([freight.isStackable boolValue])
-        [detail appendString:@"Stackable"];
+        freightCell.lblStackable.text = @"Stackable";
+    else
+        freightCell.lblStackable.text = @"";
     
+    freightCell.lblNMFC.text = @"";
     if (freight.nmfc != nil && freight.nmfc.length > 0)
-        [detail appendFormat:@" NMFC:%@",freight.nmfc];
+        freightCell.lblNMFC.text = [NSString stringWithFormat:@" NMFC:%@",freight.nmfc];
     
+    freightCell.lblFreightDescription.text = @"";
     if (freight.freightDescription != nil && freight.freightDescription.length > 0)
-        [detail appendFormat:@", Description:%@", freight.freightDescription];
+        freightCell.lblFreightDescription.text = [NSString stringWithFormat:@"Description:%@", freight.freightDescription];
 
-    cell.textLabel.text = label;
-    cell.detailTextLabel.text = detail;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -317,8 +333,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"FreightItemCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"FreightItemCellID";
+    UITableView *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
     // configure the cell
     if (cell != nil && _quoteRequest.freightItems != nil && _quoteRequest.freightItems.count > 0)
